@@ -12,8 +12,11 @@ def get_product(id):
 @product_endpoint.route("/v1/product")
 def get_products():
     product_schema = ProductSchema(many=True)
-    categories = Product.query.all()
-    return jsonify(product_schema.dump(categories))
+    if request.args.get('category'):
+        products = Product.query.filter_by(category_id=request.args.get('category')).all()
+    else:
+        products = Product.query.all()
+    return jsonify(product_schema.dump(products))
 
 @product_endpoint.route("/v1/product", methods=["POST"])
 def add_product():
