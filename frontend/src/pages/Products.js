@@ -10,7 +10,11 @@ function ProductsPage() {
 
     const columns = [
         {field: "id", headerName: "ID"},
-        {field: "name", headerName: "Name"},
+        {field: "name", headerName: "Name",
+            renderCell: (params) => {
+                return <Link to={"/product/" + params.row.id}>{params.value}</Link>
+            }
+        },
         {
             field: "category", headerName: "Category",
             valueGetter: (params) => {
