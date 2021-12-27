@@ -270,8 +270,8 @@ function ProductPage() {
                                     }
                                     <Grid item xs={6}>
                                         <Typography variant="h3">{content.name}</Typography>
-                                        <Typography variant="subtitle">{content.created_at}</Typography>
-                                        <Typography>Internal ID: {content.id}</Typography>
+                                        <Typography variant="subtitle">{content.created_at}</Typography><br /><br />
+                                        <Typography variant="body1">{content.description}</Typography>
                                     </Grid>
                                     </Grid>
                             </CardContent>
