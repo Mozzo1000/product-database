@@ -76,6 +76,19 @@ class ProductSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Product
 
+class Document(db.Model):
+    __tablename__ = "document"
 
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True)
+    type = db.Column(db.String, nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
 
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
 
+class DocumentSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Document
