@@ -72,7 +72,8 @@ function ProductPage() {
             setLoadUpload(true);
             const data = new FormData();
             data.append('file', fileData);
-            DocumentService.addDocument(data).then(
+            data.append('product_id', id);
+            DocumentService.addDocument(data, id).then(
                 response => {
                     console.log(response.data);
                     setStatusMessage(response.data.message);
