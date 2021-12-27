@@ -32,6 +32,11 @@ import Tab from '@mui/material/Tab';
 import a11yProps from '../components/TabPanel';
 import DocumentService from "../services/document.service";
 import Snackbar from '@mui/material/Snackbar';
+import Box from '@mui/material/Box';
+import MobileStepper from '@mui/material/MobileStepper';
+import SwipeableViews from 'react-swipeable-views';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 function ProductPage() {
     const [content, setContent] = useState();
@@ -44,6 +49,20 @@ function ProductPage() {
     const [statusMessage, setStatusMessage] = useState("");
     const [loadUpload, setLoadUpload] = useState(false);
     const [documentContent, setDocumentContent] = useState([]);
+    const [imageContent, setImageContent] = useState([]);
+    const [activeStep, setActiveStep] = React.useState(0);
+
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+    const handleStepChange = (step) => {
+        setActiveStep(step);
+    };
 
     const Input = styled('input')({
         display: 'none',
@@ -169,6 +188,21 @@ function ProductPage() {
                 console.log(resMessage);
             }
         )
+        DocumentService.getAllDocuments(id, "?type=image/webp").then(
+            response => {
+                setImageContent(response.data);
+                console.log(response.data);
+            },
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log(resMessage);
+            }
+        )
       }, []);
 
     const uploadFileButton = () => {
@@ -185,11 +219,46 @@ function ProductPage() {
         <Container sx={{paddingTop: 4}}>
             {content ? (
                 <Grid container spacing={3}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Card>
-                            <CardHeader title={content.name} subheader={"Added: " + content.created_at}/>
                             <CardContent>
-                                <Typography>Internal ID: {content.id}</Typography>
+                                <Grid container spacing={6}>
+                                {imageContent.length > 0 && 
+                                    <Grid item xs={6}>
+                                        <>
+                                        <SwipeableViews index={activeStep} onChangeIndex={handleStepChange} enableMouseEvents>
+                                            {imageContent.map((image, index) => (
+                                                <div key={image.name}>
+                                                    {Math.abs(activeStep - index) <= 2 ? (
+                                                        <Box component="img" sx={{width: 560, height: 420}}
+                                                            src={"http://localhost:5000/v1/document/storage/" + image.name} alt={image.name} /> 
+                                                    ): null}
+                                                </div>
+                                            ))}
+                                            </SwipeableViews>
+                                            <MobileStepper position="static" steps={imageContent.length} activeStep={activeStep} variant="dots"
+                                                nextButton={
+                                                    <Button size="small" onClick={handleNext} disabled={activeStep === imageContent.length - 1}>
+                                                        Next
+                                                        <KeyboardArrowRight />
+                                                    </Button>
+                                                }
+                                                backButton={
+                                                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                                                        <KeyboardArrowLeft />
+                                                        Back
+                                                    </Button>
+                                                }
+                                            />
+                                            </>
+                                        </Grid>
+                                    }
+                                    <Grid item xs={6}>
+                                        <Typography variant="h3">{content.name}</Typography>
+                                        <Typography variant="subtitle">{content.created_at}</Typography>
+                                        <Typography>Internal ID: {content.id}</Typography>
+                                    </Grid>
+                                    </Grid>
                             </CardContent>
                             <CardActions>
                                 <Button size="small">Edit</Button>
