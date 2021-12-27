@@ -25,13 +25,22 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
+import TabPanel from '../components/TabPanel';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import a11yProps from '../components/TabPanel';
 
 function ProductPage() {
     const [content, setContent] = useState();
     let { id } = useParams()
+    const [tab, setTab] = useState(0);
     const [openModal, setOpenModal] = useState(false);
     const [newAttributeName, setNewAttributeName] = useState();
     const [newAttributeValue, setNewAttributeValue] = useState();
+    
+    const handleTabChange = (event, newTab) => {
+        setTab(newTab);
+    };
 
     const handleClickOpenModal = () => {
         setOpenModal(true);
@@ -107,36 +116,34 @@ function ProductPage() {
                         </Card>
                     </Grid>
                     <Grid item xs={12}>
-                        <Card>
-                            <CardHeader title="Attributes" />
-                            <CardContent>
-                                <TableContainer>
-                                    <Table>
-                                        <TableHead>
-                                            <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>
-                                            <TableRow>
-                                                <TableCell>Attribute</TableCell>
-                                                <TableCell>Value</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {content.attribute.length > 0 ? (
-                                                content.attribute.map((attribute) => (
-                                                    <TableRow key={attribute.name}>
-                                                        <TableCell>{attribute.name}</TableCell>
-                                                        <TableCell>{attribute.value}</TableCell>
-                                                    </TableRow>
-                                                ))
-                                            ) : (
-                                                <Typography>No attributes found</Typography>
-
-                                            )}
-                                            
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </CardContent>
-                        </Card>
+                        <Tabs value={tab} onChange={handleTabChange} aria-label="tabs">
+                            <Tab label="Attributes" {...a11yProps(0)} />
+                            <Tab label="Environment" {...a11yProps(1)} />
+                            <Tab label="Documents" {...a11yProps(2)} />
+                        </Tabs>
+                        <TabPanel value={tab} index={0}>
+                            <Card>
+                                <CardHeader title={<Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>} />
+                                <CardContent>
+                                    <TableContainer>
+                                        <Table>
+                                            <TableBody>
+                                                {content.attribute.length > 0 ? (
+                                                    content.attribute.map((attribute) => (
+                                                        <TableRow key={attribute.name}>
+                                                            <TableCell>{attribute.name}</TableCell>
+                                                            <TableCell>{attribute.value}</TableCell>
+                                                        </TableRow>
+                                                    ))
+                                                ) : (
+                                                    <Typography>No attributes found</Typography>
+                                                )}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </CardContent>
+                            </Card>
+                        </TabPanel>
                     </Grid>
                 </Grid>
             ) : (
