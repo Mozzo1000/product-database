@@ -30,7 +30,6 @@ import TabPanel from '../components/TabPanel';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import a11yProps from '../components/TabPanel';
-import Input from '@mui/material/Input';
 import DocumentService from "../services/document.service";
 import Snackbar from '@mui/material/Snackbar';
 
@@ -240,14 +239,14 @@ function ProductPage() {
                                                 {documentContent.length > 0 ? (
                                                     documentContent.map((document) => (
                                                         <TableRow key={document.name}>
-                                                            <TableCell>{document.name}</TableCell>
+                                                            {/*TODO: Remove the hardcoded api link. This is a temporary workaround because file download did not work through the proxy pass.*/}
+                                                            <TableCell component="a" href={"http://localhost:5000/v1/document/storage/" + document.name}>{document.name}</TableCell>
                                                             <TableCell>{document.type}</TableCell>
                                                         </TableRow>
                                                     ))
                                                 ) : (
                                                     <Typography>No documents found</Typography>
-                                                )}
-                                                
+                                                )}  
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
