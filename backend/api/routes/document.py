@@ -44,3 +44,14 @@ def add_document():
             "message": "Upload complete",
             "name": filename
         }, 201
+
+@document_endpoint.route('/v1/document/<id>', methods=["DELETE"])
+def remove_document(id):
+    #Note, we are not removing the file from the filessytem.
+    document = Document.query.get(id)
+    try: 
+        db.session.delete(document)
+        db.session.commit()
+        return jsonify({'message': f'Document with id {id} has been removed'}), 200
+    except:
+        return jsonify({'message': 'Something went wrong'}), 500
