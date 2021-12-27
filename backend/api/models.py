@@ -57,6 +57,7 @@ class Product(db.Model):
     name = db.Column(db.String, nullable=False)
     brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'))
     brand = db.relationship("Brand", uselist=False, backref="brand")
+    description = db.Column(db.String, nullable=True)
 
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     category = db.relationship("Category", uselist=False, backref="category")
