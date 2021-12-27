@@ -10,8 +10,11 @@ function CategoriesPage() {
 
     const columns = [
         {field: "id", headerName: "ID"},
-        {field: "name", headerName: "Name"},
-
+        {field: "name", headerName: "Name",
+            renderCell: (params) => {
+                return <Link to={"/category/" + params.row.id}>{params.value}</Link>
+            }
+        },
     ];
 
     useEffect(() => {
