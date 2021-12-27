@@ -36,7 +36,6 @@ import Snackbar from '@mui/material/Snackbar';
 
 function ProductPage() {
     const [content, setContent] = useState();
-    const [fileContent, setFileContent] = useState();
     let { id } = useParams()
     const [tab, setTab] = useState(0);
     const [openModal, setOpenModal] = useState(false);
@@ -75,7 +74,6 @@ function ProductPage() {
             data.append('file', fileData);
             DocumentService.addDocument(data).then(
                 response => {
-                    setFileContent(response.data);
                     console.log(response.data);
                     setStatusMessage(response.data.message);
                     setOpenStatusMessage(true);
