@@ -37,6 +37,8 @@ import MobileStepper from '@mui/material/MobileStepper';
 import SwipeableViews from 'react-swipeable-views';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import Popover from '@mui/material/Popover';
+import HelpIcon from '@mui/icons-material/Help';
 
 function ProductPage() {
     const [content, setContent] = useState();
@@ -51,6 +53,16 @@ function ProductPage() {
     const [documentContent, setDocumentContent] = useState([]);
     const [imageContent, setImageContent] = useState([]);
     const [activeStep, setActiveStep] = React.useState(0);
+    const [anchorElHelp, setAnchorElHelp] = React.useState(null);
+    const openHelp = Boolean(anchorElHelp);
+
+    const handleClickHelp = (event) => {
+        setAnchorElHelp(event.currentTarget);
+      };
+    
+      const handleCloseHelp = () => {
+        setAnchorElHelp(null);
+      };
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -207,12 +219,15 @@ function ProductPage() {
 
     const uploadFileButton = () => {
         return (
+            <>            
             <label htmlFor="contained-button-file">
             <Input id="contained-button-file" multiple type="file" onChange={handleFileUpload}/>
-            <Button variant="contained" component="span">
+            <Button variant="text" component="span">
                 Upload file
             </Button>
             </label>
+            <Button aria-describedby="popover" onClick={handleClickHelp}><HelpIcon /></Button>
+            </>
         )
     }
     return (
@@ -299,6 +314,9 @@ function ProductPage() {
                             <Card>
                                 <CardHeader title={uploadFileButton()} />
                                     <CardContent>
+                                        <Popover id="popover" open={openHelp} anchorEl={anchorElHelp} onClose={handleCloseHelp} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
+                                            <Typography sx={{ p: 2 }}>Uploading images with filetype ".webp" will add them as cover images.</Typography>
+                                        </Popover>
                                         {loadUpload && 
                                             <CircularProgress />
                                         }
