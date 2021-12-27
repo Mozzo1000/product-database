@@ -3,11 +3,34 @@ import { Link } from "react-router-dom";
 import Container from '@mui/material/Container';
 import DataTable from '../components/DataTable';
 import ProductService from "../services/product.service";
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import FormControl from '@mui/material/FormControl';
+import { GridToolbarContainer, GridToolbarExport, gridClasses, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarDensitySelector} from '@mui/x-data-grid';
+import CategorySelection from '../components/CategorySelection'
+import BrandSelection from '../components/BrandSelection'
 
 function ProductsPage() {
     const [content, setContent] = useState();
     const [pageSize, setPageSize] = React.useState(10);
+    const [openModal, setOpenModal] = useState(false);
+    const [newProductCategory, setNewProductCategory] = useState(1);
+    const [newProductBrand, setNewProductBrand] = useState(1);
+    const [newProductName, setNewProductName] = useState("");
 
+    const handleClickOpenModal = () => {
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
     const columns = [
         {field: "id", headerName: "ID"},
         {field: "name", headerName: "Name",
@@ -30,6 +53,38 @@ function ProductsPage() {
         }
     ];
 
+    const handleAddProduct = (e) => {
+        e.preventDefault();
+        ProductService.addProduct(newProductName, newProductBrand, newProductCategory).then(
+            () => {
+                setOpenModal(false);
+                ProductService.getAllProducts().then(
+                    response => {
+                        setContent(response.data);
+                    },
+                    error => {
+                        const resMessage =
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                        console.log(resMessage);
+                    }
+                )
+            },
+            (error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log(resMessage);
+            }
+        );
+    }
+
     useEffect(() => {
         ProductService.getAllProducts().then(
             response => {
@@ -48,9 +103,42 @@ function ProductsPage() {
         )
       }, []);
 
-    return (
+      function CustomToolbar() {
+        return (
+          <GridToolbarContainer className={gridClasses.toolbarContainer}>
+            <GridToolbarExport />
+            <GridToolbarColumnsButton />
+            <GridToolbarFilterButton />
+            <GridToolbarDensitySelector />
+            <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>
+          </GridToolbarContainer>
+        );
+    }
+
+
+      return (
         <Container>
-            <DataTable content={content} columns={columns} pageSize={pageSize}/>
+            <DataTable content={content} columns={columns} pageSize={pageSize} toolbar={CustomToolbar}/>
+            <Dialog open={openModal} onClose={handleCloseModal}>
+                <DialogTitle>Add new product</DialogTitle>
+                <FormControl>
+                    <form onSubmit={handleAddProduct}>
+                        <DialogContent>
+                            <DialogContentText>
+                                Fill out the information below
+                            </DialogContentText>
+                            <TextField required autofocus id="name" label="Name" margin="dense" fullWidth variant="standard" value={newProductName} onChange={e => setNewProductName(e.target.value)}/>
+                            <CategorySelection selectedCategory={newProductCategory} setState={setNewProductCategory} />
+                            <BrandSelection selectedBrand={newProductBrand} setState={setNewProductBrand} />
+
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCloseModal}>Cancel</Button>
+                            <Button type="submit" color="primary" onClick={handleCloseModal}>Add</Button>
+                        </DialogActions>
+                    </form>
+                </FormControl>
+            </Dialog>
         </Container>
     )
 }
