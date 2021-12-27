@@ -14,7 +14,10 @@ def get_document(filename):
 @document_endpoint.route("/v1/document/<id>")
 def get_document_by_product(id):
     document_schema = DocumentSchema(many=True)
-    document = Document.query.filter_by(product_id=id).all()
+    if request.args.get('type'):
+        document = Document.query.filter_by(product_id=id, type=request.args.get('type')).all()
+    else:
+        document = Document.query.filter_by(product_id=id).all()
     return jsonify(document_schema.dump(document))
 
 def allowed_file(filename):
