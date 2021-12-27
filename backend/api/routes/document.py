@@ -1,10 +1,15 @@
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app, send_from_directory
 from werkzeug.utils import secure_filename
 import os
 from models import Document, DocumentSchema, db
 import mimetypes
 
 document_endpoint = Blueprint('document', __name__)
+
+@document_endpoint.route('/v1/document/storage/<path:filename>', methods=['GET'])
+def get_document(filename):
+    directory = os.path.join(os.getcwd(), current_app.config['UPLOAD_FOLDER'])
+    return send_from_directory(directory, filename, as_attachment=True)
 
 @document_endpoint.route("/v1/document/<id>")
 def get_document_by_product(id):
