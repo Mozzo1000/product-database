@@ -44,6 +44,7 @@ function ProductPage() {
     const [openStatusMessage, setOpenStatusMessage] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
     const [loadUpload, setLoadUpload] = useState(false);
+    const [documentContent, setDocumentContent] = useState([]);
 
     const Input = styled('input')({
         display: 'none',
@@ -79,6 +80,20 @@ function ProductPage() {
                     setStatusMessage(response.data.message);
                     setOpenStatusMessage(true);
                     setLoadUpload(false);
+                    DocumentService.getAllDocuments(id).then(
+                        response => {
+                            setDocumentContent(response.data);
+                        },
+                        error => {
+                            const resMessage =
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            console.log(resMessage);
+                        }
+                    )
                 },
                 error => {
                     const resMessage =
@@ -140,8 +155,33 @@ function ProductPage() {
                 console.log(resMessage);
             }
         )
+        DocumentService.getAllDocuments(id).then(
+            response => {
+                setDocumentContent(response.data);
+                console.log(response.data.length);
+            },
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log(resMessage);
+            }
+        )
       }, []);
 
+    const uploadFileButton = () => {
+        return (
+            <label htmlFor="contained-button-file">
+            <Input id="contained-button-file" multiple type="file" onChange={handleFileUpload}/>
+            <Button variant="contained" component="span">
+                Upload file
+            </Button>
+            </label>
+        )
+    }
     return (
         <Container sx={{paddingTop: 4}}>
             {content ? (
@@ -188,15 +228,31 @@ function ProductPage() {
                             </Card>
                         </TabPanel>
                         <TabPanel value={tab} index={2}>
-                            <label htmlFor="contained-button-file">
-                                <Input id="contained-button-file" multiple type="file" onChange={handleFileUpload}/>
-                                <Button variant="contained" component="span">
-                                    Upload file
-                                </Button>
-                            </label>
-                            {loadUpload &&
-                                <CircularProgress />
-                            }
+                            <Card>
+                                <CardHeader title={uploadFileButton()} />
+                                    <CardContent>
+                                        {loadUpload && 
+                                            <CircularProgress />
+                                        }
+                                    <TableContainer>
+                                        <Table>
+                                            <TableBody>
+                                                {documentContent.length > 0 ? (
+                                                    documentContent.map((document) => (
+                                                        <TableRow key={document.name}>
+                                                            <TableCell>{document.name}</TableCell>
+                                                            <TableCell>{document.type}</TableCell>
+                                                        </TableRow>
+                                                    ))
+                                                ) : (
+                                                    <Typography>No documents found</Typography>
+                                                )}
+                                                
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </CardContent>
+                            </Card>
                         </TabPanel>
                     </Grid>
                 </Grid>
