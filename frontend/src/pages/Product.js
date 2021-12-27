@@ -9,6 +9,12 @@ import CardActions from '@mui/material/CardActions';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 function ProductPage() {
     const [content, setContent] = useState();
@@ -18,7 +24,7 @@ function ProductPage() {
         ProductService.getProduct(id).then(
             response => {
                 setContent(response.data);
-                console.log(content);
+                console.log(response.data.attribute.length);
             },
             error => {
                 const resMessage =
@@ -35,6 +41,7 @@ function ProductPage() {
     return (
         <Container>
             {content ? (
+                <>
                 <Card>
                     <CardHeader title={content.name} subheader={"Added: " + content.created_at}/>
                     <CardContent>
@@ -45,6 +52,36 @@ function ProductPage() {
                         <Button size="small" color="error">Delete</Button>
                     </CardActions>
                 </Card>
+                <Card>
+                    <CardHeader title="Attributes" />
+                    <CardContent>
+                        <TableContainer>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Attribute</TableCell>
+                                        <TableCell>Value</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {content.attribute.length > 0 ? (
+                                        content.attribute.map((attribute) => (
+                                            <TableRow key={attribute.name}>
+                                                <TableCell>{attribute.name}</TableCell>
+                                                <TableCell>{attribute.value}</TableCell>
+                                            </TableRow>
+                                        ))
+                                    ) : (
+                                        <Typography>No attributes found</Typography>
+
+                                    )}
+                                    
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </CardContent>
+                </Card>
+                </>
             ) : (
                 <CircularProgress />
             )}
