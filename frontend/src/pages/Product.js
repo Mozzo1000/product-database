@@ -1,4 +1,5 @@
 import React, { useState, useEffect }  from 'react'
+import { styled } from '@mui/material/styles';
 import { useParams } from "react-router-dom";
 import ProductService from "../services/product.service";
 import AttributeService from "../services/attribute.service";
@@ -29,15 +30,26 @@ import TabPanel from '../components/TabPanel';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import a11yProps from '../components/TabPanel';
+import Input from '@mui/material/Input';
+import DocumentService from "../services/document.service";
+import Snackbar from '@mui/material/Snackbar';
 
 function ProductPage() {
     const [content, setContent] = useState();
+    const [fileContent, setFileContent] = useState();
     let { id } = useParams()
     const [tab, setTab] = useState(0);
     const [openModal, setOpenModal] = useState(false);
     const [newAttributeName, setNewAttributeName] = useState();
     const [newAttributeValue, setNewAttributeValue] = useState();
-    
+    const [openStatusMessage, setOpenStatusMessage] = useState(false);
+    const [statusMessage, setStatusMessage] = useState("");
+    const [loadUpload, setLoadUpload] = useState(false);
+
+    const Input = styled('input')({
+        display: 'none',
+    });
+      
     const handleTabChange = (event, newTab) => {
         setTab(newTab);
     };
@@ -48,6 +60,38 @@ function ProductPage() {
 
     const handleCloseModal = () => {
         setOpenModal(false);
+    };
+
+    const handleCloseMessage = () => {
+        setOpenStatusMessage(false);
+    };
+
+    const handleFileUpload = (e) => {
+        console.log(e.target.files[0]);
+        const fileData = e.target.files[0];
+        if (fileData) {
+            setLoadUpload(true);
+            const data = new FormData();
+            data.append('file', fileData);
+            DocumentService.addDocument(data).then(
+                response => {
+                    setFileContent(response.data);
+                    console.log(response.data);
+                    setStatusMessage(response.data.message);
+                    setOpenStatusMessage(true);
+                    setLoadUpload(false);
+                },
+                error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    console.log(resMessage);
+                }
+            )
+        }
     };
 
     const handleAddAttribute = (e) => {
@@ -144,6 +188,17 @@ function ProductPage() {
                                 </CardContent>
                             </Card>
                         </TabPanel>
+                        <TabPanel value={tab} index={2}>
+                            <label htmlFor="contained-button-file">
+                                <Input id="contained-button-file" multiple type="file" onChange={handleFileUpload}/>
+                                <Button variant="contained" component="span">
+                                    Upload file
+                                </Button>
+                            </label>
+                            {loadUpload &&
+                                <CircularProgress />
+                            }
+                        </TabPanel>
                     </Grid>
                 </Grid>
             ) : (
@@ -168,6 +223,7 @@ function ProductPage() {
                     </form>
                 </FormControl>
             </Dialog>
+            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </Container>
     )
 }
