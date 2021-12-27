@@ -25,7 +25,11 @@ def add_product():
             "error": "Bad request",
             "message": "name not given"
         }), 400
-    new_product = Product(name=request.json["name"], brand_id=request.json["brand_id"], category_id=request.json["category_id"])
+    if "description" in request.json:
+        description = request.json["description"]
+    else:
+        description = None
+    new_product = Product(name=request.json["name"], brand_id=request.json["brand_id"], category_id=request.json["category_id"], description=description)
     new_product.save_to_db()
     return {
         "id": new_product.id,
