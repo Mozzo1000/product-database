@@ -330,7 +330,7 @@ function ProductPage() {
                                                     documentContent.map((document) => (
                                                         <TableRow key={document.name}>
                                                             {/*TODO: Remove the hardcoded api link. This is a temporary workaround because file download did not work through the proxy pass.*/}
-                                                            <TableCell component="a" href={"http://localhost:5000/v1/document/storage/" + document.name}>{document.name}</TableCell>
+                                                            <TableCell component="a" href={"http://localhost:5000/v1/document/storage/" + document.name} target="_blank">{document.name}</TableCell>
                                                             <TableCell>{document.type}</TableCell>
                                                         </TableRow>
                                                     ))
