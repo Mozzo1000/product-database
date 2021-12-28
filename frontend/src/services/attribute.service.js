@@ -31,12 +31,16 @@ const editAttribute = (attribute_id, name, value) => {
   }, { headers: authHeader() });
 };
 
+const removeAttribute = (attribute_id) => {
+  return axios.delete(API_URL + "attribute/" + attribute_id, {}, { headers: authHeader() });
+};
 
 const exportedObject = {
     getAllAttributes,
     getAttribute,
     addAttribute,
     editAttribute,
+    removeAttribute,
 };
 
 export default exportedObject;
