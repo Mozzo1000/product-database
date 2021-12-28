@@ -203,7 +203,7 @@ function ProductPage() {
                 console.log(resMessage);
             }
         )
-        DocumentService.getAllDocuments(id, "?type=image/webp").then(
+        DocumentService.getAllDocuments(id, "?type=image/").then(
             response => {
                 setImageContent(response.data);
                 console.log(response.data);
@@ -318,7 +318,7 @@ function ProductPage() {
                                 <CardHeader title={uploadFileButton()} />
                                     <CardContent>
                                         <Popover id="popover" open={openHelp} anchorEl={anchorElHelp} onClose={handleCloseHelp} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
-                                            <Typography sx={{ p: 2 }}>Uploading images with filetype ".webp" will add them as cover images.</Typography>
+                                            <Typography sx={{ p: 2 }}>Uploading images will add them as cover images.</Typography>
                                         </Popover>
                                         {loadUpload && 
                                             <CircularProgress />
