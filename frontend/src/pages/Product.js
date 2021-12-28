@@ -273,7 +273,7 @@ function ProductPage() {
                                     }
                                     <Grid item xs={6}>
                                         <Typography variant="h3">{content.name}</Typography>
-                                        <Typography variant="subtitle">{content.created_at}</Typography><br /><br />
+                                        <Typography variant="subtitle">{new Date(content.created_at).toLocaleDateString()}</Typography><br /><br />
                                         <Typography variant="body1">{content.description}</Typography>
                                     </Grid>
                                     </Grid>
