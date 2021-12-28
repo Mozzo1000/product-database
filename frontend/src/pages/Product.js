@@ -133,6 +133,9 @@ function ProductPage() {
                         error.message ||
                         error.toString();
                     console.log(resMessage);
+                    setStatusMessage(resMessage);
+                    setOpenStatusMessage(true);
+                    setLoadUpload(false);
                 }
             )
         }
