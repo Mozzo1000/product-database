@@ -73,7 +73,7 @@ class Product(db.Model):
 class ProductSchema(ma.SQLAlchemyAutoSchema):
     category = ma.Nested(CategorySchema, many=False)
     brand = ma.Nested(BrandSchema, many=False)
-    attribute = ma.List(ma.Nested(AttributeSchema(only=("name","value",))))
+    attribute = ma.List(ma.Nested(AttributeSchema(only=("id", "name","value",))))
     class Meta:
         model = Product
 
