@@ -46,12 +46,19 @@ def add_document():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
-        new_document = Document(name=filename, type=mimetypes.guess_type(filename)[0], product_id=request.form.get("product_id"))
-        new_document.save_to_db()
-        return {
-            "message": "Upload complete",
-            "name": filename
-        }, 201
+        filetype = mimetypes.guess_type(filename)[0]
+        if filetype:
+            new_document = Document(name=filename, type=filetype, product_id=request.form.get("product_id"))
+            new_document.save_to_db()
+            return {
+                "message": "Upload complete",
+                "name": filename
+            }, 201
+        else:
+            return jsonify({
+                "error": "Bad request",
+                "message": "Could not determin file type"
+            }), 400
 
 @document_endpoint.route('/v1/document/<id>', methods=["DELETE"])
 def remove_document(id):
