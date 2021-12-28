@@ -39,6 +39,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Popover from '@mui/material/Popover';
 import HelpIcon from '@mui/icons-material/Help';
+import Image from 'material-ui-image'
 
 function ProductPage() {
     const [content, setContent] = useState();
@@ -248,8 +249,7 @@ function ProductPage() {
                                             {imageContent.map((image, index) => (
                                                 <div key={image.name}>
                                                     {Math.abs(activeStep - index) <= 2 ? (
-                                                        <Box component="img" sx={{width: 560, height: 420}}
-                                                            src={"http://localhost:5000/v1/document/storage/" + image.name} alt={image.name} /> 
+                                                        <Image src={"http://localhost:5000/v1/document/storage/" + image.name} />
                                                     ): null}
                                                 </div>
                                             ))}
