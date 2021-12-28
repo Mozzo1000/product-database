@@ -57,7 +57,7 @@ def add_document():
         else:
             return jsonify({
                 "error": "Bad request",
-                "message": "Could not determin file type"
+                "message": "Could not determine file type"
             }), 400
 
 @document_endpoint.route('/v1/document/<id>', methods=["DELETE"])
