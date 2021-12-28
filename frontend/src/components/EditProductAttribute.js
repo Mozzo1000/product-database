@@ -9,11 +9,15 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import AttributeService from "../services/attribute.service";
+import Snackbar from '@mui/material/Snackbar';
 
 function EditProductAttribute(props) {
     const [openModal, setOpenModal] = useState(false);
     const [editAttributeName, setEditAttributeName] = useState(props.props.name);
     const [editAttributeValue, setEditAttributeValue] = useState(props.props.value);
+    const [openStatusMessage, setOpenStatusMessage] = useState(false);
+    const [statusMessage, setStatusMessage] = useState("");
+
     console.log(props.props);
     const handleClickOpenModal = () => {
         setOpenModal(true);
@@ -23,12 +27,17 @@ function EditProductAttribute(props) {
         setOpenModal(false);
     };
 
+    const handleCloseMessage = () => {
+        setOpenStatusMessage(false);
+    };
+
     const handleEditAttribute = (e) => {
         e.preventDefault();
         AttributeService.editAttribute(props.props.id, editAttributeName, editAttributeValue).then(
             response => {
                 setOpenModal(false);
-                console.log(response.data);
+                setStatusMessage(response.data.message + ". Please refresh the page");
+                setOpenStatusMessage(true);
             },
             error => {
                 const resMessage =
@@ -37,7 +46,8 @@ function EditProductAttribute(props) {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                setStatusMessage(resMessage);
+                setOpenStatusMessage(true);
             }
         )
     }
@@ -60,6 +70,7 @@ function EditProductAttribute(props) {
                     </form>
                 </FormControl>
             </Dialog>
+            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </div>
     )
 }
