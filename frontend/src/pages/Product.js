@@ -40,6 +40,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Popover from '@mui/material/Popover';
 import HelpIcon from '@mui/icons-material/Help';
 import Image from 'material-ui-image'
+import EditProductAttribute from '../components/EditProductAttribute';
 
 function ProductPage() {
     const [content, setContent] = useState();
@@ -302,6 +303,7 @@ function ProductPage() {
                                                         <TableRow key={attribute.name}>
                                                             <TableCell>{attribute.name}</TableCell>
                                                             <TableCell>{attribute.value}</TableCell>
+                                                            <TableCell><EditProductAttribute props={attribute} /></TableCell>
                                                         </TableRow>
                                                     ))
                                                 ) : (
