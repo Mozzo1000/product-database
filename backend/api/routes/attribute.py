@@ -3,6 +3,19 @@ from models import Attribute, AttributeSchema, db
 
 attribute_endpoint = Blueprint('attribute', __name__)
 
+@attribute_endpoint.route('/v1/attribute/edit/<id>', methods=["GET", "POST"])
+def edit_attribute(id):
+    if not "name" and "value" in request.json:
+        return jsonify({
+            "error": "Bad request",
+            "message": "name and/or value not given"
+        }), 400
+    attribute = Attribute.query.get(id)
+    attribute.name = request.json["name"]
+    attribute.value = request.json["value"]
+    attribute.save_to_db()
+    return jsonify({'message': f'Attribute with id {id} has been edited'}), 200
+
 @attribute_endpoint.route("/v1/attribute/<id>")
 def get_attribute(id):
     attribute_schema = AttributeSchema(many=False)
