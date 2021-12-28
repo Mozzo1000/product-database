@@ -41,6 +41,7 @@ import Popover from '@mui/material/Popover';
 import HelpIcon from '@mui/icons-material/Help';
 import Image from 'material-ui-image'
 import EditProductAttribute from '../components/EditProductAttribute';
+import RemoveProductAttribute from '../components/RemoveProductAttribute';
 
 function ProductPage() {
     const [content, setContent] = useState();
@@ -304,6 +305,7 @@ function ProductPage() {
                                                             <TableCell>{attribute.name}</TableCell>
                                                             <TableCell>{attribute.value}</TableCell>
                                                             <TableCell><EditProductAttribute props={attribute} /></TableCell>
+                                                            <TableCell><RemoveProductAttribute props={attribute} /></TableCell>
                                                         </TableRow>
                                                     ))
                                                 ) : (
