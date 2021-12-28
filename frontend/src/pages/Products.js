@@ -23,6 +23,7 @@ function ProductsPage() {
     const [newProductCategory, setNewProductCategory] = useState(1);
     const [newProductBrand, setNewProductBrand] = useState(1);
     const [newProductName, setNewProductName] = useState("");
+    const [newProductDescription, setNewProductDescription] = useState("");
 
     const handleClickOpenModal = () => {
         setOpenModal(true);
@@ -55,7 +56,7 @@ function ProductsPage() {
 
     const handleAddProduct = (e) => {
         e.preventDefault();
-        ProductService.addProduct(newProductName, newProductBrand, newProductCategory).then(
+        ProductService.addProduct(newProductName, newProductBrand, newProductCategory, newProductDescription).then(
             () => {
                 setOpenModal(false);
                 ProductService.getAllProducts().then(
@@ -130,7 +131,7 @@ function ProductsPage() {
                             <TextField required autofocus id="name" label="Name" margin="dense" fullWidth variant="standard" value={newProductName} onChange={e => setNewProductName(e.target.value)}/>
                             <CategorySelection selectedCategory={newProductCategory} setState={setNewProductCategory} />
                             <BrandSelection selectedBrand={newProductBrand} setState={setNewProductBrand} />
-
+                            <TextField id="description" label="Description" margin="dense" fullWidth variant="standard" value={newProductDescription} onChange={e => setNewProductDescription(e.target.value)}/>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleCloseModal}>Cancel</Button>

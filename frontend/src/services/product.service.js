@@ -11,11 +11,12 @@ const getAllProducts = (filter) => {
   }
 };
 
-const addProduct = (name, brand_id, category_id) => {
+const addProduct = (name, brand_id, category_id, description) => {
   return axios.post(API_URL + "product", {
     name,
     brand_id,
     category_id,
+    description,
   }, { headers: authHeader() });
 };
 
