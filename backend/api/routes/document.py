@@ -45,9 +45,9 @@ def add_document():
         }), 400
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
         filetype = mimetypes.guess_type(filename)[0]
         if filetype:
+            file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
             new_document = Document(name=filename, type=filetype, product_id=request.form.get("product_id"))
             new_document.save_to_db()
             return {
