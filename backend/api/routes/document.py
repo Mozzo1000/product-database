@@ -15,7 +15,7 @@ def get_document(filename):
 def get_document_by_product(id):
     document_schema = DocumentSchema(many=True)
     if request.args.get('type'):
-        document = Document.query.filter_by(product_id=id, type=request.args.get('type')).all()
+        document = Document.query.filter(Document.product_id==id, Document.type.contains(request.args.get('type'))).all()
     else:
         document = Document.query.filter_by(product_id=id).all()
     return jsonify(document_schema.dump(document))
