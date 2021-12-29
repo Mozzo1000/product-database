@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
     const pages = [
+        {name: 'Home', link: "/"},
         {name: 'Products', link: "/products"},
         {name: 'category', link: "/category"},
         {name: 'Brand', link: "/brand"},
