@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from 'react'
 import { styled } from '@mui/material/styles';
-import { useParams } from "react-router-dom";
+import { useParams, Link as RouterLink } from "react-router-dom";
 import ProductService from "../services/product.service";
 import AttributeService from "../services/attribute.service";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -42,6 +42,8 @@ import HelpIcon from '@mui/icons-material/Help';
 import Image from 'material-ui-image'
 import EditProductAttribute from '../components/EditProductAttribute';
 import RemoveProductAttribute from '../components/RemoveProductAttribute';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
 
 function ProductPage() {
     const [content, setContent] = useState();
@@ -244,35 +246,44 @@ function ProductPage() {
                         <Card>
                             <CardContent>
                                 <Grid container spacing={6}>
-                                {imageContent.length > 0 && 
                                     <Grid item xs={6}>
-                                        <>
-                                        <SwipeableViews index={activeStep} onChangeIndex={handleStepChange} enableMouseEvents>
-                                            {imageContent.map((image, index) => (
-                                                <div key={image.name}>
-                                                    {Math.abs(activeStep - index) <= 2 ? (
-                                                        <Image src={"http://localhost:5000/v1/document/storage/" + image.name} />
-                                                    ): null}
-                                                </div>
-                                            ))}
-                                            </SwipeableViews>
-                                            <MobileStepper position="static" steps={imageContent.length} activeStep={activeStep} variant="dots"
-                                                nextButton={
-                                                    <Button size="small" onClick={handleNext} disabled={activeStep === imageContent.length - 1}>
-                                                        Next
-                                                        <KeyboardArrowRight />
-                                                    </Button>
-                                                }
-                                                backButton={
-                                                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                                                        <KeyboardArrowLeft />
-                                                        Back
-                                                    </Button>
-                                                }
-                                            />
-                                            </>
+                                        <Breadcrumbs aria-label="breadcrumb">
+                                            <Link component={RouterLink} underline="hover" color="inherit" to="/">
+                                                Home
+                                            </Link>
+                                            <Link component={RouterLink} underline="hover" color="inherit" to="/products">
+                                                Products
+                                            </Link>
+                                            <Typography color="text.primary">{content.name}</Typography>
+                                        </Breadcrumbs>
+                                        {imageContent.length > 0 && 
+                                            <>
+                                            <SwipeableViews index={activeStep} onChangeIndex={handleStepChange} enableMouseEvents>
+                                                {imageContent.map((image, index) => (
+                                                    <div key={image.name}>
+                                                        {Math.abs(activeStep - index) <= 2 ? (
+                                                            <Image src={"http://localhost:5000/v1/document/storage/" + image.name} />
+                                                        ): null}
+                                                    </div>
+                                                ))}
+                                                </SwipeableViews>
+                                                <MobileStepper position="static" steps={imageContent.length} activeStep={activeStep} variant="dots"
+                                                    nextButton={
+                                                        <Button size="small" onClick={handleNext} disabled={activeStep === imageContent.length - 1}>
+                                                            Next
+                                                            <KeyboardArrowRight />
+                                                        </Button>
+                                                    }
+                                                    backButton={
+                                                        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                                                            <KeyboardArrowLeft />
+                                                            Back
+                                                        </Button>
+                                                    }
+                                                />
+                                                </>
+                                            }
                                         </Grid>
-                                    }
                                     <Grid item xs={6}>
                                         <Typography variant="h3">{content.name}</Typography>
                                         <Typography variant="subtitle">{new Date(content.created_at).toLocaleDateString()}</Typography><br /><br />
