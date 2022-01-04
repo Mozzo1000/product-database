@@ -3,6 +3,9 @@ from werkzeug.utils import secure_filename
 import os
 from models import Document, DocumentSchema, db
 import mimetypes
+import hashlib
+import platform
+from datetime import datetime
 
 document_endpoint = Blueprint('document', __name__)
 
@@ -48,7 +51,30 @@ def add_document():
         filetype = mimetypes.guess_type(filename)[0]
         if filetype:
             file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
-            new_document = Document(name=filename, type=filetype, product_id=request.form.get("product_id"))
+            file_size = os.path.getsize(os.path.abspath(os.path.join(current_app.config["UPLOAD_FOLDER"], filename)))
+
+            file_hash = hashlib.sha256() # Create the hash object, can use something other than `.sha256()` if you wish
+            with open(os.path.join(current_app.config["UPLOAD_FOLDER"], filename), 'rb') as f: # Open the file to read it's bytes
+                fb = f.read(65536) # Read from the file. Take in the amount declared above
+                while len(fb) > 0: # While there is still data being read from the file
+                    file_hash.update(fb) # Update the hash
+                    fb = f.read(65536) # Read the next block from the file
+            checksum = file_hash.hexdigest()
+
+            if platform.system() == 'Windows':
+                file_creation_date = datetime.utcfromtimestamp(os.path.getctime(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))).strftime('%Y-%m-%d')
+            else:
+                stat = os.stat(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
+                try:
+                    file_creation_date = datetime.utcfromtimestamp(stat.st_birthtime).strftime('%Y-%m-%d')
+                except AttributeError:
+                    file_creation_date = datetime.utcfromtimestamp(stat.st_mtime).strftime('%Y-%m-%d')
+
+            new_document = Document(name=filename, 
+                                    type=filetype, 
+                                    product_id=request.form.get("product_id"), 
+                                    checksum=checksum, size=file_size, 
+                                    file_created_at=file_creation_date)
             new_document.save_to_db()
             return {
                 "message": "Upload complete",
