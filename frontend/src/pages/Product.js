@@ -44,6 +44,7 @@ import EditProductAttribute from '../components/EditProductAttribute';
 import RemoveProductAttribute from '../components/RemoveProductAttribute';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
+const prettyBytes = require('pretty-bytes');
 
 function ProductPage() {
     const [content, setContent] = useState();
@@ -340,6 +341,14 @@ function ProductPage() {
                                         }
                                     <TableContainer>
                                         <Table>
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell>File</TableCell>
+                                                    <TableCell>Type</TableCell>
+                                                    <TableCell>Size</TableCell>
+                                                    <TableCell>Checksum (SHA256)</TableCell>
+                                                </TableRow>
+                                            </TableHead>
                                             <TableBody>
                                                 {documentContent.length > 0 ? (
                                                     documentContent.map((document) => (
@@ -347,6 +356,8 @@ function ProductPage() {
                                                             {/*TODO: Remove the hardcoded api link. This is a temporary workaround because file download did not work through the proxy pass.*/}
                                                             <TableCell component="a" href={"http://localhost:5000/v1/document/storage/" + document.name} target="_blank">{document.name}</TableCell>
                                                             <TableCell>{document.type}</TableCell>
+                                                            <TableCell>{prettyBytes(document.size)}</TableCell>
+                                                            <TableCell>{document.checksum}</TableCell>
                                                         </TableRow>
                                                     ))
                                                 ) : (
