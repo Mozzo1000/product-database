@@ -3,19 +3,19 @@ from models import Brand, BrandSchema, db
 
 brand_endpoint = Blueprint('brand', __name__)
 
-@brand_endpoint.route("/v1/brand/<id>")
+@brand_endpoint.route("/v1/brands/<id>")
 def get_brand(id):
     brand_schema = BrandSchema(many=False)
     brand = Brand.query.get(id)
     return jsonify(brand_schema.dump(brand))
 
-@brand_endpoint.route("/v1/brand")
+@brand_endpoint.route("/v1/brands")
 def get_brands():
     brand_schema = BrandSchema(many=True)
     brands = Brand.query.all()
     return jsonify(brand_schema.dump(brands))
 
-@brand_endpoint.route("/v1/brand", methods=["POST"])
+@brand_endpoint.route("/v1/brands", methods=["POST"])
 def add_brand():
     if not "name" in request.json:
         return jsonify({
@@ -33,7 +33,7 @@ def add_brand():
     except:
         return jsonify({'message': 'Something went wrong'}), 500
 
-@brand_endpoint.route('/v1/brand/<id>', methods=["DELETE"])
+@brand_endpoint.route('/v1/brands/<id>', methods=["DELETE"])
 def remove_brand(id):
     brand = Brand.query.get(id)
     try: 
