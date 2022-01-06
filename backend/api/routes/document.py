@@ -14,7 +14,7 @@ def get_document(filename):
     directory = os.path.join(os.getcwd(), current_app.config['UPLOAD_FOLDER'])
     return send_from_directory(directory, filename, as_attachment=False)
 
-@document_endpoint.route("/v1/document/<id>")
+@document_endpoint.route("/v1/documents/<id>")
 def get_document_by_product(id):
     document_schema = DocumentSchema(many=True)
     if request.args.get('type'):
