@@ -3,19 +3,19 @@ from models import Category, CategorySchema, db
 
 category_endpoint = Blueprint('category', __name__)
 
-@category_endpoint.route("/v1/category/<id>")
+@category_endpoint.route("/v1/categories/<id>")
 def get_category(id):
     category_schema = CategorySchema(many=False)
     category = Category.query.get(id)
     return jsonify(category_schema.dump(category))
 
-@category_endpoint.route("/v1/category")
+@category_endpoint.route("/v1/categories")
 def get_categories():
     category_schema = CategorySchema(many=True)
     categories = Category.query.all()
     return jsonify(category_schema.dump(categories))
 
-@category_endpoint.route("/v1/category", methods=["POST"])
+@category_endpoint.route("/v1/categories", methods=["POST"])
 def add_category():
     if not "name" in request.json:
         return jsonify({
@@ -33,7 +33,7 @@ def add_category():
     except:
         return jsonify({'message': 'Something went wrong'}), 500
 
-@category_endpoint.route('/v1/category/<id>', methods=["DELETE"])
+@category_endpoint.route('/v1/categories/<id>', methods=["DELETE"])
 def remove_category(id):
     category = Category.query.get(id)
     try: 
