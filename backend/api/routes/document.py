@@ -9,7 +9,7 @@ from datetime import datetime
 
 document_endpoint = Blueprint('document', __name__)
 
-@document_endpoint.route('/v1/document/storage/<path:filename>', methods=['GET'])
+@document_endpoint.route('/v1/documents/storage/<path:filename>', methods=['GET'])
 def get_document(filename):
     directory = os.path.join(os.getcwd(), current_app.config['UPLOAD_FOLDER'])
     return send_from_directory(directory, filename, as_attachment=False)
@@ -27,7 +27,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in current_app.config["ALLOWED_EXTENSIONS"]
 
-@document_endpoint.route("/v1/document", methods=["POST"])
+@document_endpoint.route("/v1/documents", methods=["POST"])
 def add_document():
     if "file" not in request.files:
         return jsonify({
@@ -86,7 +86,7 @@ def add_document():
                 "message": "Could not determine file type"
             }), 400
 
-@document_endpoint.route('/v1/document/<id>', methods=["DELETE"])
+@document_endpoint.route('/v1/documents/<id>', methods=["DELETE"])
 def remove_document(id):
     #Note, we are not removing the file from the filessytem.
     document = Document.query.get(id)
