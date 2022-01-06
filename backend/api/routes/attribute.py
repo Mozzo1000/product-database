@@ -3,7 +3,7 @@ from models import Attribute, AttributeSchema, db
 
 attribute_endpoint = Blueprint('attribute', __name__)
 
-@attribute_endpoint.route('/v1/attribute/edit/<id>', methods=["GET", "POST"])
+@attribute_endpoint.route('/v1/attributes/edit/<id>', methods=["GET", "POST"])
 def edit_attribute(id):
     if not "name" and "value" in request.json:
         return jsonify({
@@ -16,19 +16,19 @@ def edit_attribute(id):
     attribute.save_to_db()
     return jsonify({'message': f'Attribute with id {id} has been edited'}), 200
 
-@attribute_endpoint.route("/v1/attribute/<id>")
+@attribute_endpoint.route("/v1/attributes/<id>")
 def get_attribute(id):
     attribute_schema = AttributeSchema(many=False)
     attribute = Attribute.query.get(id)
     return jsonify(attribute_schema.dump(attribute))
 
-@attribute_endpoint.route("/v1/attribute")
+@attribute_endpoint.route("/v1/attributes")
 def get_attributes():
     attribute_schema = AttributeSchema(many=True)
     attributes = Attribute.query.all()
     return jsonify(attribute_schema.dump(attributes))
 
-@attribute_endpoint.route("/v1/attribute", methods=["POST"])
+@attribute_endpoint.route("/v1/attributes", methods=["POST"])
 def add_attribute():
     if not "name" in request.json:
         return jsonify({
@@ -45,7 +45,7 @@ def add_attribute():
         "created_at": new_attribute.created_at
     }, 201
 
-@attribute_endpoint.route('/v1/attribute/<id>', methods=["DELETE"])
+@attribute_endpoint.route('/v1/attributes/<id>', methods=["DELETE"])
 def remove_attribute(id):
     attribute = Attribute.query.get(id)
     try: 
