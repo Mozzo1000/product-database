@@ -25,7 +25,7 @@ const getAttribute = (attribute_id) => {
 };
 
 const editAttribute = (attribute_id, name, value) => {
-  return axios.post(API_URL + "attributes/edit/" + attribute_id, {
+  return axios.put(API_URL + "attributes/" + attribute_id, {
     name,
     value,
   }, { headers: authHeader() });
