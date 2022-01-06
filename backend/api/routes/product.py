@@ -3,13 +3,13 @@ from models import Product, ProductSchema, db
 
 product_endpoint = Blueprint('product', __name__)
 
-@product_endpoint.route("/v1/product/<id>")
+@product_endpoint.route("/v1/products/<id>")
 def get_product(id):
     product_schema = ProductSchema(many=False)
     product = Product.query.get(id)
     return jsonify(product_schema.dump(product))
 
-@product_endpoint.route("/v1/product")
+@product_endpoint.route("/v1/products")
 def get_products():
     product_schema = ProductSchema(many=True)
     if request.args.get('category'):
@@ -18,7 +18,7 @@ def get_products():
         products = Product.query.all()
     return jsonify(product_schema.dump(products))
 
-@product_endpoint.route("/v1/product", methods=["POST"])
+@product_endpoint.route("/v1/products", methods=["POST"])
 def add_product():
     if not "name" in request.json:
         return jsonify({
@@ -39,7 +39,7 @@ def add_product():
         "created_at": new_product.created_at
     }, 201
 
-@product_endpoint.route('/v1/product/<id>', methods=["DELETE"])
+@product_endpoint.route('/v1/products/<id>', methods=["DELETE"])
 def remove_product(id):
     product = Product.query.get(id)
     try: 
