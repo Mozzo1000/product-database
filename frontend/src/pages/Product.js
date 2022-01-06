@@ -263,7 +263,7 @@ function ProductPage() {
                                                 {imageContent.map((image, index) => (
                                                     <div key={image.name}>
                                                         {Math.abs(activeStep - index) <= 2 ? (
-                                                            <Image src={"http://localhost:5000/v1/document/storage/" + image.name} />
+                                                            <Image src={"http://localhost:5000/v1/documents/storage/" + image.name} />
                                                         ): null}
                                                     </div>
                                                 ))}

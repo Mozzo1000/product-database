@@ -5,14 +5,14 @@ const API_URL = "/v1/";
 
 const getAllProducts = (filter) => {
   if(!filter) {
-    return axios.get(API_URL + "product", { headers: authHeader() });
+    return axios.get(API_URL + "products", { headers: authHeader() });
   } else {
-    return axios.get(API_URL + "product" + filter, { headers: authHeader() });
+    return axios.get(API_URL + "products" + filter, { headers: authHeader() });
   }
 };
 
 const addProduct = (name, brand_id, category_id, description) => {
-  return axios.post(API_URL + "product", {
+  return axios.post(API_URL + "products", {
     name,
     brand_id,
     category_id,
@@ -22,7 +22,7 @@ const addProduct = (name, brand_id, category_id, description) => {
 
 
 const getProduct = (product_id) => {
-  return axios.get(API_URL + "product/" + product_id, {}, { headers: authHeader() });
+  return axios.get(API_URL + "products/" + product_id, {}, { headers: authHeader() });
 };
 
 

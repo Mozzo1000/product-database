@@ -5,14 +5,14 @@ const API_URL = "/v1/";
 
 const getAllDocuments = (product_id, filter) => {
   if(!filter) {
-    return axios.get(API_URL + "document/" + product_id,  { headers: authHeader() });
+    return axios.get(API_URL + "documents/" + product_id,  { headers: authHeader() });
   } else {
-    return axios.get(API_URL + "document/" + product_id + filter,  { headers: authHeader() });
+    return axios.get(API_URL + "documents/" + product_id + filter,  { headers: authHeader() });
   }
 };
 
 const addDocument = (data) => {
-  return axios.post(API_URL + "document", data, {
+  return axios.post(API_URL + "documents", data, {
   }, { headers: authHeader() });
 };
 
