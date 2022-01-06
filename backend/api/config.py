@@ -9,3 +9,4 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     UPLOAD_FOLDER = 'documents'
     ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'webp'}
+    SWAGGER = {'specs_route': '/docs'}

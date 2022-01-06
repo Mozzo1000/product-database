@@ -1,5 +1,6 @@
 from flask import Flask, url_for
 from flask_migrate import Migrate
+from flasgger import Swagger
 import config
 from models import db, ma
 from routes.brand import brand_endpoint
@@ -8,11 +9,21 @@ from routes.product import product_endpoint
 from routes.attribute import attribute_endpoint
 from routes.document import document_endpoint
 
+swagger_template = {
+  "swagger": "2.0",
+  "info": {
+    "title": "product-database API",
+    "description": "",
+    "version": "1.0.0"
+  },
+}
+
 app = Flask(__name__)
 app.config.from_object(config.Config)
 db.init_app(app)
 ma.init_app(app)
 migrate = Migrate(app, db)
+swagger = Swagger(app, template=swagger_template)
 
 app.register_blueprint(brand_endpoint)
 app.register_blueprint(category_endpoint)
