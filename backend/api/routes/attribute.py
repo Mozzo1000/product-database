@@ -3,7 +3,7 @@ from models import Attribute, AttributeSchema, db
 
 attribute_endpoint = Blueprint('attribute', __name__)
 
-@attribute_endpoint.route('/v1/attributes/edit/<id>', methods=["GET", "POST"])
+@attribute_endpoint.route('/v1/attributes/<id>', methods=["PUT"])
 def edit_attribute(id):
     if not "name" and "value" in request.json:
         return jsonify({
