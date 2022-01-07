@@ -24,7 +24,7 @@ function ProductsPage() {
     const [newProductBrand, setNewProductBrand] = useState(1);
     const [newProductName, setNewProductName] = useState("");
     const [newProductDescription, setNewProductDescription] = useState("");
-
+    document.title = "Products - product-database"
     const handleClickOpenModal = () => {
         setOpenModal(true);
     };

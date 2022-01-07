@@ -183,6 +183,7 @@ function ProductPage() {
         ProductService.getProduct(id).then(
             response => {
                 setContent(response.data);
+                document.title = response.data.name + " - product-database"
             },
             error => {
                 const resMessage =
