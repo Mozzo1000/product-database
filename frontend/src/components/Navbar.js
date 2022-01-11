@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
     let navigate = useNavigate();
+    const currentUser = AuthService.getCurrentUser()
 
     const pages = [
         {name: 'Home', link: "/"},
@@ -56,6 +57,7 @@ function Navbar() {
 
     return (
         <AppBar position="static">
+            { currentUser &&
             <Container maxWidth="x1">
                 <Toolbar disableGutters>
                     <Typography variant="h6" noWrap component="div" sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}>
@@ -133,6 +135,7 @@ function Navbar() {
 
                 </Toolbar>
             </Container>
+            }
         </AppBar>
     )
 }
