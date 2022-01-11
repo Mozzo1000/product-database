@@ -12,8 +12,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Tooltip } from '@mui/material';
 import { Link } from "react-router-dom";
+import AuthService from '../services/auth.service';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
+    let navigate = useNavigate();
+
     const pages = [
         {name: 'Home', link: "/"},
         {name: 'Products', link: "/products"},
@@ -21,7 +25,7 @@ function Navbar() {
         {name: 'Brand', link: "/brand"},
     ];
     const settings = [
-        {name: 'Logout', link: "/logout"},
+        {name: 'Logout', action: "logout"},
     ];
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -40,6 +44,14 @@ function Navbar() {
   
     const handleCloseUserMenu = () => {
       setAnchorElUser(null);
+    };
+
+    const handleSettingsItemClick = (e) => {
+        console.log(e);
+        if(e == "logout") {
+            AuthService.logout();
+            navigate("/login");
+        }
     };
 
     return (
@@ -113,7 +125,7 @@ function Navbar() {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting.name}</Typography>
+                                    <Button onClick={() => handleSettingsItemClick(setting.action)} textAlign="center">{setting.name}</Button>
                                 </MenuItem>
                             ))}
                         </Menu>
