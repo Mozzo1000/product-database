@@ -10,3 +10,4 @@ class Config(object):
     UPLOAD_FOLDER = 'documents'
     ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'webp'}
     SWAGGER = {'specs_route': '/docs'}
+    JWT_ACCESS_TOKEN_EXPIRES = False # for development purposes
