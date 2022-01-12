@@ -26,7 +26,7 @@ function Navbar() {
         {name: 'Brand', link: "/brand"},
     ];
     const settings = [
-        {name: 'Logout', action: "logout"},
+        {name: 'Sign out', action: "logout"},
     ];
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
