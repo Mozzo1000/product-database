@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Particles from "react-tsparticles";
 
 function LoginPage(props) {
+    document.title = "Login - product-database";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [openStatusMessage, setOpenStatusMessage] = useState(false);
