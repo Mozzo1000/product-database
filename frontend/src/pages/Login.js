@@ -126,7 +126,7 @@ function LoginPage(props) {
                     <Grid container direction="column" justifyContent="center" spacing={2} className="login-form">
                         <Paper variant="elevation" elevation={2} className="login-background">
                             <Grid item>
-                                <Typography component="h1" variant="h5">Login</Typography><br />
+                                <Typography component="h1" variant="h5">Sign in to your account</Typography><br />
                             </Grid>
                             <Grid item>
                                 <form onSubmit={handleLogin}>
@@ -138,7 +138,7 @@ function LoginPage(props) {
                                             <TextField type="password" label="Password" fullWidth required name="password" variant="outlined" value={password} onChange={e => setPassword(e.target.value)} />
                                         </Grid>
                                         <Grid item>
-                                            <Button variant="contained" color="primary" type="submit" fullWidth>Login</Button>
+                                            <Button variant="contained" color="primary" type="submit" fullWidth>Sign In</Button>
                                         </Grid>
                                     </Grid>
                                 </form>
