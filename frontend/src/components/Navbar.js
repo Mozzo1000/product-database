@@ -14,6 +14,7 @@ import { Tooltip } from '@mui/material';
 import { Link } from "react-router-dom";
 import AuthService from '../services/auth.service';
 import { useNavigate } from 'react-router-dom';
+import Divider from '@mui/material/Divider';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -125,6 +126,10 @@ function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
+                            <MenuItem>
+                                <Avatar /> {currentUser["name"]}
+                            </MenuItem>
+                            <Divider />
                             {settings.map((setting) => (
                                 <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
                                     <Button onClick={() => handleSettingsItemClick(setting.action)} textAlign="center">{setting.name}</Button>
