@@ -9,6 +9,7 @@ import CategoryPage from './pages/Category';
 import ProductPage from './pages/Product';
 import LoginPage from './pages/Login';
 import AuthService from './services/auth.service';
+import Box from '@mui/material/Box';
 
 function PrivateRoute({ children }) {
   const auth = AuthService.getCurrentUser()
@@ -20,16 +21,18 @@ function App() {
     <div className="App">
       <Router>
         <Navbar />
-        <Routes>
-          <Route index element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
-          <Route path="/products" element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
-          <Route path="/category" element={<PrivateRoute><CategoriesPage/></PrivateRoute>} />
-          <Route path="/brand" element={<PrivateRoute><Brandspage/></PrivateRoute>} />
-          <Route path="/brand/:id" element={<PrivateRoute><BrandPage/></PrivateRoute>} />
-          <Route path="/category/:id" element={<PrivateRoute><CategoryPage/></PrivateRoute>} />
-          <Route path="/product/:id" element={<PrivateRoute><ProductPage/></PrivateRoute>} />
-          <Route path="/login" element={<LoginPage/>} />
-        </Routes>
+        <Box sx={{backgroundColor: "#f9fafc", flexGrow: 1, p: 3, height: "92vh", paddingLeft: { md: "240px", sm: "0px" } }}>
+          <Routes>
+            <Route index element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
+            <Route path="/products" element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
+            <Route path="/category" element={<PrivateRoute><CategoriesPage/></PrivateRoute>} />
+            <Route path="/brand" element={<PrivateRoute><Brandspage/></PrivateRoute>} />
+            <Route path="/brand/:id" element={<PrivateRoute><BrandPage/></PrivateRoute>} />
+            <Route path="/category/:id" element={<PrivateRoute><CategoryPage/></PrivateRoute>} />
+            <Route path="/product/:id" element={<PrivateRoute><ProductPage/></PrivateRoute>} />
+            <Route path="/login" element={<LoginPage/>} />
+          </Routes>
+        </Box>
       </Router>
     </div>
   );
