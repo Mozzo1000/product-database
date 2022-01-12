@@ -21,6 +21,9 @@ function App() {
     <div className="App">
       <Router>
         <Navbar />
+        <Routes>
+          <Route path="/login" element={<LoginPage/>} />
+        </Routes>
         <Box sx={{backgroundColor: "#f9fafc", flexGrow: 1, p: 3, paddingLeft: { md: "240px", sm: "0px" } }}>
           <Routes>
             <Route index element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
@@ -30,7 +33,6 @@ function App() {
             <Route path="/brand/:id" element={<PrivateRoute><BrandPage/></PrivateRoute>} />
             <Route path="/category/:id" element={<PrivateRoute><CategoryPage/></PrivateRoute>} />
             <Route path="/product/:id" element={<PrivateRoute><ProductPage/></PrivateRoute>} />
-            <Route path="/login" element={<LoginPage/>} />
           </Routes>
         </Box>
       </Router>
