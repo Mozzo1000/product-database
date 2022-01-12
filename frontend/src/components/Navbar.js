@@ -23,6 +23,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CssBaseline from '@mui/material/CssBaseline';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -61,12 +62,14 @@ function Navbar() {
             AuthService.logout();
             navigate("/login");
         }
+        handleCloseUserMenu();
     };
 
     return (
+        <>
+        { currentUser &&
         <Box sx={{display: 'flex'}}>
             <AppBar position="static" sx={{zIndex: 2}}>
-                { currentUser &&
                 <Container maxWidth="x1">
                     <Toolbar disableGutters>
                         <Typography variant="h6" noWrap component="div" sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}>
@@ -142,7 +145,6 @@ function Navbar() {
                     </Toolbar>
                     
                 </Container>
-                }
             </AppBar>
             <Drawer variant="permanent" sx={{zIndex: 1, width: 240, flexShrink: 0, [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' }, mr: 2, display: {xs: 'none', md: 'flex'}}}>
                 <Toolbar />
@@ -160,6 +162,8 @@ function Navbar() {
                 </Box>
             </Drawer>
         </Box>
+        }
+        </>
     )
 }
 
