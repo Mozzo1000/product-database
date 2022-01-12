@@ -24,7 +24,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage/>} />
         </Routes>
-        <Box sx={{flexGrow: 1, p: 3, paddingLeft: { md: "240px", sm: "0px" } }}>
+        <Box sx={{flexGrow: 1, p: 3, paddingTop: "80px", paddingLeft: { md: "240px", sm: "0px" } }}>
           <Routes>
             <Route index element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
             <Route path="/products" element={<PrivateRoute><ProductsPage/></PrivateRoute>} />

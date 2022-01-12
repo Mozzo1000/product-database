@@ -69,7 +69,7 @@ function Navbar() {
         <>
         { currentUser &&
         <Box sx={{display: 'flex'}}>
-            <AppBar position="sticky" sx={{zIndex: 2}}>
+            <AppBar position="fixed" sx={{zIndex: 2}}>
                 <Container maxWidth="x1">
                     <Toolbar disableGutters>
                         <Typography variant="h6" noWrap component="div" sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}>
