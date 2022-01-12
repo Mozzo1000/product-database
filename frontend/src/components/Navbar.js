@@ -22,6 +22,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -33,7 +34,7 @@ function Navbar() {
         {name: 'Brand', link: "/brand", icon: <PrecisionManufacturingIcon />},
     ];
     const settings = [
-        {name: 'Sign out', action: "logout"},
+        {name: 'Sign out', action: "logout", icon: <LogoutIcon />},
     ];
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -131,8 +132,9 @@ function Navbar() {
                                 </MenuItem>
                                 <Divider />
                                 {settings.map((setting) => (
-                                    <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                                        <Button onClick={() => handleSettingsItemClick(setting.action)} textAlign="center">{setting.name}</Button>
+                                    <MenuItem key={setting.name} onClick={() => handleSettingsItemClick(setting.action)}>
+                                        <ListItemIcon>{setting.icon}</ListItemIcon>
+                                        <ListItemText primary={setting.name}/>
                                     </MenuItem>
                                 ))}
                             </Menu>
