@@ -250,9 +250,6 @@ function ProductPage() {
                                 <Grid container spacing={6}>
                                     <Grid item xs={6}>
                                         <Breadcrumbs aria-label="breadcrumb">
-                                            <Link component={RouterLink} underline="hover" color="inherit" to="/">
-                                                Home
-                                            </Link>
                                             <Link component={RouterLink} underline="hover" color="inherit" to="/products">
                                                 Products
                                             </Link>
