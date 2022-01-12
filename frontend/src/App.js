@@ -21,7 +21,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route index element={<PrivateRoute><h1>product-database</h1></PrivateRoute>} />
+          <Route index element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
           <Route path="/products" element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
           <Route path="/category" element={<PrivateRoute><CategoriesPage/></PrivateRoute>} />
           <Route path="/brand" element={<PrivateRoute><Brandspage/></PrivateRoute>} />
