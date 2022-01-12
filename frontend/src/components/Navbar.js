@@ -18,16 +18,19 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import HomeIcon from '@mui/icons-material/Home';
+import CategoryIcon from '@mui/icons-material/Category';
+import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 
 function Navbar() {
     let navigate = useNavigate();
     const currentUser = AuthService.getCurrentUser()
 
     const pages = [
-        {name: 'Home', link: "/"},
-        {name: 'Products', link: "/products"},
-        {name: 'category', link: "/category"},
-        {name: 'Brand', link: "/brand"},
+        {name: 'Products', link: "/products", icon: <HomeIcon />},
+        {name: 'Category', link: "/category", icon: <CategoryIcon />},
+        {name: 'Brand', link: "/brand", icon: <PrecisionManufacturingIcon />},
     ];
     const settings = [
         {name: 'Sign out', action: "logout"},
@@ -145,6 +148,9 @@ function Navbar() {
                     <List>
                         {pages.map((page) => (
                             <ListItem button key={page.name} component={Link} to={page.link}>
+                                <ListItemIcon>
+                                    {page.icon}
+                                </ListItemIcon>
                                 <ListItemText primary={page.name}/>
                             </ListItem>
                         ))}
