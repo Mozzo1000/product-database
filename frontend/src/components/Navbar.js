@@ -69,7 +69,7 @@ function Navbar() {
         <>
         { currentUser &&
         <Box sx={{display: 'flex'}}>
-            <AppBar position="static" sx={{zIndex: 2}}>
+            <AppBar position="sticky" sx={{zIndex: 2}}>
                 <Container maxWidth="x1">
                     <Toolbar disableGutters>
                         <Typography variant="h6" noWrap component="div" sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}>
@@ -146,7 +146,7 @@ function Navbar() {
                     
                 </Container>
             </AppBar>
-            <Drawer variant="permanent" sx={{zIndex: 1, width: 240, flexShrink: 0, [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' }, mr: 2, display: {xs: 'none', md: 'flex'}}}>
+            <Drawer variant="permanent" sx={{zIndex: 1, flexShrink: 0, [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' }, mr: 2, display: {xs: 'none', md: 'flex'}}}>
                 <Toolbar />
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
