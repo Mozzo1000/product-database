@@ -132,10 +132,10 @@ function LoginPage(props) {
                                 <form onSubmit={handleLogin}>
                                     <Grid container direction="column" spacing={2}>
                                         <Grid item>
-                                            <TextField type="email" placeholder="Email" fullWidth required autoFocus name="username" variant="outlined" value={username} onChange={e => setUsername(e.target.value)} />
+                                            <TextField type="email" label="Email" fullWidth required autoFocus name="username" variant="outlined" value={username} onChange={e => setUsername(e.target.value)} />
                                         </Grid>
                                         <Grid item>
-                                            <TextField type="password" placeholder="Password" fullWidth required name="password" variant="outlined" value={password} onChange={e => setPassword(e.target.value)} />
+                                            <TextField type="password" label="Password" fullWidth required name="password" variant="outlined" value={password} onChange={e => setPassword(e.target.value)} />
                                         </Grid>
                                         <Grid item>
                                             <Button variant="contained" color="primary" type="submit" fullWidth>Login</Button>
