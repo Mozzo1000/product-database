@@ -264,7 +264,7 @@ function ProductPage() {
                         <Card>
                             <CardContent>
                                 <Grid container spacing={6}>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12} md={6}>
                                         <Breadcrumbs aria-label="breadcrumb">
                                             <Link component={RouterLink} underline="hover" color="inherit" to="/products">
                                                 Products
@@ -299,7 +299,7 @@ function ProductPage() {
                                                 </>
                                             }
                                         </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12} md={6}>
                                         <Typography variant="h3">{content.name}</Typography>
                                         <Typography variant="subtitle">{new Date(content.created_at).toLocaleDateString()}</Typography><br /><br />
                                         <Typography variant="body1">{content.description}</Typography>
