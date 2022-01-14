@@ -16,10 +16,15 @@ const addDocument = (data) => {
   }, { headers: authHeader() });
 };
 
+const removeDocument = (document_id) => {
+  return axios.delete(API_URL + "documents/" + document_id, {}, { headers: authHeader() });
+};
+
 
 const exportedObject = {
     addDocument,
     getAllDocuments,
+    removeDocument,
 };
 
 export default exportedObject;
