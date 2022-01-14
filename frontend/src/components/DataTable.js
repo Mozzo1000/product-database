@@ -20,6 +20,7 @@ function DataTable(props) {
                         components={{
                             Toolbar: props.toolbar,
                         }}
+                        density="comfortable"
                     />
                 ) : (
                     <CircularProgress />
