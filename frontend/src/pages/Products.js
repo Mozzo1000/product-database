@@ -18,6 +18,7 @@ import BrandSelection from '../components/BrandSelection'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import Typography from '@mui/material/Typography';
 import LinkMUI from '@mui/material/Link';
+import Image from 'material-ui-image'
 
 function ProductsPage() {
     const [content, setContent] = useState();
@@ -41,7 +42,7 @@ function ProductsPage() {
             renderCell: (params) => {
                 if (params.row.cover_image) {
                     // Hard code api server address until fix is found for opening image and redirect to api storage endpoint correctly.
-                    return <img src={"http://localhost:5000/v1/documents/storage/" + params.row.cover_image} width="100%" height="100%" style={{objectFit: "contain"}}/>
+                    return <Image src={"http://localhost:5000/v1/documents/storage/" + params.row.cover_image} style={{width: "100%", height: "100%", objectFit: "contain"}}/>
                 } else {
                     return <InsertPhotoIcon fontSize="large" sx={{margin: "auto"}} />
                 }
