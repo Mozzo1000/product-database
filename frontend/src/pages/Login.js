@@ -58,7 +58,7 @@ function LoginPage(props) {
                     events: {
                         onHover: {
                             enable: true,
-                            mode: "repulse",
+                            mode: "bubble",
                         },
                         resize: true,
                     },
@@ -67,7 +67,7 @@ function LoginPage(props) {
                             distance: 400,
                             duration: 2,
                             opacity: 0.8,
-                            size: 40,
+                            size: 10,
                         },
                         push: {
                         quantity: 4,
