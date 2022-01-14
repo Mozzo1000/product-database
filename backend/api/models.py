@@ -75,6 +75,13 @@ class ProductSchema(ma.SQLAlchemyAutoSchema):
     category = ma.Nested(CategorySchema, many=False)
     brand = ma.Nested(BrandSchema, many=False)
     attribute = ma.List(ma.Nested(AttributeSchema(only=("id", "name","value",))))
+
+    cover_image = ma.Method("get_cover_image")
+
+    def get_cover_image(self, obj):
+        query = Document.query.filter(Document.product_id==obj.id, Document.type.contains("image/")).first()
+        return query.name
+
     class Meta:
         model = Product
 
