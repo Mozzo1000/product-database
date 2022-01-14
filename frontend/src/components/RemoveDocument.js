@@ -12,11 +12,16 @@ import Snackbar from '@mui/material/Snackbar';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
 
 function RemoveDocument(props) {
     const [openModal, setOpenModal] = useState(false);
     const [openStatusMessage, setOpenStatusMessage] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
+    const [anchorElDocMore, setAnchorElDocMore] = React.useState(null);
+    const openDocMore = Boolean(anchorElDocMore);
 
     const handleClickOpenModal = () => {
         setOpenModal(true);
@@ -28,6 +33,14 @@ function RemoveDocument(props) {
 
     const handleCloseMessage = () => {
         setOpenStatusMessage(false);
+    };
+
+    const handleClickDocMore = (event) => {
+        setAnchorElDocMore(event.currentTarget);
+    };
+    
+    const handleCloseDocMore = () => {
+        setAnchorElDocMore(null);
     };
 
     const handleRemoveAttribute = (e) => {
@@ -52,11 +65,15 @@ function RemoveDocument(props) {
     }
 
     return (
-        <>  
-            <MenuItem onClick={handleClickOpenModal}>
-                <ListItemIcon ><DeleteIcon /></ListItemIcon>
-                <ListItemText primary="Delete" />
-            </MenuItem>
+        <>
+            <IconButton id={"morebtn-" + document.id} aria-controls={openDocMore ? 'more-menu' : undefined} aria-haspopup="true" aria-expanded={openDocMore ? 'true' : undefined} onClick={handleClickDocMore}><MoreVertIcon /></IconButton>
+            <Menu id={"moremore-" + document.id} anchorEl={anchorElDocMore} open={openDocMore} onClose={handleCloseDocMore} MenuListProps={{'aria-labelledby': 'basic-button',}}>
+                <MenuItem onClick={handleClickOpenModal}>
+                    <ListItemIcon ><DeleteIcon /></ListItemIcon>
+                    <ListItemText primary="Delete" />
+                </MenuItem>
+            </Menu>  
+
             <Dialog open={openModal} onClose={handleCloseModal}>
                 <DialogTitle>Are you sure?</DialogTitle>
                 <DialogContent>

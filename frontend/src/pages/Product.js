@@ -44,9 +44,6 @@ import EditProductAttribute from '../components/EditProductAttribute';
 import RemoveProductAttribute from '../components/RemoveProductAttribute';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
 import RemoveDocument from '../components/RemoveDocument';
 
 const prettyBytes = require('pretty-bytes');
@@ -65,9 +62,7 @@ function ProductPage() {
     const [imageContent, setImageContent] = useState([]);
     const [activeStep, setActiveStep] = React.useState(0);
     const [anchorElHelp, setAnchorElHelp] = React.useState(null);
-    const [anchorElDocMore, setAnchorElDocMore] = React.useState(null);
     const openHelp = Boolean(anchorElHelp);
-    const openDocMore = Boolean(anchorElDocMore);
 
     const handleClickHelp = (event) => {
         setAnchorElHelp(event.currentTarget);
@@ -76,15 +71,6 @@ function ProductPage() {
       const handleCloseHelp = () => {
         setAnchorElHelp(null);
     };
-
-    const handleClickDocMore = (event) => {
-        setAnchorElDocMore(event.currentTarget);
-    };
-    
-    const handleCloseDocMore = () => {
-        setAnchorElDocMore(null);
-    };
-
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -361,6 +347,7 @@ function ProductPage() {
                                                     <TableCell>Type</TableCell>
                                                     <TableCell>Size</TableCell>
                                                     <TableCell>Checksum (SHA256)</TableCell>
+                                                    <TableCell>More</TableCell>
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
@@ -377,10 +364,7 @@ function ProductPage() {
                                                             )}
                                                             <TableCell>{document.checksum}</TableCell>
                                                             <TableCell>
-                                                                <IconButton id={"morebtn-" + document.id} aria-controls={openDocMore ? 'more-menu' : undefined} aria-haspopup="true" aria-expanded={openDocMore ? 'true' : undefined} onClick={handleClickDocMore}><MoreVertIcon /></IconButton>
-                                                                <Menu id={"moremore-" + document.id} anchorEl={anchorElDocMore} open={openDocMore} onClose={handleCloseDocMore} MenuListProps={{'aria-labelledby': 'basic-button',}}>
-                                                                    <RemoveDocument props={document} />
-                                                                </Menu>
+                                                                <RemoveDocument props={document} />
                                                             </TableCell>
                                                         </TableRow>
                                                     ))
