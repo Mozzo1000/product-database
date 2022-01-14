@@ -16,6 +16,8 @@ import { GridToolbarContainer, GridToolbarExport, gridClasses, GridToolbarColumn
 import CategorySelection from '../components/CategorySelection'
 import BrandSelection from '../components/BrandSelection'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import Typography from '@mui/material/Typography';
+import LinkMUI from '@mui/material/Link';
 
 function ProductsPage() {
     const [content, setContent] = useState();
@@ -35,7 +37,7 @@ function ProductsPage() {
     };
     const columns = [
         {field: "id", headerName: "ID", hide: true},
-        {field: "image", headerName: "",
+        {field: "Image", headerName: "",
             renderCell: (params) => {
                 if (params.row.cover_image) {
                     // Hard code api server address until fix is found for opening image and redirect to api storage endpoint correctly.
@@ -45,9 +47,9 @@ function ProductsPage() {
                 }
             }
         },
-        {field: "name", headerName: "Name",
+        {field: "name", headerName: "Name", width: 300,
             renderCell: (params) => {
-                return <Link to={"/product/" + params.row.id}>{params.value}</Link>
+                return <div><Typography><LinkMUI underline="hover" component={Link} to={"/product/" + params.row.id}>{params.value}</LinkMUI></Typography><Typography>{params.row.description}</Typography></div>
             }
         },
         {
