@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import { useParams, Link as RouterLink } from "react-router-dom";
 import ProductService from "../services/product.service";
 import AttributeService from "../services/attribute.service";
+import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -380,7 +381,7 @@ function ProductPage() {
                     </Grid>
                 </Grid>
             ) : (
-                <CircularProgress />
+                <LinearProgress />
             )}
             <Dialog open={openModal} onClose={handleCloseModal}>
                 <DialogTitle>Add new attribute</DialogTitle>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { DataGrid, GridToolbarContainer, GridToolbarExport, gridClasses, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarDensitySelector} from '@mui/x-data-grid';
-import CircularProgress from '@mui/material/CircularProgress';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function DataTable(props) {
     //Props needed: content, columns, pageSize, toolbar
@@ -23,7 +23,7 @@ function DataTable(props) {
                         density="comfortable"
                     />
                 ) : (
-                    <CircularProgress />
+                    <LinearProgress />
                 )}
             </div>
         </div>
