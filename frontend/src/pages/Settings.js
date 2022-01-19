@@ -35,7 +35,7 @@ function SettingsPage() {
     };
 
     const handleSaveSettings = () => {
-        UserService.editMe(name, email).then(
+        UserService.editMe({name, email}).then(
             response => {
                 setStatusMessage(response.data.message);
                 setOpenStatusMessage(true);

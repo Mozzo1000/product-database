@@ -8,11 +8,8 @@ const getMe = () => {
   return axios.get(API_URL + "users/me", { headers: authHeader() });
 };
 
-const editMe = (name, email) => {
-  return axios.put(API_URL + "users/me", {
-    name,
-    email,
-  }, { headers: authHeader() });
+const editMe = (data) => {
+  return axios.patch(API_URL + "users/me", data, { headers: authHeader() });
 };
 
 const exportedObject = {
