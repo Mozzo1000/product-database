@@ -130,7 +130,7 @@ function Navbar() {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                <MenuItem>
+                                <MenuItem component={Link} to="/settings">
                                     <Avatar /> {currentUser["name"]}
                                 </MenuItem>
                                 <Divider />
