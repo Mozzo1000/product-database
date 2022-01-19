@@ -35,9 +35,24 @@ function SettingsPage() {
     };
 
     const handleSaveSettings = () => {
-        setStatusMessage("Settings saved!")
-        setOpenStatusMessage(true);
-        setSaveButtonDisabled(true);
+        UserService.editMe(name, email).then(
+            response => {
+                setStatusMessage(response.data.message);
+                setOpenStatusMessage(true);
+                setSaveButtonDisabled(true);
+            },
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log(resMessage);
+                setStatusMessage(resMessage);
+                setOpenStatusMessage(true);
+            }
+        )
     };
 
     useEffect(() => {
