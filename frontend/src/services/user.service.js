@@ -8,8 +8,16 @@ const getMe = () => {
   return axios.get(API_URL + "users/me", { headers: authHeader() });
 };
 
+const editMe = (name, email) => {
+  return axios.put(API_URL + "users/me", {
+    name,
+    email,
+  }, { headers: authHeader() });
+};
+
 const exportedObject = {
     getMe,
+    editMe,
 };
 
 export default exportedObject;
