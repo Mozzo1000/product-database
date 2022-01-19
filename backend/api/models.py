@@ -132,11 +132,10 @@ class User(db.Model):
         return check_password_hash(hash, password)
 
 class UserSchema(ma.SQLAlchemyAutoSchema):
-    email = ma.auto_field()
-    name = ma.auto_field()
-
     class Meta:
         model = User
+        fields = ("name", "email")
+
 
 class RevokedTokenModel(db.Model):
     __tablename__ = 'revoked_tokens'
