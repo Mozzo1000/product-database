@@ -19,10 +19,12 @@ import UserService from '../services/user.service'
 function SettingsPage() {
     const [name, setName] = useState();
     const [email, setEmail] = useState();
+    const [newPassword, setNewPassword] = useState();
     const [tab, setTab] = useState(0);
     const [openStatusMessage, setOpenStatusMessage] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
+    const [savePasswordButtonDisabled, setSavePasswordButtonDisabled] = useState(true);
 
     document.title = "Settings - product-database"
 
@@ -33,6 +35,27 @@ function SettingsPage() {
     const handleCloseMessage = () => {
         setOpenStatusMessage(false);
     };
+
+    const handleSavePasswordSettings = () => {
+        UserService.editMe({'password': newPassword}).then(
+            response => {
+                setStatusMessage(response.data.message);
+                setOpenStatusMessage(true);
+                setSaveButtonDisabled(true);
+            },
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log(resMessage);
+                setStatusMessage(resMessage);
+                setOpenStatusMessage(true);
+            }
+        )
+    }
 
     const handleSaveSettings = () => {
         UserService.editMe({name, email}).then(
@@ -115,16 +138,13 @@ function SettingsPage() {
                             <CardContent>
                                 <Grid container spacing={3} direction="column">
                                     <Grid item>
-                                        <TextField fullWidth required label="Current password"/>
+                                        <TextField type="password" fullWidth required label="New password" value={newPassword} onChange={e => (setNewPassword(e.target.value), setSavePasswordButtonDisabled(!e.target.value))} />
                                     </Grid>
                                     <Grid item>
-                                        <TextField fullWidth required label="New password"/>
+                                        <TextField type="password" fullWidth required label="Confirm new password"/>
                                     </Grid>
                                     <Grid item>
-                                        <TextField fullWidth required label="Confirm new password"/>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button fullWidth variant="contained">Save new password</Button>
+                                        <Button fullWidth variant="contained" onClick={handleSavePasswordSettings} disabled={savePasswordButtonDisabled}>Save new password</Button>
                                     </Grid>
                                 </Grid>
                             </CardContent>
