@@ -13,9 +13,16 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Snackbar from '@mui/material/Snackbar';
+import UserService from '../services/user.service'
 
 function SettingsPage() {
+    const [name, setName] = useState();
+    const [email, setEmail] = useState();
     const [tab, setTab] = useState(0);
+    const [openStatusMessage, setOpenStatusMessage] = useState(false);
+    const [statusMessage, setStatusMessage] = useState("");
+    const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
 
     document.title = "Settings - product-database"
 
@@ -23,8 +30,34 @@ function SettingsPage() {
         setTab(newTab);
     };
 
+    const handleCloseMessage = () => {
+        setOpenStatusMessage(false);
+    };
+
+    const handleSaveSettings = () => {
+        setStatusMessage("Settings saved!")
+        setOpenStatusMessage(true);
+        setSaveButtonDisabled(true);
+    };
+
     useEffect(() => {
-        
+        UserService.getMe().then(
+            response => {
+                setName(response.data.name);
+                setEmail(response.data.email);
+            },
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log(resMessage);
+                setStatusMessage(resMessage);
+                setOpenStatusMessage(true);
+            }
+        )
       }, []);
 
       return (
@@ -41,9 +74,9 @@ function SettingsPage() {
                     <Grid item xs={12} md={6} order={{xs: 2, md: 1}}>
                         <Card>
                             <CardContent>
-                                <TextField fullWidth label="Name" sx={{m:1}}/>
-                                <TextField fullWidth label="Email" sx={{m:1}}/>
-                                <Button fullWidth variant="contained">Save changes</Button>
+                                <TextField fullWidth label="Name" value={name} onChange={e => (setName(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{m:1}}/>
+                                <TextField fullWidth label="Email" value={email} onChange={e => (setEmail(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{m:1}}/>
+                                <Button fullWidth variant="contained" disabled={saveButtonDisabled} onClick={handleSaveSettings}>Save changes</Button>
                             </CardContent>
                         </Card>
                     </Grid>
@@ -90,6 +123,7 @@ function SettingsPage() {
             <TabPanel value={tab} index={2}>
 
             </TabPanel>
+            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </Container>
     )
 }
