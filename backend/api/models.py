@@ -131,6 +131,13 @@ class User(db.Model):
     def verify_hash(password, hash):
         return check_password_hash(hash, password)
 
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    email = ma.auto_field()
+    name = ma.auto_field()
+
+    class Meta:
+        model = User
+
 class RevokedTokenModel(db.Model):
     __tablename__ = 'revoked_tokens'
 
