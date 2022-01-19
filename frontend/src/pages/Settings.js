@@ -34,9 +34,10 @@ function SettingsPage() {
                 <Tab label="Brand" {...a11yProps(2)} />
             </Tabs>
             <TabPanel value={tab} index={0}>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} justifyContent="flex-start" alignItems="center">
                     <Grid item xs={12} md={6} order={{xs: 2, md: 1}}>
-                        <TextField label="Name" />
+                        <TextField label="Name" sx={{m:1}}/>
+                        <TextField label="Email" sx={{m:1}}/>
                     </Grid>
                     <Grid item xs={12} md={6} order={{xs: 1, md: 2}}>
                         <Avatar sx={{ width: 100, height: 100 }} />
