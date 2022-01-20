@@ -1,3 +1,4 @@
 .env
 *.pyc
 backend/documents/*
+backend/profiles/*
