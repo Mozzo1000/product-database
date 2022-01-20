@@ -44,6 +44,8 @@ function SettingsPage() {
                 setStatusMessage(response.data.message);
                 setOpenStatusMessage(true);
                 setSaveButtonDisabled(true);
+                setNewPassword("");
+                setNewPasswordConf("");
             },
             error => {
                 const resMessage =
