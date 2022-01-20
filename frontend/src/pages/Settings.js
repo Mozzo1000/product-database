@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import UserService from '../services/user.service'
+import { styled } from '@mui/material/styles';
 
 function SettingsPage() {
     const [name, setName] = useState();
@@ -22,6 +23,7 @@ function SettingsPage() {
     const [newPassword, setNewPassword] = useState();
     const [newPasswordConf, setNewPasswordConf] = useState();
     const [passwordError, setPasswordError] = useState();
+    const [profileImage, setProfileImage] = useState();
     const [tab, setTab] = useState(0);
     const [openStatusMessage, setOpenStatusMessage] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
@@ -106,6 +108,7 @@ function SettingsPage() {
             response => {
                 setName(response.data.name);
                 setEmail(response.data.email);
+                setProfileImage(response.data.image);
             },
             error => {
                 const resMessage =
@@ -120,6 +123,69 @@ function SettingsPage() {
             }
         )
       }, []);
+
+    const Input = styled('input')({
+        display: 'none',
+    });
+
+    const handleImageUpload = (e) => {
+        const fileData = e.target.files[0];
+        console.log(fileData);
+        if (fileData) {
+            const data = new FormData();
+            data.append('image', fileData);
+            console.log(data);
+            UserService.editMe(data).then(
+                response => {
+                    console.log(response.data);
+                    setStatusMessage(response.data.message);
+                    setOpenStatusMessage(true);
+                    UserService.getMe().then(
+                        response => {
+                            setName(response.data.name);
+                            setEmail(response.data.email);
+                            setProfileImage(response.data.image);
+                        },
+                        error => {
+                            const resMessage =
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            console.log(resMessage);
+                            setStatusMessage(resMessage);
+                            setOpenStatusMessage(true);
+                        }
+                    )
+                },
+                error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    console.log(resMessage);
+                    setStatusMessage(resMessage);
+                    setOpenStatusMessage(true);
+                }
+            )
+        }
+    };
+
+    const uploadImageButton = () => {
+        return (
+            <>            
+            <label htmlFor="contained-button-file">
+                <Input id="contained-button-file" multiple type="file" onChange={handleImageUpload}/>
+                <Button variant="text" component="span">
+                    Upload file
+                </Button>
+            </label>
+            </>
+        )
+    }
 
       return (
         <Container>
@@ -146,10 +212,15 @@ function SettingsPage() {
                             <CardContent>
                                 <Grid container spacing={3} direction="column" alignItems="center">
                                     <Grid item>
-                                        <Avatar sx={{ width: 100, height: 100 }} />
+                                        <Avatar src={"http://localhost:5000/v1/users/storage/" + profileImage} sx={{ width: 100, height: 100 }} />
                                     </Grid>
                                     <Grid item>
-                                        <Button variant="contained">Change picture</Button>
+                                        <label htmlFor="contained-button-file">
+                                        <Input id="contained-button-file" multiple type="file" onChange={handleImageUpload}/>
+                                        <Button variant="contained" component="span">
+                                            Change picture
+                                        </Button>
+                                    </label>
                                     </Grid>
                                 </Grid>
                             </CardContent>
