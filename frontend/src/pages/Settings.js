@@ -20,6 +20,8 @@ function SettingsPage() {
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [newPassword, setNewPassword] = useState();
+    const [newPasswordConf, setNewPasswordConf] = useState();
+    const [passwordError, setPasswordError] = useState();
     const [tab, setTab] = useState(0);
     const [openStatusMessage, setOpenStatusMessage] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
@@ -77,6 +79,25 @@ function SettingsPage() {
             }
         )
     };
+
+    useEffect(() => {
+        if (newPasswordConf != newPassword) {
+            setPasswordError("Passwords do not match");
+            setSavePasswordButtonDisabled(true);
+        }
+        if (!newPassword && !newPasswordConf) {
+            setPasswordError("");
+        }
+    }, [newPassword, newPasswordConf])
+
+    useEffect(() => {
+        if (newPasswordConf == newPassword) {
+            if (newPasswordConf || newPassword) { 
+                setSavePasswordButtonDisabled(false);
+                setPasswordError("")
+            }
+        }
+    }, [newPasswordConf, passwordError])
 
     useEffect(() => {
         UserService.getMe().then(
@@ -138,10 +159,10 @@ function SettingsPage() {
                             <CardContent>
                                 <Grid container spacing={3} direction="column">
                                     <Grid item>
-                                        <TextField type="password" fullWidth required label="New password" value={newPassword} onChange={e => (setNewPassword(e.target.value), setSavePasswordButtonDisabled(!e.target.value))} />
+                                        <TextField type="password" fullWidth required label="New password" value={newPassword} onChange={e => setNewPassword(e.target.value)} />
                                     </Grid>
                                     <Grid item>
-                                        <TextField type="password" fullWidth required label="Confirm new password"/>
+                                        <TextField type="password" fullWidth required label="Confirm new password" value={newPasswordConf} helperText={passwordError} onChange={e => setNewPasswordConf(e.target.value)} error={newPassword != newPasswordConf} />
                                     </Grid>
                                     <Grid item>
                                         <Button fullWidth variant="contained" onClick={handleSavePasswordSettings} disabled={savePasswordButtonDisabled}>Save new password</Button>
