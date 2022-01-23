@@ -131,7 +131,7 @@ function Navbar() {
                                 onClose={handleCloseUserMenu}
                             >
                                 <MenuItem component={Link} to="/settings">
-                                    <Avatar /> {currentUser["name"]}
+                                    <Avatar src={"http://localhost:5000/v1/users/storage/" + currentUser["image"]}/> {currentUser["name"]}
                                 </MenuItem>
                                 <Divider />
                                 {settings.map((setting) => (
