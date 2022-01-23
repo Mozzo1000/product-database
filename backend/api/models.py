@@ -115,6 +115,7 @@ class User(db.Model):
     name = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=True)
+    role = db.Column(db.String, default="user")
 
     def save_to_db(self):
         db.session.add(self)
