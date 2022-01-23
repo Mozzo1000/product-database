@@ -24,6 +24,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function SettingsPage() {
     const [name, setName] = useState();
@@ -296,7 +297,7 @@ function SettingsPage() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {users &&
+                            {users ? (
                                 users.map((user) => (
                                     <TableRow key={user.id}>
                                         <TableCell>{user.name}</TableCell>
@@ -304,7 +305,9 @@ function SettingsPage() {
                                         <TableCell><MoreVertIcon /></TableCell>
                                     </TableRow>
                                 ))
-                            }
+                            ) : (
+                                <LinearProgress />
+                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>
