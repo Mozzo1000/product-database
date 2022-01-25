@@ -32,11 +32,12 @@ def login():
         return jsonify({'message': 'Wrong email or password, please try again.'}), 404
 
     if User.verify_hash(request.json["password"], current_user.password):
-        access_token = create_access_token(identity=request.json['email'])
+        access_token = create_access_token(identity=request.json['email'], additional_claims={"role": current_user.role})
         refresh_token = create_refresh_token(identity=request.json['email'])
 
         return jsonify({'message': 'Logged in', 'email': current_user.email, 'name': current_user.name,
-                        'access_token': access_token, 'refresh_token': refresh_token}), 201
+                        'image': current_user.image, 'access_token': access_token, 'refresh_token': refresh_token, 
+                        'role': current_user.role}), 201
     else:
         return jsonify({'message': 'Wrong username or password, please try again.'}), 401
 

@@ -4,6 +4,7 @@ from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, get_jwt_identity, get_jwt)
 from models import User, UserSchema
 import os
+from api.utils import admin_required
 
 user_endpoint = Blueprint('user', __name__)
 
@@ -52,4 +53,10 @@ def edit_logged_in_user():
     user.save_to_db()
     return jsonify({'message': 'User settings saved'}), 200
 
+@user_endpoint.route('/v1/users', methods=["GET"])
+@admin_required()
+def get_all_users():
+    user_schema = UserSchema(many=True)
+    users = User.query.all()
+    return jsonify(user_schema.dump(users))
 
