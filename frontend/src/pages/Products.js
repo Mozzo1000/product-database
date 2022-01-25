@@ -22,7 +22,7 @@ import Image from 'material-ui-image'
 
 function ProductsPage() {
     const [content, setContent] = useState();
-    const [pageSize, setPageSize] = React.useState(10);
+    const [pageSize] = React.useState(10);
     const [openModal, setOpenModal] = useState(false);
     const [newProductCategory, setNewProductCategory] = useState(1);
     const [newProductBrand, setNewProductBrand] = useState(1);

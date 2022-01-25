@@ -33,7 +33,6 @@ import Tab from '@mui/material/Tab';
 import a11yProps from '../components/TabPanel';
 import DocumentService from "../services/document.service";
 import Snackbar from '@mui/material/Snackbar';
-import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
 import SwipeableViews from 'react-swipeable-views';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -223,7 +222,7 @@ function ProductPage() {
                 console.log(resMessage);
             }
         )
-      }, []);
+      }, [id]);
 
     const uploadFileButton = () => {
         return (

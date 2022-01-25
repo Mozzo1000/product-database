@@ -16,7 +16,7 @@ import FormControl from '@mui/material/FormControl';
 
 function Brandspage() {
     const [content, setContent] = useState();
-    const [pageSize, setPageSize] = React.useState(10);
+    const [pageSize] = React.useState(10);
     const [openModal, setOpenModal] = useState(false);
     const [newBrandName, setNewBrandName] = useState();
 

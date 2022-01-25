@@ -29,7 +29,7 @@ function CategoryPage() {
                 console.log(resMessage);
             }
         )
-      }, []);
+      }, [id]);
 
     return (
         <Container>

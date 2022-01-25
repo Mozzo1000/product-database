@@ -115,7 +115,7 @@ function SettingsPage() {
     };
 
     useEffect(() => {
-        if (newPasswordConf != newPassword) {
+        if (newPasswordConf !== newPassword) {
             setPasswordError("Passwords do not match");
             setSavePasswordButtonDisabled(true);
         }
@@ -125,13 +125,13 @@ function SettingsPage() {
     }, [newPassword, newPasswordConf])
 
     useEffect(() => {
-        if (newPasswordConf == newPassword) {
+        if (newPasswordConf === newPassword) {
             if (newPasswordConf || newPassword) { 
                 setSavePasswordButtonDisabled(false);
                 setPasswordError("")
             }
         }
-    }, [newPasswordConf, passwordError])
+    }, [newPassword, newPasswordConf, passwordError])
 
     useEffect(() => {
         UserService.getMe().then(
@@ -199,20 +199,6 @@ function SettingsPage() {
             )
         }
     };
-
-    const uploadImageButton = () => {
-        return (
-            <>            
-            <label htmlFor="contained-button-file">
-                <Input id="contained-button-file" multiple type="file" onChange={handleImageUpload}/>
-                <Button variant="text" component="span">
-                    Upload file
-                </Button>
-            </label>
-            </>
-        )
-    }
-
       return (
         <Container>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -230,6 +216,7 @@ function SettingsPage() {
                     <Grid item xs={12} md={6} order={{xs: 2, md: 1}}>
                         <Card>
                             <CardContent>
+                                {/*eslint-disable no-sequences*/}
                                 <TextField fullWidth label="Name" value={name} onChange={e => (setName(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{m:1}}/>
                                 <TextField fullWidth label="Email" value={email} onChange={e => (setEmail(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{m:1}}/>
                                 <Button fullWidth variant="contained" disabled={saveButtonDisabled} onClick={handleSaveSettings}>Save changes</Button>
@@ -264,7 +251,7 @@ function SettingsPage() {
                                         <TextField type="password" fullWidth required label="New password" value={newPassword} onChange={e => setNewPassword(e.target.value)} />
                                     </Grid>
                                     <Grid item>
-                                        <TextField type="password" fullWidth required label="Confirm new password" value={newPasswordConf} helperText={passwordError} onChange={e => setNewPasswordConf(e.target.value)} error={newPassword != newPasswordConf} />
+                                        <TextField type="password" fullWidth required label="Confirm new password" value={newPasswordConf} helperText={passwordError} onChange={e => setNewPasswordConf(e.target.value)} error={newPassword !== newPasswordConf} />
                                     </Grid>
                                     <Grid item>
                                         <Button fullWidth variant="contained" onClick={handleSavePasswordSettings} disabled={savePasswordButtonDisabled}>Save new password</Button>

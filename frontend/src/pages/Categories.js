@@ -16,7 +16,7 @@ import { GridToolbarContainer, GridToolbarExport, gridClasses, GridToolbarColumn
 
 function CategoriesPage() {
     const [content, setContent] = useState();
-    const [pageSize, setPageSize] = React.useState(10);
+    const [pageSize] = React.useState(10);
     const [openModal, setOpenModal] = useState(false);
     const [newCategoryName, setNewCategoryName] = useState();
 

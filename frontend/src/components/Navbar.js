@@ -2,7 +2,6 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
@@ -23,7 +22,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import LogoutIcon from '@mui/icons-material/Logout';
-import CssBaseline from '@mui/material/CssBaseline';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -57,7 +55,7 @@ function Navbar() {
     };
 
     const handleSettingsItemClick = (e) => {
-        if(e == "logout") {
+        if(e === "logout") {
             AuthService.logout();
             navigate("/login");
         }

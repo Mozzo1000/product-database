@@ -29,7 +29,7 @@ function BrandPage() {
                 console.log(resMessage);
             }
         )
-      }, []);
+      }, [id]);
 
     return (
         <Container>
