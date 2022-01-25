@@ -74,7 +74,6 @@ function Brandspage() {
         BrandService.getAllBrands().then(
             response => {
                 setContent(response.data);
-                console.log(response.data)
             },
             error => {
                 const resMessage =

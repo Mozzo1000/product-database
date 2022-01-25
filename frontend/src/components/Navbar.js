@@ -57,7 +57,6 @@ function Navbar() {
     };
 
     const handleSettingsItemClick = (e) => {
-        console.log(e);
         if(e == "logout") {
             AuthService.logout();
             navigate("/login");

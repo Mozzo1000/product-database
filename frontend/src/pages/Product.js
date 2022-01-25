@@ -106,7 +106,6 @@ function ProductPage() {
     };
 
     const handleFileUpload = (e) => {
-        console.log(e.target.files[0]);
         const fileData = e.target.files[0];
         if (fileData) {
             setLoadUpload(true);
@@ -115,7 +114,6 @@ function ProductPage() {
             data.append('product_id', id);
             DocumentService.addDocument(data, id).then(
                 response => {
-                    console.log(response.data);
                     setStatusMessage(response.data.message);
                     setOpenStatusMessage(true);
                     setLoadUpload(false);
@@ -141,7 +139,6 @@ function ProductPage() {
                             error.response.data.message) ||
                         error.message ||
                         error.toString();
-                    console.log(resMessage);
                     setStatusMessage(resMessage);
                     setOpenStatusMessage(true);
                     setLoadUpload(false);
@@ -201,7 +198,6 @@ function ProductPage() {
         DocumentService.getAllDocuments(id).then(
             response => {
                 setDocumentContent(response.data);
-                console.log(response.data.length);
             },
             error => {
                 const resMessage =
@@ -216,7 +212,6 @@ function ProductPage() {
         DocumentService.getAllDocuments(id, "?type=image/").then(
             response => {
                 setImageContent(response.data);
-                console.log(response.data);
             },
             error => {
                 const resMessage =

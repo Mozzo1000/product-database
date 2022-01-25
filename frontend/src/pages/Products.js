@@ -104,7 +104,6 @@ function ProductsPage() {
         ProductService.getAllProducts().then(
             response => {
                 setContent(response.data);
-                console.log(response.data)
             },
             error => {
                 const resMessage =

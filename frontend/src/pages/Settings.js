@@ -56,7 +56,6 @@ function SettingsPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
                 setStatusMessage(resMessage);
                 setOpenStatusMessage(true);
             }
@@ -117,7 +116,6 @@ function SettingsPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
                 setStatusMessage(resMessage);
                 setOpenStatusMessage(true);
             }
@@ -134,7 +132,6 @@ function SettingsPage() {
         if (fileData) {
             const data = new FormData();
             data.append('image', fileData);
-            console.log(data);
             UserService.editMe(data).then(
                 response => {
                     console.log(response.data);
@@ -153,7 +150,6 @@ function SettingsPage() {
                                     error.response.data.message) ||
                                 error.message ||
                                 error.toString();
-                            console.log(resMessage);
                             setStatusMessage(resMessage);
                             setOpenStatusMessage(true);
                         }
@@ -166,7 +162,6 @@ function SettingsPage() {
                             error.response.data.message) ||
                         error.message ||
                         error.toString();
-                    console.log(resMessage);
                     setStatusMessage(resMessage);
                     setOpenStatusMessage(true);
                 }

@@ -18,7 +18,6 @@ function EditProductAttribute(props) {
     const [openStatusMessage, setOpenStatusMessage] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
 
-    console.log(props.props);
     const handleClickOpenModal = () => {
         setOpenModal(true);
     };

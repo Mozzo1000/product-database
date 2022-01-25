@@ -18,7 +18,6 @@ function CategoryPage() {
         CategoryService.getCategory(id).then(
             response => {
                 setContent(response.data);
-                console.log(content);
             },
             error => {
                 const resMessage =

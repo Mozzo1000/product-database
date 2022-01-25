@@ -27,7 +27,6 @@ function LoginPage(props) {
         e.preventDefault();
         AuthService.login(username, password).then(
             response => {
-                console.log(response);
                 navigate("/")
             },
             error => {

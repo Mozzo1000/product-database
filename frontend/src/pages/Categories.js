@@ -73,7 +73,6 @@ function CategoriesPage() {
         CategoryService.getAllCategories().then(
             response => {
                 setContent(response.data);
-                console.log(response.data)
             },
             error => {
                 const resMessage =

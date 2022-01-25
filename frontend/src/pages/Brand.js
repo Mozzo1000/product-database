@@ -18,7 +18,6 @@ function BrandPage() {
         BrandService.getBrand(id).then(
             response => {
                 setContent(response.data);
-                console.log(content);
             },
             error => {
                 const resMessage =
