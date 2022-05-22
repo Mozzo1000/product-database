@@ -21,6 +21,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -31,6 +32,11 @@ function Navbar() {
     const pages = [
         {name: 'Products', link: "/products", icon: <HomeIcon sx={{color: 'white'}} />},
     ];
+
+    const pagesBottom = [
+        {name: 'Settings', link: "/settings", icon: <SettingsIcon sx={{color: 'white'}} />},
+    ];
+
     const settings = [
         {name: 'Sign out', action: "logout", icon: <LogoutIcon />},
     ];
@@ -160,7 +166,20 @@ function Navbar() {
                             </ListItem>
                         ))}
                     </List>
+                    
                 </Box>
+                {currentUser["role"] === "admin" &&   
+                    <List sx={{marginTop: 'auto'}}>
+                        {pagesBottom.map((page) => (
+                            <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link}>
+                                <ListItemIcon>
+                                    {page.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={page.name}/>
+                            </ListItem>
+                        ))}
+                    </List>
+                }
             </Drawer>
         </Box>
         }
