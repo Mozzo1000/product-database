@@ -28,6 +28,7 @@ import LoginIcon from '@mui/icons-material/Login';
 function Navbar() {
     let navigate = useNavigate();
     let location = useLocation();
+    const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const currentUser = AuthService.getCurrentUser()
 
@@ -43,6 +44,10 @@ function Navbar() {
     const settings = [
         {name: 'Sign out', action: "logout", icon: <LogoutIcon />},
     ];
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -70,6 +75,42 @@ function Navbar() {
         handleCloseUserMenu();
     };
 
+    const drawer = (
+        <>
+            <Toolbar>
+                <Typography align="center" sx={{flexGrow: 1, textTransform: 'uppercase', letterSpacing: '0.05rem', fontWeight: '600'}}>
+                    product-database
+                </Typography>
+            </Toolbar>
+            <Divider sx={{background: 'rgba(255, 255, 255, 0.15);'}} />
+            <Box sx={{ overflow: 'auto' }}>
+                <List>
+                    {pages.map((page) => (
+                        <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link}>
+                            <ListItemIcon>
+                                {page.icon}
+                            </ListItemIcon>
+                            <ListItemText primary={page.name}/>
+                        </ListItem>
+                    ))}
+                </List>
+                
+            </Box>
+            {currentUser && currentUser["role"] === "admin" &&   
+                <List sx={{marginTop: 'auto'}}>
+                    {pagesBottom.map((page) => (
+                        <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link}>
+                            <ListItemIcon>
+                                {page.icon}
+                            </ListItemIcon>
+                            <ListItemText primary={page.name}/>
+                        </ListItem>
+                    ))}
+                </List>
+            }
+        </>
+    );
+
     return (
         <>
         <Box sx={{display: 'flex'}}>
@@ -80,35 +121,21 @@ function Navbar() {
                             {pages.find(el => location.pathname === el.link)?.name}
                             {pagesBottom.find(el => location.pathname === el.link)?.name}
                         </Typography>
-
-                        <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-                            <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
+                        <Box sx={{flexGrow: 1, display: {xs: 'flex', lg: 'none'}}}>
+                            <IconButton aria-label="open drawer" edge="start" onClick={handleDrawerToggle} sx={{ mr: 2, display: { md: 'none' } }}>
                                 <MenuIcon />
                             </IconButton>
-                            <Menu 
-                                id="menu-appbar" 
-                                anchorEl={anchorElNav}
-                                anchorOrigin={{
-                                    vertical: 'bottom', 
-                                    horizontal: 'left',
-                                }} 
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
+                            <Drawer variant="temporary" open={mobileOpen} onClose={handleDrawerToggle}
+                                ModalProps={{
+                                    keepMounted: true, // Better open performance on mobile.
                                 }}
-                                open={Boolean(anchorElNav)} 
-                                onClose={handleCloseNavMenu}
-                                sx={{display: {xs: 'block', md: 'none'}}}
-                            >
-                                {pages.map((page) => (
-                                    <MenuItem key={page.name} component={Link} to={page.link}>
-                                        <Typography textAlign="center">{page.name}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
-
+                                sx={{
+                                    display: { xs: 'block', md: 'none' },
+                                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240, color: 'white', backgroundColor: '#1d4dbc' },
+                                    }}>
+                                {drawer}
+                            </Drawer>
+                        </Box>                        
                         <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                             {pages.find(el => location.pathname === el.link)?.name}
                             {pagesBottom.find(el => location.pathname === el.link)?.name}
@@ -161,37 +188,7 @@ function Navbar() {
                 </Container>
             </AppBar>
             <Drawer variant="permanent" sx={{zIndex: 1, flexShrink: 0, [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box', color: 'white', backgroundColor: '#1d4dbc' }, mr: 2, display: {xs: 'none', md: 'flex'}}}>
-                <Toolbar>
-                    <Typography align="center" sx={{flexGrow: 1, textTransform: 'uppercase', letterSpacing: '0.05rem', fontWeight: '600'}}>
-                            product-database
-                    </Typography>
-                </Toolbar>
-                <Divider sx={{background: 'rgba(255, 255, 255, 0.15);'}} />
-                <Box sx={{ overflow: 'auto' }}>
-                    <List>
-                        {pages.map((page) => (
-                            <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link}>
-                                <ListItemIcon>
-                                    {page.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={page.name}/>
-                            </ListItem>
-                        ))}
-                    </List>
-                    
-                </Box>
-                {currentUser && currentUser["role"] === "admin" &&   
-                    <List sx={{marginTop: 'auto'}}>
-                        {pagesBottom.map((page) => (
-                            <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link}>
-                                <ListItemIcon>
-                                    {page.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={page.name}/>
-                            </ListItem>
-                        ))}
-                    </List>
-                }
+                {drawer}
             </Drawer>
         </Box>
         </>
