@@ -29,8 +29,6 @@ function Navbar() {
 
     const pages = [
         {name: 'Products', link: "/products", icon: <HomeIcon />},
-        {name: 'Category', link: "/category", icon: <CategoryIcon />},
-        {name: 'Brand', link: "/brand", icon: <PrecisionManufacturingIcon />},
     ];
     const settings = [
         {name: 'Sign out', action: "logout", icon: <LogoutIcon />},
