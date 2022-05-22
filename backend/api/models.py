@@ -136,7 +136,7 @@ class User(db.Model):
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = User
-        fields = ("name", "email", "image")
+        fields = ("name", "email", "image", "role")
 
 
 class RevokedTokenModel(db.Model):
