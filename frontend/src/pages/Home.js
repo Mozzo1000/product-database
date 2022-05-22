@@ -26,7 +26,6 @@ function HomePage() {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        console.log("You searched for : " + search)
         ProductService.search(search).then(
             response => {
                 if (response.data.length <= 0) {
@@ -34,7 +33,6 @@ function HomePage() {
                     setOpenStatusMessage(true);
                 }
                 setSearchedList(response.data);
-                console.log(searchedList);
             },
             error => {
                 const resMessage =
