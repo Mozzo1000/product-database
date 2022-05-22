@@ -45,6 +45,8 @@ import RemoveProductAttribute from '../components/RemoveProductAttribute';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import RemoveDocument from '../components/RemoveDocument';
+import AddEnvironmentReport from '../components/AddEnvironmentReport';
+import EnvironmentService from "../services/environment.service";
 
 const prettyBytes = require('pretty-bytes');
 
@@ -63,6 +65,8 @@ function ProductPage() {
     const [activeStep, setActiveStep] = React.useState(0);
     const [anchorElHelp, setAnchorElHelp] = React.useState(null);
     const openHelp = Boolean(anchorElHelp);
+    const [environmentContent, setEnvironmentContent] = useState([]);
+
 
     const handleClickHelp = (event) => {
         setAnchorElHelp(event.currentTarget);
@@ -222,6 +226,20 @@ function ProductPage() {
                 console.log(resMessage);
             }
         )
+        EnvironmentService.getEnvironment(id).then(
+            response => {
+                setEnvironmentContent(response.data);
+            },
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log(resMessage);
+            }
+        )
       }, [id]);
 
     const uploadFileButton = () => {
@@ -324,6 +342,35 @@ function ProductPage() {
                                 </CardContent>
                             </Card>
                         </TabPanel>
+                        
+                        <TabPanel value={tab} index={1}>
+                            <Card>
+                                <CardHeader title={<AddEnvironmentReport id={id}/>} />
+                                <CardContent>
+                                    <TableContainer>
+                                        <Table>
+                                            <TableBody>
+                                                {environmentContent ? (
+                                                    <>
+                                                    <TableRow>
+                                                        <TableCell>Carbon footprint</TableCell>
+                                                        <TableCell>{environmentContent.carbon_footprint} kgCO2e</TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell>Carbon deviation</TableCell>
+                                                        <TableCell>+/- {environmentContent.carbon_deviation} kgCO2e</TableCell>
+                                                    </TableRow>
+                                                    </>
+                                                ) : (
+                                                    <Typography>No environment report data found</Typography>
+                                                )}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </CardContent>
+                            </Card>
+                        </TabPanel>
+
                         <TabPanel value={tab} index={2}>
                             <Card>
                                 <CardHeader title={uploadFileButton()} />
