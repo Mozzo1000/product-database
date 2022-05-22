@@ -10,9 +10,8 @@ import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { ListItemText, Tooltip } from '@mui/material';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthService from '../services/auth.service';
-import { useNavigate } from 'react-router-dom';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -25,10 +24,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 function Navbar() {
     let navigate = useNavigate();
+    let location = useLocation();
+
     const currentUser = AuthService.getCurrentUser()
 
     const pages = [
-        {name: 'Products', link: "/products", icon: <HomeIcon />},
+        {name: 'Products', link: "/products", icon: <HomeIcon sx={{color: 'white'}} />},
     ];
     const settings = [
         {name: 'Sign out', action: "logout", icon: <LogoutIcon />},
@@ -64,11 +65,11 @@ function Navbar() {
         <>
         { currentUser &&
         <Box sx={{display: 'flex'}}>
-            <AppBar position="fixed" sx={{zIndex: 2}}>
+            <AppBar position="fixed" sx={{width: { md: `calc(100% - ${240}px)` }, zIndex: 2, backgroundColor: 'white', color: 'black'}}>
                 <Container maxWidth="x1">
                     <Toolbar disableGutters>
                         <Typography variant="h6" noWrap component="div" sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}>
-                            product-database
+                            {pages.find(el => location.pathname === el.link)?.name}
                         </Typography>
 
                         <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -100,7 +101,7 @@ function Navbar() {
                         </Box>
 
                         <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-                            product-database
+                            CHANGE ME TO WHERE I AM ON MOBILE
                         </Typography>
                         <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}></Box>
                         <Box sx={{flexGrow: 0}}>
@@ -141,12 +142,17 @@ function Navbar() {
                     
                 </Container>
             </AppBar>
-            <Drawer variant="permanent" sx={{zIndex: 1, flexShrink: 0, [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' }, mr: 2, display: {xs: 'none', md: 'flex'}}}>
-                <Toolbar />
+            <Drawer variant="permanent" sx={{zIndex: 1, flexShrink: 0, [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box', color: 'white', backgroundColor: '#1d4dbc' }, mr: 2, display: {xs: 'none', md: 'flex'}}}>
+                <Toolbar>
+                    <Typography align="center" sx={{flexGrow: 1, textTransform: 'uppercase', letterSpacing: '0.05rem', fontWeight: '600'}}>
+                            product-database
+                    </Typography>
+                </Toolbar>
+                <Divider sx={{background: 'rgba(255, 255, 255, 0.15);'}} />
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
                         {pages.map((page) => (
-                            <ListItem button key={page.name} component={Link} to={page.link}>
+                            <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link}>
                                 <ListItemIcon>
                                     {page.icon}
                                 </ListItemIcon>
