@@ -78,6 +78,7 @@ function Navbar() {
                     <Toolbar disableGutters>
                         <Typography variant="h6" noWrap component="div" sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}>
                             {pages.find(el => location.pathname === el.link)?.name}
+                            {pagesBottom.find(el => location.pathname === el.link)?.name}
                         </Typography>
 
                         <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -109,7 +110,8 @@ function Navbar() {
                         </Box>
 
                         <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-                            CHANGE ME TO WHERE I AM ON MOBILE
+                            {pages.find(el => location.pathname === el.link)?.name}
+                            {pagesBottom.find(el => location.pathname === el.link)?.name}
                         </Typography>
                         <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}></Box>
                         {currentUser &&
