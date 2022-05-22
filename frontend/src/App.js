@@ -10,6 +10,7 @@ import LoginPage from './pages/Login';
 import AuthService from './services/auth.service';
 import Box from '@mui/material/Box';
 import SettingsPage from './pages/Settings';
+import AboutPage from './pages/About';
 
 function PrivateRoute({ children }) {
   const auth = AuthService.getCurrentUser()
@@ -39,6 +40,7 @@ function App() {
               <Route path="/category/:id" element={<PrivateRoute><CategoryPage/></PrivateRoute>} />
               <Route path="/product/:id" element={<ProductPage/>} />
               <Route path="/settings" element={<PrivateRoute><SettingsPage/></PrivateRoute>} />
+              <Route path="/about" element={<AboutPage />} />
             </Route>
           </Routes>
         </Box>
