@@ -17,16 +17,9 @@ import Snackbar from '@mui/material/Snackbar';
 import UserService from '../services/user.service'
 import { styled } from '@mui/material/styles';
 import AuthService from '../services/auth.service'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import LinearProgress from '@mui/material/LinearProgress';
 import CategoriesPage from './Categories';
 import BrandsPage from './Brands';
+import UserTable from '../components/UserTable';
 
 function SettingsPage() {
     const [name, setName] = useState();
@@ -40,7 +33,6 @@ function SettingsPage() {
     const [statusMessage, setStatusMessage] = useState("");
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
     const [savePasswordButtonDisabled, setSavePasswordButtonDisabled] = useState(true);
-    const [users, setUsers] = useState();
     const currentUser = AuthService.getCurrentUser();
 
     document.title = "Settings - product-database"
@@ -52,26 +44,6 @@ function SettingsPage() {
     const handleCloseMessage = () => {
         setOpenStatusMessage(false);
     };
-
-    useEffect(() => {
-        if (tab === 3) {
-            UserService.getAllUsers().then(
-                response => {
-                    setUsers(response.data);
-                },
-                error => {
-                    const resMessage =
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString();
-                    setStatusMessage(resMessage);
-                    setOpenStatusMessage(true);
-                }
-            )
-        }
-      }, [tab]);
 
     const handleSavePasswordSettings = () => {
         UserService.editMe({'password': newPassword}).then(
@@ -271,30 +243,7 @@ function SettingsPage() {
                 <BrandsPage />
             </TabPanel>
             <TabPanel value={tab} index={3}>
-                <TableContainer>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Name</TableCell>
-                                <TableCell>Email</TableCell>
-                                <TableCell>Action</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {users ? (
-                                users.map((user) => (
-                                    <TableRow key={user.id}>
-                                        <TableCell>{user.name}</TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell><MoreVertIcon /></TableCell>
-                                    </TableRow>
-                                ))
-                            ) : (
-                                <LinearProgress />
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <UserTable />
             </TabPanel>
 
             <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
