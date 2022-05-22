@@ -71,7 +71,7 @@ function Navbar() {
         <>
             <Toolbar>
                 <Typography align="center" sx={{flexGrow: 1, textTransform: 'uppercase', letterSpacing: '0.05rem', fontWeight: '600'}}>
-                    product-database
+                    product database
                 </Typography>
             </Toolbar>
             <Divider sx={{background: 'rgba(255, 255, 255, 0.15);'}} />
