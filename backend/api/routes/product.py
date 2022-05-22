@@ -9,6 +9,12 @@ def get_product(id):
     product = Product.query.get(id)
     return jsonify(product_schema.dump(product))
 
+@product_endpoint.route("/v1/products/search/<query>")
+def search_for_product(query):
+    product_schema = ProductSchema(many=True)
+    products = Product.query.filter(Product.name.match(query)).all()
+    return jsonify(product_schema.dump(products))
+
 @product_endpoint.route("/v1/products")
 def get_products():
     product_schema = ProductSchema(many=True)
