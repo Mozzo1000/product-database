@@ -23,6 +23,7 @@ import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturi
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import LoginIcon from '@mui/icons-material/Login';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -147,8 +148,14 @@ function Navbar() {
                                 </Menu>
                             </Box>
                         }
+                        {!currentUser && 
+                            <Tooltip title="Login">
+                                <IconButton component={Link} to="/login" sx={{p: 0}}>
+                                <LoginIcon />
+                                </IconButton>
+                            </Tooltip>
+                        }
                     </Toolbar>
-                    
                 </Container>
             </AppBar>
             <Drawer variant="permanent" sx={{zIndex: 1, flexShrink: 0, [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box', color: 'white', backgroundColor: '#1d4dbc' }, mr: 2, display: {xs: 'none', md: 'flex'}}}>
