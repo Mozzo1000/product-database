@@ -251,7 +251,7 @@ function ProductPage() {
     const uploadFileButton = () => {
         return (
             <>
-            {currentUser && currentUser["role"] == "admin" &&
+            {currentUser && currentUser["role"] === "admin" &&
                 <>
                 <label htmlFor="contained-button-file">
                 <Input id="contained-button-file" multiple type="file" onChange={handleFileUpload}/>
@@ -269,7 +269,7 @@ function ProductPage() {
     const addNewAttributeButton = () => {
         return (
             <>
-            {currentUser && currentUser["role"] == "admin" &&
+            {currentUser && currentUser["role"] === "admin" &&
                 <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>   
             }         
             </>
@@ -279,7 +279,7 @@ function ProductPage() {
     const addEnvironmentReportButton = () => {
         return (
             <>
-            {currentUser && currentUser["role"] == "admin" &&
+            {currentUser && currentUser["role"] === "admin" &&
                 <AddEnvironmentReport id={id}/>
             }
             </>
@@ -362,7 +362,7 @@ function ProductPage() {
                                     </Grid>
                             </CardContent>
                             <CardActions>
-                                {currentUser && currentUser["role"] == "admin" &&
+                                {currentUser && currentUser["role"] === "admin" &&
                                     <>
                                     <Button size="small">Edit</Button>
                                     <Button size="small" color="error">Delete</Button>
@@ -389,7 +389,7 @@ function ProductPage() {
                                                         <TableRow key={attribute.name}>
                                                             <TableCell>{attribute.name}</TableCell>
                                                             <TableCell>{attribute.value}</TableCell>
-                                                            {currentUser && currentUser["role"] == "admin" &&
+                                                            {currentUser && currentUser["role"] === "admin" &&
                                                                 <>
                                                                 <TableCell><EditProductAttribute props={attribute} /></TableCell>
                                                                 <TableCell><RemoveProductAttribute props={attribute} /></TableCell>

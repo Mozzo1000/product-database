@@ -3,7 +3,6 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Image from 'material-ui-image'
-import Divider from '@mui/material/Divider'
 
 function AboutPage() {
   return (
@@ -42,17 +41,17 @@ function AboutPage() {
                 <Grid item xs={6}>
                     <Typography variant="h5" sx={{fontWeight: 600}}>Open source</Typography>
                     <Typography>
-                        Everything we do is fully transparent and open sourced. You can find the source code for this website and internal tools used on <a href="https://github.com/Mozzo1000/product-database" target="_blank">Github</a>.
+                        Everything we do is fully transparent and open sourced. You can find the source code for this website and internal tools used on <a href="https://github.com/Mozzo1000/product-database" target="_blank" rel="noreferrer">Github</a>.
                     </Typography>
                     <br />
                     <Typography variant="h6">Technical information</Typography>
                     <Typography>
-                        <ul>Frontend (this website): <a href="https://reactjs.org/" target="_blank">React</a>, <a href="https://mui.com/" target="_blank">MUI</a></ul>
-                        <ul>Backend (API): <a href="https://python.org/" target="_blank">Python</a>, <a href="https://github.com/pallets/flask/" target="_blank">Flask</a></ul>
-                        <ul>Database: <a href="https://postgresql.org/" target="_blank">PostgreSQL</a></ul>
+                        <ul>Frontend (this website): <a href="https://reactjs.org/" target="_blank" rel="noreferrer">React</a>, <a href="https://mui.com/" target="_blank" rel="noreferrer">MUI</a></ul>
+                        <ul>Backend (API): <a href="https://python.org/" target="_blank" rel="noreferrer">Python</a>, <a href="https://github.com/pallets/flask/" target="_blank" rel="noreferrer">Flask</a></ul>
+                        <ul>Database: <a href="https://postgresql.org/" target="_blank" rel="noreferrer">PostgreSQL</a></ul>
                     </Typography>
                     <br/>
-                    <Typography>Images shown on this about page are from <a href="https://undraw.co/" target="_blank">unDraw</a> </Typography>
+                    <Typography>Images shown on this about page are from <a href="https://undraw.co/" target="_blank" rel="noreferrer">unDraw</a> </Typography>
                 </Grid>
                 <Grid item xs={6}>
                     <Image style={{backgroundColor: 'transparent'}} src="assets/undraw_open_source_-1-qxw.svg"/>

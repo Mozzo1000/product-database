@@ -127,7 +127,7 @@ function ProductsPage() {
             <GridToolbarColumnsButton />
             <GridToolbarFilterButton />
             <GridToolbarDensitySelector />
-            {currentUser && currentUser["role"] == "admin" && 
+            {currentUser && currentUser["role"] === "admin" && 
                 <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>
             }
           </GridToolbarContainer>
