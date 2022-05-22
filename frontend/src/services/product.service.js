@@ -25,11 +25,16 @@ const getProduct = (product_id) => {
   return axios.get(API_URL + "products/" + product_id, {}, { headers: authHeader() });
 };
 
+const search = (query) => {
+  return axios.get(API_URL + "products/search/" + query, {}, { headers: authHeader() });
+};
+
 
 const exportedObject = {
     getAllProducts,
     getProduct,
     addProduct,
+    search,
 };
 
 export default exportedObject;
