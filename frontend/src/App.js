@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from "react-router-dom";
 import Navbar from './components/Navbar';
 import HomePage from './pages/Home'
 import ProductsPage from './pages/Products'
@@ -16,22 +16,30 @@ function PrivateRoute({ children }) {
   return auth ? children : <Navigate to="/login" />;
 }
 
+const NavbarLayout = () => (
+  <>
+    <Navbar />
+    <Outlet />
+  </>
+);
+
 function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar />
         <Routes>
           <Route path="/login" element={<LoginPage/>} />
         </Routes>
         <Box sx={{flexGrow: 1, p: 3, paddingTop: "80px", paddingLeft: { md: "240px", sm: "0px" } }}>
           <Routes>
-            <Route index element={<HomePage/>} />
-            <Route path="/products" element={<ProductsPage/>} />
-            <Route path="/brand/:id" element={<PrivateRoute><BrandPage/></PrivateRoute>} />
-            <Route path="/category/:id" element={<PrivateRoute><CategoryPage/></PrivateRoute>} />
-            <Route path="/product/:id" element={<ProductPage/>} />
-            <Route path="/settings" element={<PrivateRoute><SettingsPage/></PrivateRoute>} />
+            <Route element={<NavbarLayout/>}>
+              <Route index element={<HomePage/>} />
+              <Route path="/products" element={<ProductsPage/>} />
+              <Route path="/brand/:id" element={<PrivateRoute><BrandPage/></PrivateRoute>} />
+              <Route path="/category/:id" element={<PrivateRoute><CategoryPage/></PrivateRoute>} />
+              <Route path="/product/:id" element={<ProductPage/>} />
+              <Route path="/settings" element={<PrivateRoute><SettingsPage/></PrivateRoute>} />
+            </Route>
           </Routes>
         </Box>
       </Router>
