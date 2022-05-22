@@ -29,8 +29,6 @@ function App() {
           <Routes>
             <Route index element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
             <Route path="/products" element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
-            <Route path="/category" element={<PrivateRoute><CategoriesPage/></PrivateRoute>} />
-            <Route path="/brand" element={<PrivateRoute><Brandspage/></PrivateRoute>} />
             <Route path="/brand/:id" element={<PrivateRoute><BrandPage/></PrivateRoute>} />
             <Route path="/category/:id" element={<PrivateRoute><CategoryPage/></PrivateRoute>} />
             <Route path="/product/:id" element={<PrivateRoute><ProductPage/></PrivateRoute>} />

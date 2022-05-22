@@ -25,6 +25,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LinearProgress from '@mui/material/LinearProgress';
+import CategoriesPage from './Categories';
+import BrandsPage from './Brands';
 
 function SettingsPage() {
     const [name, setName] = useState();
@@ -263,10 +265,10 @@ function SettingsPage() {
                 </Grid>
             </TabPanel>
             <TabPanel value={tab} index={1}>
-
+                <CategoriesPage />
             </TabPanel>
             <TabPanel value={tab} index={2}>
-
+                <BrandsPage />
             </TabPanel>
             <TabPanel value={tab} index={3}>
                 <TableContainer>
