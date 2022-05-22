@@ -153,3 +153,56 @@ class RevokedTokenModel(db.Model):
     def is_jti_blacklisted(cls, jti):
         query = cls.query.filter_by(jti=jti).first()
         return bool(query)
+
+class EnvironmentManufacturingComponent(db.Model):
+
+    __tablename__ = "environment_manufacturing_component"
+
+    id = db.Column(db.Integer, primary_key=True)
+    environment_id = db.Column(db.Integer, db.ForeignKey('environment.id'))
+    name = db.Column(db.String, nullable=False)
+    percentage = db.Column(db.Integer, nullable=False)
+
+
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+class Environment(db.Model):
+    __tablename__ = "environment"
+
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+
+    carbon_footprint = db.Column(db.Integer, nullable=False) # Dell, HP, Lenovo
+    carbon_deviation = db.Column(db.Integer, nullable=False) # Dell, HP, Lenovo
+
+    carbon_percentage_manufacturing = db.Column(db.Float, nullable=True) # Dell, Lenovo
+    carbon_percentage_transportation = db.Column(db.Float, nullable=True) # Dell, Lenovo
+    carbon_percentage_eol = db.Column(db.Float, nullable=True) # Dell, Lenovo
+    carbon_percentage_use = db.Column(db.Float, nullable=True) # Dell, Lenovo
+
+    carbon_percentage_manufacturing_components = db.relationship("EnvironmentManufacturingComponent", uselist=True, backref="environment_manufacturing_component")
+
+    weight_kg_assumption = db.Column(db.Float, nullable=False) # Dell, HP, Lenovo
+    lifetime_year_assumption = db.Column(db.Integer, nullable=False) # Dell, HP, Lenovo
+    screen_size_assumption = db.Column(db.Integer, nullable=True) # Dell, HP, Lenovo
+    use_location_assumption = db.Column(db.String, nullable=False) # Dell, HP, Lenovo
+    assembly_location_assumption = db.Column(db.String, nullable=False) # Dell, HP, Lenovo
+    energy_demand_kwh_assumption = db.Column(db.Float, nullable=True) # Dell, HP
+
+    source = db.Column(db.String, nullable=False) # Dell, HP, Lenovo
+
+    report_created = db.Column(db.Date, nullable=False) # Dell, HP, Lenovo
+    
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+class EnvironmentSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Environment
