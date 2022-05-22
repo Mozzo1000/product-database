@@ -85,7 +85,7 @@ function HomePage() {
                                     <Typography color="textSecondary" gutterBottom >
                                         {product.category.name}
                                     </Typography>
-                                    <Typography variant="h5" component="h2" component={Link} to={"product/" + product.id}>
+                                    <Typography variant="h5" component={Link} to={"product/" + product.id}>
                                         {product.name}
                                     </Typography>
                                     <Typography color="textSecondary">
