@@ -440,9 +440,11 @@ function ProductPage() {
                                                                 <TableCell>{prettyBytes(document.size)}</TableCell>
                                                             )}
                                                             <TableCell>{document.checksum}</TableCell>
+                                                            {currentUser && currentUser["role"] === "admin" && 
                                                             <TableCell>
                                                                 <RemoveDocument props={document} />
                                                             </TableCell>
+                                                            }
                                                         </TableRow>
                                                     ))
                                                 ) : (
