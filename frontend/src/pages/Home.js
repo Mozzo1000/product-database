@@ -31,8 +31,10 @@ function HomePage() {
                 if (response.data.length <= 0) {
                     setStatusMessage("No search results found");
                     setOpenStatusMessage(true);
+                    setSearchedList();
+                } else {
+                    setSearchedList(response.data);
                 }
-                setSearchedList(response.data);
             },
             error => {
                 const resMessage =
@@ -43,6 +45,7 @@ function HomePage() {
                     error.toString();
                 setStatusMessage(resMessage);
                 setOpenStatusMessage(true);
+                setSearchedList();
             }
         )
     }
