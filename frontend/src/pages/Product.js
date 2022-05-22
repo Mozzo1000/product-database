@@ -48,6 +48,10 @@ import RemoveDocument from '../components/RemoveDocument';
 import AddEnvironmentReport from '../components/AddEnvironmentReport';
 import EnvironmentService from "../services/environment.service";
 import AuthService from "../services/auth.service";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const prettyBytes = require('pretty-bytes');
 
@@ -329,6 +333,31 @@ function ProductPage() {
                                         <Typography variant="h3">{content.name}</Typography>
                                         <Typography variant="subtitle">{new Date(content.created_at).toLocaleDateString()}</Typography><br /><br />
                                         <Typography variant="body1">{content.description}</Typography>
+                                        <Accordion>
+                                            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+                                                <Typography>More information</Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <TableContainer>
+                                                    <Table>
+                                                        <TableBody>
+                                                            <TableRow>
+                                                                <TableCell>Manufacturer</TableCell>
+                                                                <TableCell>{content.brand.name}</TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>Attributes stored</TableCell>
+                                                                <TableCell>{content.attribute.length}</TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>Added to database</TableCell>
+                                                                <TableCell>{new Date(content.created_at).toLocaleDateString()}</TableCell>
+                                                            </TableRow>
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </AccordionDetails>
+                                        </Accordion>
                                     </Grid>
                                     </Grid>
                             </CardContent>
