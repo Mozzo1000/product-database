@@ -62,7 +62,7 @@ function Navbar() {
     const handleSettingsItemClick = (e) => {
         if(e === "logout") {
             AuthService.logout();
-            navigate("/login");
+            navigate("/");
         }
         handleCloseUserMenu();
     };
