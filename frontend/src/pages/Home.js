@@ -29,6 +29,10 @@ function HomePage() {
         console.log("You searched for : " + search)
         ProductService.search(search).then(
             response => {
+                if (response.data.length <= 0) {
+                    setStatusMessage("No search results found");
+                    setOpenStatusMessage(true);
+                }
                 setSearchedList(response.data);
                 console.log(searchedList);
             },
