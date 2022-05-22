@@ -22,6 +22,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -30,7 +31,8 @@ function Navbar() {
     const currentUser = AuthService.getCurrentUser()
 
     const pages = [
-        {name: 'Products', link: "/products", icon: <HomeIcon sx={{color: 'white'}} />},
+        {name: 'Home', link: '/', icon: <HomeIcon sx={{color: 'white'}} />},
+        {name: 'Products', link: "/products", icon: <InventoryIcon sx={{color: 'white'}} />},
     ];
 
     const pagesBottom = [
@@ -69,7 +71,6 @@ function Navbar() {
 
     return (
         <>
-        { currentUser &&
         <Box sx={{display: 'flex'}}>
             <AppBar position="fixed" sx={{width: { md: `calc(100% - ${240}px)` }, zIndex: 2, backgroundColor: 'white', color: 'black'}}>
                 <Container maxWidth="x1">
@@ -110,40 +111,42 @@ function Navbar() {
                             CHANGE ME TO WHERE I AM ON MOBILE
                         </Typography>
                         <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}></Box>
-                        <Box sx={{flexGrow: 0}}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                    <Avatar src={"http://localhost:5000/v1/users/storage/" + currentUser["image"]} alt="User" />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu 
-                                sx={{mt: '45px'}} 
-                                id="menu-appbar" 
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                <MenuItem component={Link} to="/settings">
-                                    <Avatar src={"http://localhost:5000/v1/users/storage/" + currentUser["image"]}/> {currentUser["name"]}
-                                </MenuItem>
-                                <Divider />
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting.name} onClick={() => handleSettingsItemClick(setting.action)}>
-                                        <ListItemIcon>{setting.icon}</ListItemIcon>
-                                        <ListItemText primary={setting.name}/>
+                        {currentUser &&
+                            <Box sx={{flexGrow: 0}}>
+                                <Tooltip title="Open settings">
+                                    <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                                        <Avatar src={"http://localhost:5000/v1/users/storage/" + currentUser["image"]} alt="User" />
+                                    </IconButton>
+                                </Tooltip>
+                                <Menu 
+                                    sx={{mt: '45px'}} 
+                                    id="menu-appbar" 
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    <MenuItem component={Link} to="/settings">
+                                        <Avatar src={"http://localhost:5000/v1/users/storage/" + currentUser["image"]}/> {currentUser["name"]}
                                     </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
+                                    <Divider />
+                                    {settings.map((setting) => (
+                                        <MenuItem key={setting.name} onClick={() => handleSettingsItemClick(setting.action)}>
+                                            <ListItemIcon>{setting.icon}</ListItemIcon>
+                                            <ListItemText primary={setting.name}/>
+                                        </MenuItem>
+                                    ))}
+                                </Menu>
+                            </Box>
+                        }
                     </Toolbar>
                     
                 </Container>
@@ -168,7 +171,7 @@ function Navbar() {
                     </List>
                     
                 </Box>
-                {currentUser["role"] === "admin" &&   
+                {currentUser && currentUser["role"] === "admin" &&   
                     <List sx={{marginTop: 'auto'}}>
                         {pagesBottom.map((page) => (
                             <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link}>
@@ -182,7 +185,6 @@ function Navbar() {
                 }
             </Drawer>
         </Box>
-        }
         </>
     )
 }

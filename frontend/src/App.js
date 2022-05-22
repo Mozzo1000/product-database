@@ -1,9 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Navbar from './components/Navbar';
+import HomePage from './pages/Home'
 import ProductsPage from './pages/Products'
-import CategoriesPage from './pages/Categories'
-import Brandspage from './pages/Brands';
 import BrandPage from './pages/Brand';
 import CategoryPage from './pages/Category';
 import ProductPage from './pages/Product';
@@ -27,7 +26,7 @@ function App() {
         </Routes>
         <Box sx={{flexGrow: 1, p: 3, paddingTop: "80px", paddingLeft: { md: "240px", sm: "0px" } }}>
           <Routes>
-            <Route index element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
+            <Route index element={<HomePage/>} />
             <Route path="/products" element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
             <Route path="/brand/:id" element={<PrivateRoute><BrandPage/></PrivateRoute>} />
             <Route path="/category/:id" element={<PrivateRoute><CategoryPage/></PrivateRoute>} />
