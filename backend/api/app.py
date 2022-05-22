@@ -11,6 +11,7 @@ from routes.product import product_endpoint
 from routes.attribute import attribute_endpoint
 from routes.document import document_endpoint
 from routes.user import user_endpoint
+from routes.environment import environment_endpoint
 
 swagger_template = {
   "swagger": "2.0",
@@ -36,6 +37,7 @@ app.register_blueprint(product_endpoint)
 app.register_blueprint(attribute_endpoint)
 app.register_blueprint(document_endpoint)
 app.register_blueprint(user_endpoint)
+app.register_blueprint(environment_endpoint)
 
 @app.route('/')
 def index():
