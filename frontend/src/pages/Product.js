@@ -47,6 +47,7 @@ import Link from '@mui/material/Link';
 import RemoveDocument from '../components/RemoveDocument';
 import AddEnvironmentReport from '../components/AddEnvironmentReport';
 import EnvironmentService from "../services/environment.service";
+import AuthService from "../services/auth.service";
 
 const prettyBytes = require('pretty-bytes');
 
@@ -66,6 +67,7 @@ function ProductPage() {
     const [anchorElHelp, setAnchorElHelp] = React.useState(null);
     const openHelp = Boolean(anchorElHelp);
     const [environmentContent, setEnvironmentContent] = useState([]);
+    const currentUser = AuthService.getCurrentUser();
 
 
     const handleClickHelp = (event) => {
@@ -244,17 +246,42 @@ function ProductPage() {
 
     const uploadFileButton = () => {
         return (
-            <>            
-            <label htmlFor="contained-button-file">
-            <Input id="contained-button-file" multiple type="file" onChange={handleFileUpload}/>
-            <Button variant="text" component="span">
-                Upload file
-            </Button>
-            </label>
-            <Button aria-describedby="popover" onClick={handleClickHelp}><HelpIcon /></Button>
+            <>
+            {currentUser && currentUser["role"] == "admin" &&
+                <>
+                <label htmlFor="contained-button-file">
+                <Input id="contained-button-file" multiple type="file" onChange={handleFileUpload}/>
+                <Button variant="text" component="span">
+                    Upload file
+                </Button>
+                </label>
+                <Button aria-describedby="popover" onClick={handleClickHelp}><HelpIcon /></Button>
+                </>
+            }
             </>
         )
     }
+
+    const addNewAttributeButton = () => {
+        return (
+            <>
+            {currentUser && currentUser["role"] == "admin" &&
+                <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>   
+            }         
+            </>
+        )
+    }
+
+    const addEnvironmentReportButton = () => {
+        return (
+            <>
+            {currentUser && currentUser["role"] == "admin" &&
+                <AddEnvironmentReport id={id}/>
+            }
+            </>
+        )
+    }
+
     return (
         <Container sx={{paddingTop: 4}}>
             {content ? (
@@ -306,8 +333,12 @@ function ProductPage() {
                                     </Grid>
                             </CardContent>
                             <CardActions>
-                                <Button size="small">Edit</Button>
-                                <Button size="small" color="error">Delete</Button>
+                                {currentUser && currentUser["role"] == "admin" &&
+                                    <>
+                                    <Button size="small">Edit</Button>
+                                    <Button size="small" color="error">Delete</Button>
+                                    </>
+                                }
                             </CardActions>
                         </Card>
                     </Grid>
@@ -319,7 +350,7 @@ function ProductPage() {
                         </Tabs>
                         <TabPanel value={tab} index={0}>
                             <Card>
-                                <CardHeader title={<Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>} />
+                                <CardHeader title={addNewAttributeButton()} />
                                 <CardContent>
                                     <TableContainer>
                                         <Table>
@@ -329,8 +360,12 @@ function ProductPage() {
                                                         <TableRow key={attribute.name}>
                                                             <TableCell>{attribute.name}</TableCell>
                                                             <TableCell>{attribute.value}</TableCell>
-                                                            <TableCell><EditProductAttribute props={attribute} /></TableCell>
-                                                            <TableCell><RemoveProductAttribute props={attribute} /></TableCell>
+                                                            {currentUser && currentUser["role"] == "admin" &&
+                                                                <>
+                                                                <TableCell><EditProductAttribute props={attribute} /></TableCell>
+                                                                <TableCell><RemoveProductAttribute props={attribute} /></TableCell>
+                                                                </>
+                                                            }
                                                         </TableRow>
                                                     ))
                                                 ) : (
@@ -345,7 +380,7 @@ function ProductPage() {
                         
                         <TabPanel value={tab} index={1}>
                             <Card>
-                                <CardHeader title={<AddEnvironmentReport id={id}/>} />
+                                <CardHeader title={addEnvironmentReportButton()} />
                                 <CardContent>
                                     <TableContainer>
                                         <Table>

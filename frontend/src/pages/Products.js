@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Container from '@mui/material/Container';
 import DataTable from '../components/DataTable';
 import ProductService from "../services/product.service";
+import AuthService from "../services/auth.service";
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
@@ -28,6 +29,8 @@ function ProductsPage() {
     const [newProductBrand, setNewProductBrand] = useState(1);
     const [newProductName, setNewProductName] = useState("");
     const [newProductDescription, setNewProductDescription] = useState("");
+    const currentUser = AuthService.getCurrentUser();
+
     document.title = "Products - product-database"
     const handleClickOpenModal = () => {
         setOpenModal(true);
@@ -124,7 +127,9 @@ function ProductsPage() {
             <GridToolbarColumnsButton />
             <GridToolbarFilterButton />
             <GridToolbarDensitySelector />
-            <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>
+            {currentUser && currentUser["role"] == "admin" && 
+                <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>
+            }
           </GridToolbarContainer>
         );
     }

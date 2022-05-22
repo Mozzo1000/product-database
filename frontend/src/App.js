@@ -27,10 +27,10 @@ function App() {
         <Box sx={{flexGrow: 1, p: 3, paddingTop: "80px", paddingLeft: { md: "240px", sm: "0px" } }}>
           <Routes>
             <Route index element={<HomePage/>} />
-            <Route path="/products" element={<PrivateRoute><ProductsPage/></PrivateRoute>} />
+            <Route path="/products" element={<ProductsPage/>} />
             <Route path="/brand/:id" element={<PrivateRoute><BrandPage/></PrivateRoute>} />
             <Route path="/category/:id" element={<PrivateRoute><CategoryPage/></PrivateRoute>} />
-            <Route path="/product/:id" element={<PrivateRoute><ProductPage/></PrivateRoute>} />
+            <Route path="/product/:id" element={<ProductPage/>} />
             <Route path="/settings" element={<PrivateRoute><SettingsPage/></PrivateRoute>} />
           </Routes>
         </Box>
