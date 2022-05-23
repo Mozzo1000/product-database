@@ -11,6 +11,7 @@ import AuthService from './services/auth.service';
 import Box from '@mui/material/Box';
 import SettingsPage from './pages/Settings';
 import AboutPage from './pages/About';
+import Footer from './components/Footer';
 
 function PrivateRoute({ children }) {
   const auth = AuthService.getCurrentUser()
@@ -21,6 +22,7 @@ const NavbarLayout = () => (
   <>
     <Navbar />
     <Outlet />
+    <Footer />
   </>
 );
 
