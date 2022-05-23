@@ -89,7 +89,7 @@ function HomePage() {
                         Easy searching
                     </Typography>
                     <Typography variant="h6" sx={{opacity: '0.4', paddingBottom: '30px'}}>
-                        Find everything you might need about computers, monitors, devices and gadgets in one easy to use search. 100% free and open.
+                        Find everything you might need about computers, monitors, devices and gadgets in just one search. 100% free and open.
                     </Typography>
                     <Grid container direction="row" spacing={3}>
                         <Grid item>
