@@ -52,28 +52,32 @@ function HomePage() {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        ProductService.search(search).then(
-            response => {
-                if (response.data.length <= 0) {
-                    setStatusMessage("No search results found");
+        if (search) {
+            ProductService.search(search).then(
+                response => {
+                    if (response.data.length <= 0) {
+                        setStatusMessage("No search results found");
+                        setOpenStatusMessage(true);
+                        setSearchedList();
+                    } else {
+                        setSearchedList(response.data);
+                    }
+                },
+                error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    setStatusMessage(resMessage);
                     setOpenStatusMessage(true);
                     setSearchedList();
-                } else {
-                    setSearchedList(response.data);
                 }
-            },
-            error => {
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
-                setSearchedList();
-            }
-        )
+            )
+        } else {
+            setSearchedList();
+        }
     }
 
     return (
