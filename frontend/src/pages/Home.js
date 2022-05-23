@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useState, useEffect }  from 'react'
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -15,11 +15,15 @@ import Box from '@mui/material/Box';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import StatsService from '../services/stats.service';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function HomePage() {
     document.title = "product-database";
     const [search, setSearch] = useState("");
     const [searchedList, setSearchedList] = useState([]);
+    const [statsProducts, setStatsProducts] = useState();
+    const [statsBrands, setStatsBrands] = useState();
 
     const [openStatusMessage, setOpenStatusMessage] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
@@ -27,6 +31,24 @@ function HomePage() {
     const handleCloseMessage = () => {
         setOpenStatusMessage(false);
     };
+
+    useEffect(() => {
+        StatsService.get().then(
+            response => {
+                setStatsProducts(response.data["products"])
+                setStatsBrands(response.data["brands"])
+            },
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                console.log(resMessage);
+            }
+        )
+      });
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -85,11 +107,23 @@ function HomePage() {
             <Box sx={{flexGrow: 1, paddingBottom: '50px'}}>
                 <Grid container sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
                     <Grid item xs={12} md={3.5} sx={{backgroundColor: '#f2f0f1', textAlign: 'center', padding: '30px', width: '200px', borderRadius: '10px', margin: '10px !important'}}>
-                        <Typography variant="h3" fontWeight={700}>1000</Typography>
+                        {statsProducts ? (
+                            <>
+                            <Typography variant="h3" fontWeight={700}>{statsProducts}</Typography>
+                            </>
+                        ) : (
+                            <CircularProgress />
+                        )}
                         <Typography variant="h6" sx={{opacity: '0.4'}}>products</Typography>
                     </Grid>
                     <Grid item xs={12} md={3.5} sx={{backgroundColor: '#f2f0f1', textAlign: 'center', padding: '30px', width: '200px', borderRadius: '10px', margin: '10px !important'}}>
-                        <Typography variant="h3" fontWeight={700}>5</Typography>
+                        {statsBrands ? (
+                            <>
+                            <Typography variant="h3" fontWeight={700}>{statsBrands}</Typography>
+                            </>
+                        ) : (
+                            <CircularProgress />
+                        )}
                         <Typography variant="h6" sx={{opacity: '0.4'}}>brands</Typography>
                     </Grid>
                 </Grid>
