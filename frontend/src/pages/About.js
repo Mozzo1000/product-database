@@ -46,12 +46,12 @@ function AboutPage() {
                     <br />
                     <Typography variant="h6">Technical information</Typography>
                     <Typography>
-                        <ul>Frontend (this website): <a href="https://reactjs.org/" target="_blank" rel="noreferrer">React</a>, <a href="https://mui.com/" target="_blank" rel="noreferrer">MUI</a></ul>
-                        <ul>Backend (API): <a href="https://python.org/" target="_blank" rel="noreferrer">Python</a>, <a href="https://github.com/pallets/flask/" target="_blank" rel="noreferrer">Flask</a></ul>
+                        <ul>Frontend: <a href="https://reactjs.org/" target="_blank" rel="noreferrer">React</a>, <a href="https://mui.com/" target="_blank" rel="noreferrer">MUI</a></ul>
+                        <ul>Backend: <a href="https://python.org/" target="_blank" rel="noreferrer">Python</a>, <a href="https://github.com/pallets/flask/" target="_blank" rel="noreferrer">Flask</a></ul>
                         <ul>Database: <a href="https://postgresql.org/" target="_blank" rel="noreferrer">PostgreSQL</a></ul>
                     </Typography>
                     <br/>
-                    <Typography>Images shown on this about page are from <a href="https://undraw.co/" target="_blank" rel="noreferrer">unDraw</a> </Typography>
+                    <Typography>Non-product images are from <a href="https://undraw.co/" target="_blank" rel="noreferrer">unDraw</a> </Typography>
                 </Grid>
                 <Grid item xs={6}>
                     <Image style={{backgroundColor: 'transparent'}} src="assets/undraw_open_source_-1-qxw.svg"/>
