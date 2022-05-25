@@ -12,6 +12,7 @@ import Box from '@mui/material/Box';
 import SettingsPage from './pages/Settings';
 import AboutPage from './pages/About';
 import Footer from './components/Footer';
+import RegisterPage from './pages/Register';
 
 function PrivateRoute({ children }) {
   const auth = AuthService.getCurrentUser()
@@ -32,6 +33,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<LoginPage/>} />
+          <Route path="/register" element={<RegisterPage/>} />
         </Routes>
         <Box sx={{flexGrow: 1, p: 3, paddingTop: "80px", paddingLeft: { md: "240px", sm: "0px" } }}>
           <Routes>
