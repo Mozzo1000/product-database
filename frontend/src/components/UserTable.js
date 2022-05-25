@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LinearProgress from '@mui/material/LinearProgress';
 import Snackbar from '@mui/material/Snackbar';
+import Avatar from '@mui/material/Avatar';
 
 function UserTable() {
     const [users, setUsers] = useState();
@@ -44,6 +45,7 @@ function UserTable() {
         <Table>
             <TableHead>
                 <TableRow>
+                    <TableCell></TableCell>
                     <TableCell>Name</TableCell>
                     <TableCell>Email</TableCell>
                     <TableCell>Role</TableCell>
@@ -54,6 +56,7 @@ function UserTable() {
                 {users ? (
                     users.map((user) => (
                         <TableRow key={user.id}>
+                            <TableCell><Avatar src={"http://localhost:5000/v1/users/storage/" + user.image} alt="User" /></TableCell>
                             <TableCell>{user.name}</TableCell>
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{user.role}</TableCell>
