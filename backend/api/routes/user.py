@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, abort, send_from_directory, curre
 from werkzeug.utils import secure_filename
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, get_jwt_identity, get_jwt)
-from models import User, UserSchema
+from models import User, UserSchema, db
 import os
 from api.utils import admin_required
 
@@ -60,3 +60,13 @@ def get_all_users():
     users = User.query.all()
     return jsonify(user_schema.dump(users))
 
+@user_endpoint.route('/v1/users/<id>', methods=["DELETE"])
+@admin_required()
+def delete_user(id):
+    user = User.query.get(id)
+    try: 
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({'message': f'User with id {id} has been removed'}), 200
+    except:
+        return jsonify({'message': 'Something went wrong'}), 500
