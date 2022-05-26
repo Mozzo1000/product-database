@@ -116,6 +116,7 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=True)
     role = db.Column(db.String, default="user")
+    status = db.Column(db.String, default="active")
 
     def save_to_db(self):
         db.session.add(self)
@@ -136,7 +137,7 @@ class User(db.Model):
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = User
-        fields = ("name", "email", "image", "role")
+        fields = ("name", "email", "image", "role", "status")
 
 
 class RevokedTokenModel(db.Model):
