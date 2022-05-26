@@ -328,163 +328,171 @@ function ProductPage() {
                                                 />
                                                 </>
                                             }
-                                        </Grid>
+                                    </Grid>
                                     <Grid item xs={12} md={6}>
-                                        <Typography variant="h3">{content.name}</Typography>
-                                        <Typography variant="subtitle">{new Date(content.created_at).toLocaleDateString()}</Typography><br /><br />
-                                        <Typography variant="body1">{content.description}</Typography>
-                                        <Accordion>
-                                            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-                                                <Typography>More information</Typography>
-                                            </AccordionSummary>
-                                            <AccordionDetails>
-                                                <TableContainer>
-                                                    <Table>
-                                                        <TableBody>
-                                                            <TableRow>
-                                                                <TableCell>Manufacturer</TableCell>
-                                                                <TableCell>{content.brand.name}</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell>Attributes stored</TableCell>
-                                                                <TableCell>{content.attribute.length}</TableCell>
-                                                            </TableRow>
-                                                            <TableRow>
-                                                                <TableCell>Added to database</TableCell>
-                                                                <TableCell>{new Date(content.created_at).toLocaleDateString()}</TableCell>
-                                                            </TableRow>
-                                                        </TableBody>
-                                                    </Table>
-                                                </TableContainer>
-                                            </AccordionDetails>
-                                        </Accordion>
+                                        <Grid container spacing={0} justifyContent="flex-start" alignItems="stretch" >
+                                            <Grid item>
+                                                <Typography variant="h3">{content.name}</Typography>
+                                                <Typography variant="subtitle">{new Date(content.created_at).toLocaleDateString()}</Typography><br /><br />
+                                            </Grid>
+                                            <Grid item>
+                                                <Typography variant="body1">{content.description}</Typography>
+                                            </Grid>
+                                            <Grid item>
+                                                <Accordion>
+                                                    <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+                                                        <Typography>More information</Typography>
+                                                    </AccordionSummary>
+                                                    <AccordionDetails>
+                                                        <TableContainer>
+                                                            <Table>
+                                                                <TableBody>
+                                                                    <TableRow>
+                                                                        <TableCell>Manufacturer</TableCell>
+                                                                        <TableCell>{content.brand.name}</TableCell>
+                                                                    </TableRow>
+                                                                    <TableRow>
+                                                                        <TableCell>Attributes stored</TableCell>
+                                                                        <TableCell>{content.attribute.length}</TableCell>
+                                                                    </TableRow>
+                                                                    <TableRow>
+                                                                        <TableCell>Added to database</TableCell>
+                                                                        <TableCell>{new Date(content.created_at).toLocaleDateString()}</TableCell>
+                                                                    </TableRow>
+                                                                </TableBody>
+                                                            </Table>
+                                                        </TableContainer>
+                                                    </AccordionDetails>
+                                                </Accordion>
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
-                                    </Grid>
+                                </Grid>
+                                <CardActions>
+                                    {currentUser && currentUser["role"] === "admin" &&
+                                        <>
+                                        <Button size="small">Edit</Button>
+                                        <Button size="small" color="error">Delete</Button>
+                                        </>
+                                    }
+                                </CardActions>
                             </CardContent>
-                            <CardActions>
-                                {currentUser && currentUser["role"] === "admin" &&
-                                    <>
-                                    <Button size="small">Edit</Button>
-                                    <Button size="small" color="error">Delete</Button>
-                                    </>
-                                }
-                            </CardActions>
                         </Card>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Tabs value={tab} onChange={handleTabChange} aria-label="tabs">
-                            <Tab label="Attributes" {...a11yProps(0)} />
-                            <Tab label="Environment" {...a11yProps(1)} />
-                            <Tab label="Documents" {...a11yProps(2)} />
-                        </Tabs>
-                        <TabPanel value={tab} index={0}>
-                            <Card>
-                                <CardHeader title={addNewAttributeButton()} />
-                                <CardContent>
-                                    <TableContainer>
-                                        <Table>
-                                            <TableBody>
-                                                {content.attribute.length > 0 ? (
-                                                    content.attribute.map((attribute) => (
-                                                        <TableRow key={attribute.name}>
-                                                            <TableCell>{attribute.name}</TableCell>
-                                                            <TableCell>{attribute.value}</TableCell>
-                                                            {currentUser && currentUser["role"] === "admin" &&
-                                                                <>
-                                                                <TableCell><EditProductAttribute props={attribute} /></TableCell>
-                                                                <TableCell><RemoveProductAttribute props={attribute} /></TableCell>
-                                                                </>
-                                                            }
-                                                        </TableRow>
-                                                    ))
-                                                ) : (
-                                                    <Typography>No attributes found</Typography>
-                                                )}
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                </CardContent>
-                            </Card>
-                        </TabPanel>
-                        
-                        <TabPanel value={tab} index={1}>
-                            <Card>
-                                <CardHeader title={addEnvironmentReportButton()} />
-                                <CardContent>
-                                    <TableContainer>
-                                        <Table>
-                                            <TableBody>
-                                                {environmentContent ? (
-                                                    <>
-                                                    <TableRow>
-                                                        <TableCell>Carbon footprint</TableCell>
-                                                        <TableCell>{environmentContent.carbon_footprint} kgCO2e</TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <TableCell>Carbon deviation</TableCell>
-                                                        <TableCell>+/- {environmentContent.carbon_deviation} kgCO2e</TableCell>
-                                                    </TableRow>
-                                                    </>
-                                                ) : (
-                                                    <Typography>No environment report data found</Typography>
-                                                )}
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                </CardContent>
-                            </Card>
-                        </TabPanel>
-
-                        <TabPanel value={tab} index={2}>
-                            <Card>
-                                <CardHeader title={uploadFileButton()} />
+                        <Grid item xs={12}>
+                            <Tabs value={tab} onChange={handleTabChange} aria-label="tabs">
+                                <Tab label="Attributes" {...a11yProps(0)} />
+                                <Tab label="Environment" {...a11yProps(1)} />
+                                <Tab label="Documents" {...a11yProps(2)} />
+                            </Tabs>
+                            <TabPanel value={tab} index={0}>
+                                <Card>
+                                    <CardHeader title={addNewAttributeButton()} />
                                     <CardContent>
-                                        <Popover id="popover" open={openHelp} anchorEl={anchorElHelp} onClose={handleCloseHelp} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
-                                            <Typography sx={{ p: 2 }}>Uploading images will add them as cover images.</Typography>
-                                        </Popover>
-                                        {loadUpload && 
-                                            <CircularProgress />
-                                        }
-                                    <TableContainer>
-                                        <Table>
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell>File</TableCell>
-                                                    <TableCell>Type</TableCell>
-                                                    <TableCell>Size</TableCell>
-                                                    <TableCell>Checksum (SHA256)</TableCell>
-                                                    <TableCell>More</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {documentContent.length > 0 ? (
-                                                    documentContent.map((document) => (
-                                                        <TableRow key={document.name}>
-                                                            {/*TODO: Remove the hardcoded api link. This is a temporary workaround because file download did not work through the proxy pass.*/}
-                                                            <TableCell component="a" href={"http://localhost:5000/v1/documents/storage/" + document.name} target="_blank">{document.name}</TableCell>
-                                                            <TableCell>{document.type}</TableCell>
-                                                            {document.size === null ? (
-                                                                <TableCell>{document.size}</TableCell>
-                                                            ): (
-                                                                <TableCell>{prettyBytes(document.size)}</TableCell>
-                                                            )}
-                                                            <TableCell>{document.checksum}</TableCell>
-                                                            {currentUser && currentUser["role"] === "admin" && 
-                                                            <TableCell>
-                                                                <RemoveDocument props={document} />
-                                                            </TableCell>
-                                                            }
+                                        <TableContainer>
+                                            <Table>
+                                                <TableBody>
+                                                    {content.attribute.length > 0 ? (
+                                                        content.attribute.map((attribute) => (
+                                                            <TableRow key={attribute.name}>
+                                                                <TableCell>{attribute.name}</TableCell>
+                                                                <TableCell>{attribute.value}</TableCell>
+                                                                {currentUser && currentUser["role"] === "admin" &&
+                                                                    <>
+                                                                    <TableCell><EditProductAttribute props={attribute} /></TableCell>
+                                                                    <TableCell><RemoveProductAttribute props={attribute} /></TableCell>
+                                                                    </>
+                                                                }
+                                                            </TableRow>
+                                                        ))
+                                                    ) : (
+                                                        <Typography>No attributes found</Typography>
+                                                    )}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </CardContent>
+                                </Card>
+                            </TabPanel>
+                            
+                            <TabPanel value={tab} index={1}>
+                                <Card>
+                                    <CardHeader title={addEnvironmentReportButton()} />
+                                    <CardContent>
+                                        <TableContainer>
+                                            <Table>
+                                                <TableBody>
+                                                    {environmentContent ? (
+                                                        <>
+                                                        <TableRow>
+                                                            <TableCell>Carbon footprint</TableCell>
+                                                            <TableCell>{environmentContent.carbon_footprint} kgCO2e</TableCell>
                                                         </TableRow>
-                                                    ))
-                                                ) : (
-                                                    <Typography>No documents found</Typography>
-                                                )}  
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                </CardContent>
-                            </Card>
-                        </TabPanel>
+                                                        <TableRow>
+                                                            <TableCell>Carbon deviation</TableCell>
+                                                            <TableCell>+/- {environmentContent.carbon_deviation} kgCO2e</TableCell>
+                                                        </TableRow>
+                                                        </>
+                                                    ) : (
+                                                        <Typography>No environment report data found</Typography>
+                                                    )}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </CardContent>
+                                </Card>
+                            </TabPanel>
+
+                            <TabPanel value={tab} index={2}>
+                                <Card>
+                                    <CardHeader title={uploadFileButton()} />
+                                        <CardContent>
+                                            <Popover id="popover" open={openHelp} anchorEl={anchorElHelp} onClose={handleCloseHelp} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
+                                                <Typography sx={{ p: 2 }}>Uploading images will add them as cover images.</Typography>
+                                            </Popover>
+                                            {loadUpload && 
+                                                <CircularProgress />
+                                            }
+                                        <TableContainer>
+                                            <Table>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell>File</TableCell>
+                                                        <TableCell>Type</TableCell>
+                                                        <TableCell>Size</TableCell>
+                                                        <TableCell>Checksum (SHA256)</TableCell>
+                                                        <TableCell>More</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {documentContent.length > 0 ? (
+                                                        documentContent.map((document) => (
+                                                            <TableRow key={document.name}>
+                                                                {/*TODO: Remove the hardcoded api link. This is a temporary workaround because file download did not work through the proxy pass.*/}
+                                                                <TableCell component="a" href={"http://localhost:5000/v1/documents/storage/" + document.name} target="_blank">{document.name}</TableCell>
+                                                                <TableCell>{document.type}</TableCell>
+                                                                {document.size === null ? (
+                                                                    <TableCell>{document.size}</TableCell>
+                                                                ): (
+                                                                    <TableCell>{prettyBytes(document.size)}</TableCell>
+                                                                )}
+                                                                <TableCell>{document.checksum}</TableCell>
+                                                                {currentUser && currentUser["role"] === "admin" && 
+                                                                <TableCell>
+                                                                    <RemoveDocument props={document} />
+                                                                </TableCell>
+                                                                }
+                                                            </TableRow>
+                                                        ))
+                                                    ) : (
+                                                        <Typography>No documents found</Typography>
+                                                    )}  
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </CardContent>
+                                </Card>
+                            </TabPanel>
+                        </Grid>
                     </Grid>
                 </Grid>
             ) : (
