@@ -10,6 +10,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LinearProgress from '@mui/material/LinearProgress';
 import Snackbar from '@mui/material/Snackbar';
 import Avatar from '@mui/material/Avatar';
+import Chip from '@mui/material/Chip';
 
 function UserTable() {
     const [users, setUsers] = useState();
@@ -49,6 +50,7 @@ function UserTable() {
                     <TableCell>Name</TableCell>
                     <TableCell>Email</TableCell>
                     <TableCell>Role</TableCell>
+                    <TableCell>Status</TableCell>
                     <TableCell>Action</TableCell>
                 </TableRow>
             </TableHead>
@@ -60,6 +62,13 @@ function UserTable() {
                             <TableCell>{user.name}</TableCell>
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{user.role}</TableCell>
+                            <TableCell>
+                                {user.status == "active" ? (
+                                    <Chip label="Active" color="success" />
+                                ): (
+                                    <Chip label="Inactive" color="error" />
+                                )}
+                            </TableCell>
                             <TableCell><MoreVertIcon /></TableCell>
                         </TableRow>
                     ))
