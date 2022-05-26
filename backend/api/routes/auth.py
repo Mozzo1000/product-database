@@ -31,13 +31,15 @@ def login():
     if not current_user:
         return jsonify({'message': 'Wrong email or password, please try again.'}), 404
 
-    if User.verify_hash(request.json["password"], current_user.password):
+    if User.verify_hash(request.json["password"], current_user.password) and current_user.status == "active":
         access_token = create_access_token(identity=request.json['email'], additional_claims={"role": current_user.role})
         refresh_token = create_refresh_token(identity=request.json['email'])
 
         return jsonify({'message': 'Logged in', 'email': current_user.email, 'name': current_user.name,
                         'image': current_user.image, 'access_token': access_token, 'refresh_token': refresh_token, 
                         'role': current_user.role}), 201
+    elif current_user.status == "inactive":
+        return jsonify({'message': 'Account has been inactivated, contact administrator for more information.'}), 403
     else:
         return jsonify({'message': 'Wrong username or password, please try again.'}), 401
 
