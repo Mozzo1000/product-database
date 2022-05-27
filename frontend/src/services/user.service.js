@@ -15,10 +15,15 @@ const getAllUsers = () => {
   return axios.get(API_URL + "users", {headers: authHeader() });
 }
 
+const deleteUser = (id) => {
+  return axios.delete(API_URL + "users/" + id, {headers: authHeader()});
+}
+
 const exportedObject = {
     getMe,
     editMe,
     getAllUsers,
+    deleteUser,
 };
 
 export default exportedObject;
