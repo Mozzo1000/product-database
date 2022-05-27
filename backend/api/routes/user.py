@@ -70,3 +70,20 @@ def delete_user(id):
         return jsonify({'message': f'User with id {id} has been removed'}), 200
     except:
         return jsonify({'message': 'Something went wrong'}), 500
+
+@user_endpoint.route('/v1/users/<id>/status', methods=["PATCH"])
+@admin_required()
+def change_user_status_by_id(id):
+    if "status" not in request.json:
+        return jsonify({
+            "error": "Bad request",
+            "message": "status not given"
+       }), 400
+    
+    user = User.query.get(id)
+    if request.json["status"] == "active" or request.json["status"] == "inactive":
+        user.status = request.json["status"]
+        user.save_to_db()
+        return jsonify({'message': 'Status changed sucessfully.'})
+    else:
+        return jsonify({'message': 'Invalid status.'}), 400
