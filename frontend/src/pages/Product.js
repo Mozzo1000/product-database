@@ -52,6 +52,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import useAlert from '../components/Alerts/useAlert';
+import FavoriteButton from '../components/FavoriteButton';
 
 const prettyBytes = require('pretty-bytes');
 
@@ -326,7 +327,14 @@ function ProductPage() {
                                     <Grid item xs={12} md={6}>
                                         <Grid container spacing={0} justifyContent="flex-start" alignItems="stretch" >
                                             <Grid item>
-                                                <Typography variant="h3">{content.name}</Typography>
+                                                <Grid container spacing={3} direction="row" alignItems="center">
+                                                    <Grid item>
+                                                        <Typography variant="h3">{content.name}</Typography>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        {currentUser && <FavoriteButton product_id={content.id} />}
+                                                    </Grid>
+                                                </Grid>
                                                 <Typography variant="subtitle">{new Date(content.created_at).toLocaleDateString()}</Typography><br /><br />
                                             </Grid>
                                             <Grid item>
