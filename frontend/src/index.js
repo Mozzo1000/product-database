@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import CssBaseline from '@mui/material/CssBaseline';
+import { SnackbarProvider } from 'material-ui-snackbar-provider';
+import Alert from './components/Alerts/Alert';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -18,7 +20,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <SnackbarProvider SnackbarComponent={Alert}>
+        <App />
+      </SnackbarProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
