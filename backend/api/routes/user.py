@@ -87,3 +87,20 @@ def change_user_status_by_id(id):
         return jsonify({'message': 'Status changed sucessfully.'})
     else:
         return jsonify({'message': 'Invalid status.'}), 400
+
+@user_endpoint.route('/v1/users/<id>/role', methods=["PATCH"])
+@admin_required()
+def change_user_role_by_id(id):
+    if "role" not in request.json:
+        return jsonify({
+            "error": "Bad request",
+            "message": "role not given"
+       }), 400
+    
+    user = User.query.get(id)
+    if request.json["role"] == "admin" or request.json["role"] == "user":
+        user.role = request.json["role"]
+        user.save_to_db()
+        return jsonify({'message': 'Role changed sucessfully.'})
+    else:
+        return jsonify({'message': 'Invalid role.'}), 400
