@@ -207,3 +207,19 @@ class Environment(db.Model):
 class EnvironmentSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Environment
+
+class Favorite(db.Model):
+    __tablename__ = "favorite"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+class FavoriteSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Favorite
