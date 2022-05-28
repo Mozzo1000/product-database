@@ -8,7 +8,7 @@ const add = (product_id) => {
 };
 
 const getAll = () => {
-  return axios.get(API_URL + "favorites", {}, { headers: authHeader() });
+  return axios.get(API_URL + "favorites", { headers: authHeader() });
 };
 
 const remove = (product_id) => {
