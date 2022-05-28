@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
 import ProductService from "../services/product.service";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -17,20 +16,16 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import StatsService from '../services/stats.service';
 import CircularProgress from '@mui/material/CircularProgress';
+import useAlert from '../components/Alerts/useAlert';
 
 function HomePage() {
     document.title = "product-database";
+    const snackbar = useAlert();
+
     const [search, setSearch] = useState("");
     const [searchedList, setSearchedList] = useState([]);
     const [statsProducts, setStatsProducts] = useState();
     const [statsBrands, setStatsBrands] = useState();
-
-    const [openStatusMessage, setOpenStatusMessage] = useState(false);
-    const [statusMessage, setStatusMessage] = useState("");
-    
-    const handleCloseMessage = () => {
-        setOpenStatusMessage(false);
-    };
 
     useEffect(() => {
         StatsService.get().then(
@@ -45,7 +40,7 @@ function HomePage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         )
       });
@@ -56,8 +51,8 @@ function HomePage() {
             ProductService.search(search).then(
                 response => {
                     if (response.data.length <= 0) {
-                        setStatusMessage("No search results found");
-                        setOpenStatusMessage(true);
+                        snackbar.showInfo("No search results found");
+                        
                         setSearchedList();
                     } else {
                         setSearchedList(response.data);
@@ -70,8 +65,7 @@ function HomePage() {
                             error.response.data.message) ||
                         error.message ||
                         error.toString();
-                    setStatusMessage(resMessage);
-                    setOpenStatusMessage(true);
+                    snackbar.showError(resMessage);
                     setSearchedList();
                 }
             )
@@ -180,7 +174,6 @@ function HomePage() {
                     </Grid>
                 </Grid>
             </Box>
-            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </Container>
     )
 }

@@ -32,7 +32,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import a11yProps from '../components/TabPanel';
 import DocumentService from "../services/document.service";
-import Snackbar from '@mui/material/Snackbar';
 import MobileStepper from '@mui/material/MobileStepper';
 import SwipeableViews from 'react-swipeable-views';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -52,18 +51,19 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import useAlert from '../components/Alerts/useAlert';
 
 const prettyBytes = require('pretty-bytes');
 
 function ProductPage() {
+    const snackbar = useAlert();
+
     const [content, setContent] = useState();
     let { id } = useParams()
     const [tab, setTab] = useState(0);
     const [openModal, setOpenModal] = useState(false);
     const [newAttributeName, setNewAttributeName] = useState();
     const [newAttributeValue, setNewAttributeValue] = useState();
-    const [openStatusMessage, setOpenStatusMessage] = useState(false);
-    const [statusMessage, setStatusMessage] = useState("");
     const [loadUpload, setLoadUpload] = useState(false);
     const [documentContent, setDocumentContent] = useState([]);
     const [imageContent, setImageContent] = useState([]);
@@ -110,10 +110,6 @@ function ProductPage() {
         setOpenModal(false);
     };
 
-    const handleCloseMessage = () => {
-        setOpenStatusMessage(false);
-    };
-
     const handleFileUpload = (e) => {
         const fileData = e.target.files[0];
         if (fileData) {
@@ -123,8 +119,7 @@ function ProductPage() {
             data.append('product_id', id);
             DocumentService.addDocument(data, id).then(
                 response => {
-                    setStatusMessage(response.data.message);
-                    setOpenStatusMessage(true);
+                    snackbar.showSuccess(response.data.message);
                     setLoadUpload(false);
                     DocumentService.getAllDocuments(id).then(
                         response => {
@@ -137,7 +132,7 @@ function ProductPage() {
                                     error.response.data.message) ||
                                 error.message ||
                                 error.toString();
-                            console.log(resMessage);
+                            snackbar.showError(resMessage);
                         }
                     )
                 },
@@ -148,8 +143,7 @@ function ProductPage() {
                             error.response.data.message) ||
                         error.message ||
                         error.toString();
-                    setStatusMessage(resMessage);
-                    setOpenStatusMessage(true);
+                    snackbar.showError(resMessage);
                     setLoadUpload(false);
                 }
             )
@@ -172,7 +166,7 @@ function ProductPage() {
                                 error.response.data.message) ||
                             error.message ||
                             error.toString();
-                        console.log(resMessage);
+                        snackbar.showError(resMessage);
                     }
                 )
             },
@@ -183,7 +177,7 @@ function ProductPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         );
     }
@@ -201,7 +195,7 @@ function ProductPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         )
         DocumentService.getAllDocuments(id).then(
@@ -215,7 +209,7 @@ function ProductPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         )
         DocumentService.getAllDocuments(id, "?type=image/").then(
@@ -229,7 +223,7 @@ function ProductPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         )
         EnvironmentService.getEnvironment(id).then(
@@ -243,7 +237,7 @@ function ProductPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         )
       }, [id]);
@@ -517,7 +511,6 @@ function ProductPage() {
                     </form>
                 </FormControl>
             </Dialog>
-            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </Container>
     )
 }

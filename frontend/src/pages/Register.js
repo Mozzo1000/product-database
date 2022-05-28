@@ -7,33 +7,28 @@ import './Login.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AuthService from "../services/auth.service";
-import Snackbar from '@mui/material/Snackbar';
 import { useNavigate, Link } from 'react-router-dom';
 import ParticleBackground from '../components/ParticleBackground';
 import LinkMUI from '@mui/material/Link';
+import useAlert from '../components/Alerts/useAlert';
 
 function RegisterPage(props) {
     document.title = "Register - product-database";
+    const snackbar = useAlert();
+
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [passwordConf, setPasswordConf] = useState();
     const [passwordError, setPasswordError] = useState();
     const [registerButtonDisabled, setRegisterButtonDisabled] = useState(true);
-    const [openStatusMessage, setOpenStatusMessage] = useState(false);
-    const [statusMessage, setStatusMessage] = useState("");
     let navigate = useNavigate();
-
-    const handleCloseMessage = () => {
-        setOpenStatusMessage(false);
-    };
 
     const handleRegistration = (e) => {
         e.preventDefault();
         AuthService.register(email, name, password).then(
             response => {
-                setStatusMessage(response.data["message"]);
-                setOpenStatusMessage(true);
+                snackbar.showSuccess(response.data.message);
                 setName("");
                 setEmail("");
                 setPassword("");
@@ -46,8 +41,7 @@ function RegisterPage(props) {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
     }
@@ -109,7 +103,6 @@ function RegisterPage(props) {
                     </Grid>
                 </Grid>
             </Grid>
-            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </Container>
     )
 }

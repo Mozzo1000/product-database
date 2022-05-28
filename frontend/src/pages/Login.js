@@ -7,22 +7,18 @@ import './Login.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AuthService from "../services/auth.service";
-import Snackbar from '@mui/material/Snackbar';
 import { useNavigate, Link } from 'react-router-dom';
 import ParticleBackground from '../components/ParticleBackground';
 import LinkMUI from '@mui/material/Link';
+import useAlert from '../components/Alerts/useAlert';
 
 function LoginPage(props) {
     document.title = "Login - product-database";
+    const snackbar = useAlert();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [openStatusMessage, setOpenStatusMessage] = useState(false);
-    const [statusMessage, setStatusMessage] = useState("");
     let navigate = useNavigate();
-
-    const handleCloseMessage = () => {
-        setOpenStatusMessage(false);
-    };
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -37,8 +33,7 @@ function LoginPage(props) {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
     }
@@ -75,7 +70,6 @@ function LoginPage(props) {
                     </Grid>
                 </Grid>
             </Grid>
-            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </Container>
     )
 }

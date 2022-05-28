@@ -4,8 +4,11 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import { FormControl } from '@mui/material';
+import useAlert from './Alerts/useAlert';
 
 function BrandSelection(props) {
+    const snackbar = useAlert();
+
     const [content, setContent] = useState();
 
     useEffect(() => {
@@ -20,7 +23,7 @@ function BrandSelection(props) {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         )
       }, []);

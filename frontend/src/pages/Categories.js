@@ -13,8 +13,11 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import { GridToolbarContainer, GridToolbarExport, gridClasses, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarDensitySelector} from '@mui/x-data-grid';
+import useAlert from '../components/Alerts/useAlert';
 
 function CategoriesPage() {
+    const snackbar = useAlert();
+
     const [content, setContent] = useState();
     const [pageSize] = React.useState(10);
     const [openModal, setOpenModal] = useState(false);
@@ -53,7 +56,7 @@ function CategoriesPage() {
                                 error.response.data.message) ||
                             error.message ||
                             error.toString();
-                        console.log(resMessage);
+                        snackbar.showError(resMessage);
                     }
                 )
             },
@@ -64,7 +67,7 @@ function CategoriesPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         );
     }

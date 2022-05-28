@@ -9,8 +9,11 @@ import CardActions from '@mui/material/CardActions';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import useAlert from '../components/Alerts/useAlert';
 
 function BrandPage() {
+    const snackbar = useAlert();
+
     const [content, setContent] = useState();
     let { id } = useParams()
 
@@ -26,7 +29,7 @@ function BrandPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         )
       }, [id]);

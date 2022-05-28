@@ -8,18 +8,18 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import DocumentService from "../services/document.service";
-import Snackbar from '@mui/material/Snackbar';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import useAlert from './Alerts/useAlert';
 
 function RemoveDocument(props) {
+    const snackbar = useAlert();
+
     const [openModal, setOpenModal] = useState(false);
-    const [openStatusMessage, setOpenStatusMessage] = useState(false);
-    const [statusMessage, setStatusMessage] = useState("");
     const [anchorElDocMore, setAnchorElDocMore] = React.useState(null);
     const openDocMore = Boolean(anchorElDocMore);
 
@@ -29,10 +29,6 @@ function RemoveDocument(props) {
 
     const handleCloseModal = () => {
         setOpenModal(false);
-    };
-
-    const handleCloseMessage = () => {
-        setOpenStatusMessage(false);
     };
 
     const handleClickDocMore = (event) => {
@@ -48,8 +44,8 @@ function RemoveDocument(props) {
         DocumentService.removeDocument(props.props.id).then(
             response => {
                 setOpenModal(false);
-                setStatusMessage(response.data.message + ". Please refresh the page");
-                setOpenStatusMessage(true);
+                // TODO: Update the state with new data automatically instead of prompting the user to refresh the page.
+                snackbar.showSuccess(response.data.message + ". Please refresh the page");
             },
             error => {
                 const resMessage =
@@ -58,8 +54,7 @@ function RemoveDocument(props) {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
     }
@@ -90,7 +85,6 @@ function RemoveDocument(props) {
                     </form>
                 </FormControl>
             </Dialog>
-            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </>
     )
 }

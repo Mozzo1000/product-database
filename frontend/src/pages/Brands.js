@@ -13,8 +13,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
+import useAlert from '../components/Alerts/useAlert';
 
 function Brandspage() {
+    const snackbar = useAlert();
+
     const [content, setContent] = useState();
     const [pageSize] = React.useState(10);
     const [openModal, setOpenModal] = useState(false);
@@ -54,7 +57,7 @@ function Brandspage() {
                                 error.response.data.message) ||
                             error.message ||
                             error.toString();
-                        console.log(resMessage);
+                        snackbar.showError(resMessage);
                     }
                 )
             },
@@ -65,7 +68,7 @@ function Brandspage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         );
     }
@@ -82,7 +85,7 @@ function Brandspage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         )
       }, []);

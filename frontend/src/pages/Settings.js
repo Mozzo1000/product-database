@@ -13,15 +13,17 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Snackbar from '@mui/material/Snackbar';
 import UserService from '../services/user.service'
 import { styled } from '@mui/material/styles';
 import AuthService from '../services/auth.service'
 import CategoriesPage from './Categories';
 import BrandsPage from './Brands';
 import UserTable from '../components/UserTable';
+import useAlert from '../components/Alerts/useAlert';
 
 function SettingsPage() {
+    const snackbar = useAlert();
+
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [newPassword, setNewPassword] = useState();
@@ -29,8 +31,6 @@ function SettingsPage() {
     const [passwordError, setPasswordError] = useState();
     const [profileImage, setProfileImage] = useState();
     const [tab, setTab] = useState(0);
-    const [openStatusMessage, setOpenStatusMessage] = useState(false);
-    const [statusMessage, setStatusMessage] = useState("");
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
     const [savePasswordButtonDisabled, setSavePasswordButtonDisabled] = useState(true);
     const currentUser = AuthService.getCurrentUser();
@@ -41,15 +41,10 @@ function SettingsPage() {
         setTab(newTab);
     };
 
-    const handleCloseMessage = () => {
-        setOpenStatusMessage(false);
-    };
-
     const handleSavePasswordSettings = () => {
         UserService.editMe({'password': newPassword}).then(
             response => {
-                setStatusMessage(response.data.message);
-                setOpenStatusMessage(true);
+                snackbar.showSuccess(response.data.message);
                 setSaveButtonDisabled(true);
                 setNewPassword("");
                 setNewPasswordConf("");
@@ -61,8 +56,7 @@ function SettingsPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
     }
@@ -70,8 +64,7 @@ function SettingsPage() {
     const handleSaveSettings = () => {
         UserService.editMe({name, email}).then(
             response => {
-                setStatusMessage(response.data.message);
-                setOpenStatusMessage(true);
+                snackbar.showSuccess(response.data.message);
                 setSaveButtonDisabled(true);
             },
             error => {
@@ -82,8 +75,7 @@ function SettingsPage() {
                     error.message ||
                     error.toString();
                 console.log(resMessage);
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
     };
@@ -121,8 +113,7 @@ function SettingsPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
       }, []);
@@ -139,9 +130,7 @@ function SettingsPage() {
             data.append('image', fileData);
             UserService.editMe(data).then(
                 response => {
-                    console.log(response.data);
-                    setStatusMessage(response.data.message);
-                    setOpenStatusMessage(true);
+                    snackbar.showSuccess(response.data.message);
                     UserService.getMe().then(
                         response => {
                             setName(response.data.name);
@@ -155,8 +144,7 @@ function SettingsPage() {
                                     error.response.data.message) ||
                                 error.message ||
                                 error.toString();
-                            setStatusMessage(resMessage);
-                            setOpenStatusMessage(true);
+                            snackbar.showError(resMessage);
                         }
                     )
                 },
@@ -167,8 +155,7 @@ function SettingsPage() {
                             error.response.data.message) ||
                         error.message ||
                         error.toString();
-                    setStatusMessage(resMessage);
-                    setOpenStatusMessage(true);
+                    snackbar.showError(resMessage);
                 }
             )
         }
@@ -245,8 +232,6 @@ function SettingsPage() {
             <TabPanel value={tab} index={3}>
                 <UserTable />
             </TabPanel>
-
-            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </Container>
     )
 }

@@ -9,12 +9,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import AttributeService from "../services/attribute.service";
-import Snackbar from '@mui/material/Snackbar';
+import useAlert from './Alerts/useAlert';
 
 function RemoveProductAttribute(props) {
+    const snackbar = useAlert();
+
     const [openModal, setOpenModal] = useState(false);
-    const [openStatusMessage, setOpenStatusMessage] = useState(false);
-    const [statusMessage, setStatusMessage] = useState("");
 
     const handleClickOpenModal = () => {
         setOpenModal(true);
@@ -24,17 +24,13 @@ function RemoveProductAttribute(props) {
         setOpenModal(false);
     };
 
-    const handleCloseMessage = () => {
-        setOpenStatusMessage(false);
-    };
-
     const handleRemoveAttribute = (e) => {
         e.preventDefault();
         AttributeService.removeAttribute(props.props.id).then(
             response => {
                 setOpenModal(false);
-                setStatusMessage(response.data.message + ". Please refresh the page");
-                setOpenStatusMessage(true);
+                // TODO: Update the state with new data automatically instead of prompting the user to refresh the page.
+                snackbar.showSuccess(response.data.message + ". Please refresh the page");
             },
             error => {
                 const resMessage =
@@ -43,8 +39,7 @@ function RemoveProductAttribute(props) {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
     }
@@ -68,7 +63,6 @@ function RemoveProductAttribute(props) {
                     </form>
                 </FormControl>
             </Dialog>
-            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </div>
     )
 }

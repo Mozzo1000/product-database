@@ -7,19 +7,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import LinearProgress from '@mui/material/LinearProgress';
-import Snackbar from '@mui/material/Snackbar';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import UserTableActionMenu from './UserTableActionMenu';
+import useAlert from './Alerts/useAlert';
 
 function UserTable() {
+    const snackbar = useAlert();
     const [users, setUsers] = useState();
-    const [openStatusMessage, setOpenStatusMessage] = useState(false);
-    const [statusMessage, setStatusMessage] = useState("");
-
-    const handleCloseMessage = () => {
-        setOpenStatusMessage(false);
-    };
 
     const loadUsers = () => {
         UserService.getAllUsers().then(
@@ -34,8 +29,7 @@ function UserTable() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
     }
@@ -53,8 +47,7 @@ function UserTable() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
       }, []);
@@ -99,7 +92,6 @@ function UserTable() {
             </TableBody>
         </Table>
     </TableContainer>
-    <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
     </>
   )
 }

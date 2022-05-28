@@ -20,8 +20,11 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import Typography from '@mui/material/Typography';
 import LinkMUI from '@mui/material/Link';
 import Image from 'material-ui-image'
+import useAlert from '../components/Alerts/useAlert';
 
 function ProductsPage() {
+    const snackbar = useAlert();
+
     const [content, setContent] = useState();
     const [pageSize] = React.useState(10);
     const [openModal, setOpenModal] = useState(false);
@@ -87,7 +90,7 @@ function ProductsPage() {
                                 error.response.data.message) ||
                             error.message ||
                             error.toString();
-                        console.log(resMessage);
+                        snackbar.showError(resMessage);
                     }
                 )
             },
@@ -115,7 +118,7 @@ function ProductsPage() {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                console.log(resMessage);
+                snackbar.showError(resMessage);
             }
         )
       }, []);

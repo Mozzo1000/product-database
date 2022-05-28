@@ -8,14 +8,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import AttributeService from "../services/attribute.service";
-import Snackbar from '@mui/material/Snackbar';
+import useAlert from './Alerts/useAlert';
 
 function EditProductAttribute(props) {
+    const snackbar = useAlert();
+
     const [openModal, setOpenModal] = useState(false);
     const [editAttributeName, setEditAttributeName] = useState(props.props.name);
     const [editAttributeValue, setEditAttributeValue] = useState(props.props.value);
-    const [openStatusMessage, setOpenStatusMessage] = useState(false);
-    const [statusMessage, setStatusMessage] = useState("");
 
     const handleClickOpenModal = () => {
         setOpenModal(true);
@@ -25,17 +25,13 @@ function EditProductAttribute(props) {
         setOpenModal(false);
     };
 
-    const handleCloseMessage = () => {
-        setOpenStatusMessage(false);
-    };
-
     const handleEditAttribute = (e) => {
         e.preventDefault();
         AttributeService.editAttribute(props.props.id, editAttributeName, editAttributeValue).then(
             response => {
                 setOpenModal(false);
-                setStatusMessage(response.data.message + ". Please refresh the page");
-                setOpenStatusMessage(true);
+                // TODO: Update the state with new data automatically instead of prompting the user to refresh the page.
+                snackbar.showSuccess(response.data.message + ". Please refresh the page");
             },
             error => {
                 const resMessage =
@@ -44,8 +40,7 @@ function EditProductAttribute(props) {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
     }
@@ -68,7 +63,6 @@ function EditProductAttribute(props) {
                     </form>
                 </FormControl>
             </Dialog>
-            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </div>
     )
 }

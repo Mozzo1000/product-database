@@ -8,11 +8,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import EnvironmentService from "../services/environment.service";
-import Snackbar from '@mui/material/Snackbar';
 import Divider from '@mui/material/Divider';
 import Chip from '@mui/material/Chip';
+import useAlert from './Alerts/useAlert';
 
 function AddEnvironmentReport(props) {
+    const snackbar = useAlert();
+
     const [openModal, setOpenModal] = useState(false);
 
     const [carbonFootPrintValue, setCarbonFootprintValue] = useState();
@@ -30,19 +32,12 @@ function AddEnvironmentReport(props) {
     const [screensizeAssumption, setScreensizeAssumption] = useState();
     const [energyDemandAssumption, setEnergyDemandAssumption] = useState();
 
-    const [openStatusMessage, setOpenStatusMessage] = useState(false);
-    const [statusMessage, setStatusMessage] = useState("");
-
     const handleClickOpenModal = () => {
         setOpenModal(true);
     };
 
     const handleCloseModal = () => {
         setOpenModal(false);
-    };
-
-    const handleCloseMessage = () => {
-        setOpenStatusMessage(false);
     };
 
     const handleAddEnvironment = (e) => {
@@ -56,8 +51,8 @@ function AddEnvironmentReport(props) {
                                             carbonUse, screensizeAssumption, energyDemandAssumption).then(
             response => {
                 setOpenModal(false);
-                setStatusMessage(response.data.message + ". Please refresh the page");
-                setOpenStatusMessage(true);
+                // TODO: Update the state with new data automatically instead of prompting the user to refresh the page.
+                snackbar.showSuccess(response.data.message + ". Please refresh the page");
             },
             error => {
                 const resMessage =
@@ -66,8 +61,7 @@ function AddEnvironmentReport(props) {
                         error.response.data.message) ||
                     error.message ||
                     error.toString();
-                setStatusMessage(resMessage);
-                setOpenStatusMessage(true);
+                snackbar.showError(resMessage);
             }
         )
     }
@@ -110,7 +104,6 @@ function AddEnvironmentReport(props) {
                     </form>
                 </FormControl>
             </Dialog>
-            <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </div>
     )
 }
