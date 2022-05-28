@@ -23,12 +23,17 @@ const changeUserStatus = (id, status) => {
   return axios.patch(API_URL + "users/" + id + "/status", {"status": status}, {headers: authHeader()});
 }
 
+const changeUserRole = (id, role) => {
+  return axios.patch(API_URL + "users/" + id + "/role", {"role": role}, {headers: authHeader()});
+}
+
 const exportedObject = {
     getMe,
     editMe,
     getAllUsers,
     deleteUser,
     changeUserStatus,
+    changeUserRole,
 };
 
 export default exportedObject;
