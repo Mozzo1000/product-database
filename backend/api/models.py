@@ -214,6 +214,7 @@ class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    product = db.relationship("Product", uselist=False, backref="product")
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     def save_to_db(self):
@@ -221,5 +222,7 @@ class Favorite(db.Model):
         db.session.commit()
 
 class FavoriteSchema(ma.SQLAlchemyAutoSchema):
+    product = ma.Nested(ProductSchema, many=False, only=("brand.name","category.name", "name", "description", "cover_image",))
+
     class Meta:
         model = Favorite
