@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState }  from 'react'
 import UserService from '../services/user.service'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
@@ -15,6 +15,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import TrafficIcon from '@mui/icons-material/Traffic';
 import Snackbar from '@mui/material/Snackbar';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 
 function UserTableActionMenu(props) {
 
@@ -92,6 +94,33 @@ function UserTableActionMenu(props) {
         )
     }
 
+    const handleChangeUserRole = (id, role) => {
+        let newRole = "";
+        if (role === "admin") {
+            newRole = "user"
+        } else if (role === "user") {
+            newRole = "admin"
+        }
+        UserService.changeUserRole(id, newRole).then(
+            response => {
+                setStatusMessage(response.data["message"]);
+                setOpenStatusMessage(true);
+                handleClose();
+                props.callback();
+            },
+            error => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                setStatusMessage(resMessage);
+                setOpenStatusMessage(true);
+            }
+        )
+    }
+
     return (
         <>
         <IconButton onClick={handleClick}>
@@ -103,7 +132,19 @@ function UserTableActionMenu(props) {
                     <TrafficIcon />
                 </ListItemIcon>
                 <ListItemText>
-                    Change status to {props.user.status == "active" ? "inactive" : "active"}
+                    Change status to {props.user.status === "active" ? "inactive" : "active"}
+                </ListItemText>
+            </MenuItem>
+            <MenuItem onClick={() => handleChangeUserRole(props.user.id, props.user.role)}>
+                <ListItemIcon>
+                    {props.user.role === "admin" ? <ArrowCircleDownIcon /> : <ArrowCircleUpIcon />}
+                </ListItemIcon>
+                <ListItemText>
+                    {props.user.role === "admin" ? (
+                        "Demote to user"
+                    ): (
+                        "Promote to admin"
+                    )} 
                 </ListItemText>
             </MenuItem>
             <MenuItem onClick={handleDeleteConfirmationOpen}>
