@@ -222,7 +222,7 @@ class Favorite(db.Model):
         db.session.commit()
 
 class FavoriteSchema(ma.SQLAlchemyAutoSchema):
-    product = ma.Nested(ProductSchema, many=False, only=("brand.name","category.name", "name", "description", "cover_image",))
+    product = ma.Nested(ProductSchema, many=False, only=("brand.name","category.name", "name", "description", "cover_image", "id",))
 
     class Meta:
         model = Favorite
