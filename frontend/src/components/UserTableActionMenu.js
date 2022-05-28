@@ -17,8 +17,10 @@ import TrafficIcon from '@mui/icons-material/Traffic';
 import Snackbar from '@mui/material/Snackbar';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+import useAlert from './Alerts/useAlert';
 
 function UserTableActionMenu(props) {
+    const snackbar = useAlert()
 
     const [openStatusMessage, setOpenStatusMessage] = useState(false);
     const [statusMessage, setStatusMessage] = useState("");
@@ -76,8 +78,7 @@ function UserTableActionMenu(props) {
         }
         UserService.changeUserStatus(id, newStatus).then(
             response => {
-                setStatusMessage(response.data["message"]);
-                setOpenStatusMessage(true);
+                snackbar.showSuccess(response.data["message"])
                 handleClose();
                 props.callback();
             },
@@ -170,7 +171,6 @@ function UserTableActionMenu(props) {
                 <Button onClick={() => handleDeleteUser(props.user.id)} color="error" autofocus >Yes</Button>
             </DialogActions>
         </Dialog>
-        <Snackbar open={openStatusMessage} autoHideDuration={6000} onClose={handleCloseMessage} message={statusMessage} />
         </>
     )
 }
