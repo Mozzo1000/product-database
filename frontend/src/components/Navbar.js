@@ -23,6 +23,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import LoginIcon from '@mui/icons-material/Login';
 import InfoIcon from '@mui/icons-material/Info';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -34,6 +35,7 @@ function Navbar() {
     const pages = [
         {name: 'Home', link: '/', icon: <HomeIcon sx={{color: 'white'}} />},
         {name: 'Products', link: "/products", icon: <InventoryIcon sx={{color: 'white'}} />},
+        {name: 'Favorites', link: '/favorites', icon: <FavoriteIcon sx={{color: 'white'}} />},
         {name: 'About', link: '/about', icon: <InfoIcon sx={{color: 'white'}} />},
     ];
 

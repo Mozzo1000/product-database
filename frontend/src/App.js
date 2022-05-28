@@ -13,6 +13,7 @@ import SettingsPage from './pages/Settings';
 import AboutPage from './pages/About';
 import Footer from './components/Footer';
 import RegisterPage from './pages/Register';
+import FavoriteTable from './components/FavoriteTable';
 
 function PrivateRoute({ children }) {
   const auth = AuthService.getCurrentUser()
@@ -44,6 +45,7 @@ function App() {
               <Route path="/category/:id" element={<PrivateRoute><CategoryPage/></PrivateRoute>} />
               <Route path="/product/:id" element={<ProductPage/>} />
               <Route path="/settings" element={<PrivateRoute><SettingsPage/></PrivateRoute>} />
+              <Route path="/favorites" element={<PrivateRoute><FavoriteTable/></PrivateRoute>} />
               <Route path="/about" element={<AboutPage />} />
             </Route>
           </Routes>
