@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import Snackbar from '@mui/material/Snackbar';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@material-ui/icons/Close'
 
 export default function CustomSnackbar ({
     message,
@@ -12,15 +14,27 @@ export default function CustomSnackbar ({
     customParameters
     }) {
     return (
-        <Snackbar autoHideDuration={6000} {...SnackbarProps}>
+        <Snackbar {...SnackbarProps}>
         <Alert
             severity={customParameters?.type}
-            action={action != null && (
-            <Button color='inherit' size='small' {...ButtonProps}>
-                {action}
-            </Button>
-            )}>
+            action={
+                <>
+                  {action != null && (
+                    <Button color='secondary' size='small' {...ButtonProps}>
+                      {action}
+                    </Button>
+                  )}
+                  <IconButton
+                    aria-label='close'
+                    color='inherit'
+                    size='small'
+                    onClick={SnackbarProps.onClose}>
+                    <CloseIcon />
+                  </IconButton>
+                </>
+              }>
             {message}
+            
         </Alert>
         </Snackbar>
     )
