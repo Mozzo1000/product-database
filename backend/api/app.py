@@ -13,6 +13,7 @@ from routes.document import document_endpoint
 from routes.user import user_endpoint
 from routes.environment import environment_endpoint
 from routes.stats import stats_endpoint
+from routes.favorite import favorite_endpoint
 
 swagger_template = {
   "swagger": "2.0",
@@ -40,6 +41,7 @@ app.register_blueprint(document_endpoint)
 app.register_blueprint(user_endpoint)
 app.register_blueprint(environment_endpoint)
 app.register_blueprint(stats_endpoint)
+app.register_blueprint(favorite_endpoint)
 
 @app.route('/')
 def index():
