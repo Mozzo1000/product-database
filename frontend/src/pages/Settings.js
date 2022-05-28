@@ -165,10 +165,12 @@ function SettingsPage() {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={tab} onChange={handleTabChange} aria-label="tabs">
                     <Tab label="Account" {...a11yProps(0)} />
-                    <Tab label="Category" {...a11yProps(1)} />
-                    <Tab label="Brand" {...a11yProps(2)} />
                     {currentUser["role"] === "admin" &&
+                    <>
+                        <Tab label="Category" {...a11yProps(1)} />
+                        <Tab label="Brand" {...a11yProps(2)} />
                         <Tab label="Users" {...a11yProps(3)} />
+                    </>
                     }
                 </Tabs>
             </Box>
