@@ -16,6 +16,7 @@ function FavoriteButton(props) {
             FavoriteService.remove(props.product_id).then(
                 response => {
                     snackbar.showSuccess(response.data.message);
+                    props.onRemove();
                 },
                 error => {
                     const resMessage =
@@ -32,6 +33,7 @@ function FavoriteButton(props) {
             FavoriteService.add(props.product_id).then(
                 response => {
                     snackbar.showSuccess(response.data.message);
+                    props.onAdd();
                 },
                 error => {
                     const resMessage =
