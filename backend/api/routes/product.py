@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models import Product, ProductSchema, db
+from api.utils import admin_required
 
 product_endpoint = Blueprint('product', __name__)
 
@@ -25,6 +26,7 @@ def get_products():
     return jsonify(product_schema.dump(products))
 
 @product_endpoint.route("/v1/products", methods=["POST"])
+@admin_required()
 def add_product():
     if not "name" in request.json:
         return jsonify({
@@ -46,6 +48,7 @@ def add_product():
     }, 201
 
 @product_endpoint.route('/v1/products/<id>', methods=["DELETE"])
+@admin_required()
 def remove_product(id):
     product = Product.query.get(id)
     try: 

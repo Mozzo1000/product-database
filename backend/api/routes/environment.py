@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models import Environment, EnvironmentSchema, db
+from api.utils import admin_required
 
 environment_endpoint = Blueprint('environment', __name__)
 
@@ -10,6 +11,7 @@ def get_environment(id):
     return jsonify(environment_schema.dump(environment))
 
 @environment_endpoint.route("/v1/environments", methods=["POST"])
+@admin_required()
 def add_environment():
     if not "product_id" and "carbon_footprint" and "carbon_deviation" and \
         "weight_kg_assumption" and "lifetime_year_assumption" and "use_location_assumption" and \
@@ -71,6 +73,7 @@ def add_environment():
     }, 201
 
 @environment_endpoint.route('/v1/environments/<id>', methods=["DELETE"])
+@admin_required()
 def remove_environment(id):
     environment = Environment.query.get(id)
     try: 

@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models import Category, CategorySchema, db
+from api.utils import admin_required
 
 category_endpoint = Blueprint('category', __name__)
 
@@ -16,6 +17,7 @@ def get_categories():
     return jsonify(category_schema.dump(categories))
 
 @category_endpoint.route("/v1/categories", methods=["POST"])
+@admin_required()
 def add_category():
     if not "name" in request.json:
         return jsonify({
@@ -34,6 +36,7 @@ def add_category():
         return jsonify({'message': 'Something went wrong'}), 500
 
 @category_endpoint.route('/v1/categories/<id>', methods=["DELETE"])
+@admin_required()
 def remove_category(id):
     category = Category.query.get(id)
     try: 

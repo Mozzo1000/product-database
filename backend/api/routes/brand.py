@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models import Brand, BrandSchema, db
+from api.utils import admin_required
 
 brand_endpoint = Blueprint('brand', __name__)
 
@@ -40,6 +41,7 @@ def get_brands():
     return jsonify(brand_schema.dump(brands))
 
 @brand_endpoint.route("/v1/brands", methods=["POST"])
+@admin_required()
 def add_brand():
     """
         Add brand
@@ -75,6 +77,7 @@ def add_brand():
         return jsonify({'message': 'Something went wrong'}), 500
 
 @brand_endpoint.route('/v1/brands/<id>', methods=["DELETE"])
+@admin_required()
 def remove_brand(id):
     """
         Remove brand

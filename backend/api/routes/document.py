@@ -6,6 +6,7 @@ import mimetypes
 import hashlib
 import platform
 from datetime import datetime
+from api.utils import admin_required
 
 document_endpoint = Blueprint('document', __name__)
 
@@ -28,6 +29,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in current_app.config["ALLOWED_EXTENSIONS"]
 
 @document_endpoint.route("/v1/documents", methods=["POST"])
+@admin_required()
 def add_document():
     if "file" not in request.files:
         return jsonify({
@@ -87,6 +89,7 @@ def add_document():
             }), 400
 
 @document_endpoint.route('/v1/documents/<id>', methods=["DELETE"])
+@admin_required()
 def remove_document(id):
     #Note, we are not removing the file from the filessytem.
     document = Document.query.get(id)

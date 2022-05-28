@@ -1,9 +1,11 @@
 from flask import Blueprint, request, jsonify
 from models import Attribute, AttributeSchema, db
+from api.utils import admin_required
 
 attribute_endpoint = Blueprint('attribute', __name__)
 
 @attribute_endpoint.route('/v1/attributes/<id>', methods=["PUT"])
+@admin_required()
 def edit_attribute(id):
     if not "name" and "value" in request.json:
         return jsonify({
@@ -29,6 +31,7 @@ def get_attributes():
     return jsonify(attribute_schema.dump(attributes))
 
 @attribute_endpoint.route("/v1/attributes", methods=["POST"])
+@admin_required()
 def add_attribute():
     if not "name" in request.json:
         return jsonify({
@@ -46,6 +49,7 @@ def add_attribute():
     }, 201
 
 @attribute_endpoint.route('/v1/attributes/<id>', methods=["DELETE"])
+@admin_required()
 def remove_attribute(id):
     attribute = Attribute.query.get(id)
     try: 
