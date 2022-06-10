@@ -12,8 +12,7 @@ const getAllDocuments = (product_id, filter) => {
 };
 
 const addDocument = (data) => {
-  return axios.post(API_URL + "documents", data, {
-  }, { headers: authHeader() });
+  return axios.post(API_URL + "documents", data, { headers: authHeader() });
 };
 
 const removeDocument = (document_id) => {
