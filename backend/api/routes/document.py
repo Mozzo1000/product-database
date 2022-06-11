@@ -49,7 +49,7 @@ def add_document():
             "message": "file is empty"
         }), 400
     if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
+        filename = secure_filename(os.path.basename(file.filename))
         filetype = mimetypes.guess_type(filename)[0]
         if filetype:
             file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
