@@ -2,3 +2,4 @@
 *.pyc
 backend/documents/*
 backend/profiles/*
+tools/*.csv
