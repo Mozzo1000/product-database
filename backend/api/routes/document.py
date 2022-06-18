@@ -7,6 +7,7 @@ import hashlib
 import platform
 from datetime import datetime
 from api.utils import admin_required
+from sqlalchemy.exc import IntegrityError
 
 document_endpoint = Blueprint('document', __name__)
 
@@ -71,13 +72,18 @@ def add_document():
                     file_creation_date = datetime.utcfromtimestamp(stat.st_birthtime).strftime('%Y-%m-%d')
                 except AttributeError:
                     file_creation_date = datetime.utcfromtimestamp(stat.st_mtime).strftime('%Y-%m-%d')
-
-            new_document = Document(name=filename, 
-                                    type=filetype, 
-                                    product_id=request.form.get("product_id"), 
-                                    checksum=checksum, size=file_size, 
-                                    file_created_at=file_creation_date)
-            new_document.save_to_db()
+            try:
+                new_document = Document(name=filename, 
+                                        type=filetype, 
+                                        product_id=request.form.get("product_id"), 
+                                        checksum=checksum, size=file_size, 
+                                        file_created_at=file_creation_date)
+                new_document.save_to_db()
+            except IntegrityError:
+                return jsonify({
+                    "error": "Bad request",
+                    "message": "Document name already exists in database"
+                }), 400
             return {
                 "message": "Upload complete",
                 "name": filename
