@@ -5,11 +5,16 @@ class API:
     def __init__(self, email, password, url="http://localhost:5000"):
         self.url = url
         # Login
-        self.login_access = requests.post(url + "/v1/auth/login", json={"email": email, "password": password} )
-        if self.login_access.status_code == 201:
-            self.headers = {"Authorization": "Bearer " + self.login_access.json()["access_token"]}
-        else:
-            print(f"Unable to login. Status {self.login_access.status_code}")
+        try:
+            self.login_access = requests.post(url + "/v1/auth/login", json={"email": email, "password": password} )
+            if self.login_access.status_code == 201:
+                self.headers = {"Authorization": "Bearer " + self.login_access.json()["access_token"]}
+                print("Successfully connected to API")
+            else:
+                print(f"Unable to login. Status {self.login_access.status_code}")
+                sys.exit(1)
+        except requests.exceptions.ConnectionError:
+            print("Failed to connect to API server, please check your network settings.")
             sys.exit(1)
 
     def add_product(self, name, description, brand_id, category_id):
