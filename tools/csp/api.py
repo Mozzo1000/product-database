@@ -30,4 +30,10 @@ class API:
         # send post request..
         document = requests.post(self.url + "/v1/documents", files=data, data=data, headers=self.headers)
         return document.json()
+    
+    def get_brands(self):
+        return requests.get(self.url + "/v1/brands").json()
+
+    def get_categories(self):
+        return requests.get(self.url + "/v1/categories").json()
         
