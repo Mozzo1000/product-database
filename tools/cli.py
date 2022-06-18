@@ -91,7 +91,8 @@ def parse_url(parser, url, api, brand_id, category_id):
                     for i in image_pbar:
                         image_pbar.set_description("Adding images")
                         new_image = api.add_document(i, new_product["id"])
-                        num_of_images.append(new_image)
+                        if new_image["message"] == "Upload complete":
+                            num_of_images.append(new_image)
                     print(f"Added {len(num_of_images)} images to product {new_product['name']}\n")
 
                     shutil.rmtree("images")
