@@ -13,6 +13,7 @@ from getpass import getpass
 import shutil
 import csv
 from csp.browser import Browser
+from tqdm import tqdm
 
 def main():
     parser = argparse.ArgumentParser("Common Scraper Platform CLI")
@@ -41,17 +42,17 @@ def main():
     if parser.parse_args().brand:
         brand_id = parser.parse_args().brand
     else:
-        print(f"{'ID':<8} {'Brand':<15}")
+        print(f"\n{'ID':<8} {'Brand':<15}")
         for brand in api.get_brands():
             print(f"{brand['id']:<8} {brand['name']}")
-        brand_id = input("Brand ID: ")
+        brand_id = input("Select brand ID: ")
     if parser.parse_args().category:
         category_id = parser.parse_args().category
     else:
-        print(f"{'ID':<8} {'Category':<15}")
+        print(f"\n{'ID':<8} {'Category':<15}")
         for category in api.get_categories():
             print(f"{category['id']:<8} {category['name']}")
-        category_id = input("Category ID: ")
+        category_id = input("Select category ID: ")
 
     if parser.parse_args().url:
         parse_url(parser, parser.parse_args().url, api, brand_id, category_id)
@@ -65,9 +66,6 @@ def main():
         parser.print_help()
 
 def parse_url(parser, url, api, brand_id, category_id):
-    
-
-    
     package_dir = os.path.join(Path(__file__).resolve().parent, "csp/scrapers")
     for (_, module_name, _) in iter_modules([package_dir]):
         module = import_module(f"csp.scrapers.{module_name}")
@@ -75,21 +73,35 @@ def parse_url(parser, url, api, brand_id, category_id):
             attribute = getattr(module, attribute_name)
             if isclass(attribute) and issubclass(attribute, BaseScraper) and attribute.__name__ != "BaseScraper":
                 if urlparse(url).hostname == attribute(url, download_content=False).registered_url:
-                    print(f"Using scraper: {attribute.__name__}")
+                    print(f"\nUsing scraper: {attribute.__name__}")
+                    print(f"URL: {url}\n")
                     scraper = attribute(url)
                     new_product = api.add_product(scraper.get_title(), scraper.get_description(), brand_id, category_id)
-                    for name, value in scraper.get_attributes().items():
+                    print(f"Added new product with name: {new_product['name']}\n")
+                    num_of_attr = []
+                    attr_pbar = tqdm(scraper.get_attributes().items())
+                    for name, value in attr_pbar:
+                        attr_pbar.set_description("Adding attributes")
                         new_attribute = api.add_attribute(new_product["id"], name, value)
-                        print(new_attribute)
-                    for i in scraper.get_images():
+                        num_of_attr.append(new_attribute)
+                    print(f"Added {len(num_of_attr)} attributes to product {new_product['name']}\n")
+                    
+                    num_of_images = []
+                    image_pbar = tqdm(scraper.get_images())
+                    for i in image_pbar:
+                        image_pbar.set_description("Adding images")
                         new_image = api.add_document(i, new_product["id"])
-                        print(new_image)
+                        num_of_images.append(new_image)
+                    print(f"Added {len(num_of_images)} images to product {new_product['name']}\n")
+
                     shutil.rmtree("images")
+
+                    print("Starting browser...")
                     browser = Browser(url)
-                    #api.add_document(browser.save_screenshot(), new_product["id"])
                     api.add_document(browser.save_pdf(), new_product["id"])
                     browser.exit()
-    
+
+                    print(f"\nAll done with {new_product['name']} : {url}")
 
 if __name__ == "__main__":
     main()
