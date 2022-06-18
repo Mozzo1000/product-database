@@ -18,25 +18,14 @@ def main():
     parser = argparse.ArgumentParser("Common Scraper Platform CLI")
     parser.add_argument("-u", "--url", type=str, help="Url to scrape")
     parser.add_argument("-f", "--file", type=str, help="File with urls to scrape")
+    parser.add_argument("-b", "--brand", type=int, help="ID of brand to insert scraped content into")
+    parser.add_argument("-c", "--category", type=int,  help="ID of category to insert scraped content into")
 
     api_group = parser.add_argument_group("API")
     api_group.add_argument("-a", "--api-url", type=str, default="http://localhost:5000", help="URL to api")
     api_group.add_argument("-e", "--email", type=str, help="Email for authenticating to api")
     api_group.add_argument("-p", "--password", type=str, help="Password for authenticating to api")
     
-    
-    if parser.parse_args().url:
-        parse_url(parser, parser.parse_args().url)
-        
-    elif parser.parse_args().file:
-        with open(parser.parse_args().file, "r") as csvfile:
-            for row in csv.reader(csvfile, delimiter=","):
-                print(', '.join(row))
-                parse_url(parser, ', '.join(row))
-    else:
-        parser.print_help()
-
-def parse_url(parser, url):
     print("Connecting to API...")
     if parser.parse_args().email:
         email_ans = parser.parse_args().email
@@ -48,6 +37,36 @@ def parse_url(parser, url):
         password_ans = getpass()
 
     api = API(email_ans, password_ans, parser.parse_args().api_url)
+
+    if parser.parse_args().brand:
+        brand_id = parser.parse_args().brand
+    else:
+        print(f"{'ID':<8} {'Brand':<15}")
+        for brand in api.get_brands():
+            print(f"{brand['id']:<8} {brand['name']}")
+        brand_id = input("Brand ID: ")
+    if parser.parse_args().category:
+        category_id = parser.parse_args().category
+    else:
+        print(f"{'ID':<8} {'Category':<15}")
+        for category in api.get_categories():
+            print(f"{category['id']:<8} {category['name']}")
+        category_id = input("Category ID: ")
+
+    if parser.parse_args().url:
+        parse_url(parser, parser.parse_args().url, api, brand_id, category_id)
+        
+    elif parser.parse_args().file:
+        with open(parser.parse_args().file, "r") as csvfile:
+            for row in csv.reader(csvfile, delimiter=","):
+                print(', '.join(row))
+                parse_url(parser, ', '.join(row), api, brand_id, category_id)
+    else:
+        parser.print_help()
+
+def parse_url(parser, url, api, brand_id, category_id):
+    
+
     
     package_dir = os.path.join(Path(__file__).resolve().parent, "csp/scrapers")
     for (_, module_name, _) in iter_modules([package_dir]):
@@ -58,7 +77,7 @@ def parse_url(parser, url):
                 if urlparse(url).hostname == attribute(url, download_content=False).registered_url:
                     print(f"Using scraper: {attribute.__name__}")
                     scraper = attribute(url)
-                    new_product = api.add_product(scraper.get_title(), scraper.get_description(), 1, 1)
+                    new_product = api.add_product(scraper.get_title(), scraper.get_description(), brand_id, category_id)
                     for name, value in scraper.get_attributes().items():
                         new_attribute = api.add_attribute(new_product["id"], name, value)
                         print(new_attribute)
@@ -67,7 +86,7 @@ def parse_url(parser, url):
                         print(new_image)
                     shutil.rmtree("images")
                     browser = Browser(url)
-                    api.add_document(browser.save_screenshot(), new_product["id"])
+                    #api.add_document(browser.save_screenshot(), new_product["id"])
                     api.add_document(browser.save_pdf(), new_product["id"])
                     browser.exit()
     
