@@ -60,8 +60,9 @@ function InventoryTable() {
                                 <TableCell><LinkMUI underline="hover" component={Link} to={"/product/" + inventory.product.id}>{inventory.product.name}</LinkMUI></TableCell>
                                 <TableCell>{inventory.year}</TableCell>
                                 <TableCell>{inventory.quantity}</TableCell>
-                                <TableCell>{inventory.cost}</TableCell>
+                                <TableCell>{inventory.cost ? inventory.cost : 0}</TableCell>
                                 <TableCell>{inventory.cost*inventory.quantity}</TableCell>
+                                <TableCell></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
