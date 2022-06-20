@@ -226,3 +226,25 @@ class FavoriteSchema(ma.SQLAlchemyAutoSchema):
 
     class Meta:
         model = Favorite
+
+class Inventory(db.Model):
+    __tablename__ = "inventory"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    product = db.relationship("Product", uselist=False)
+    year = db.Column(db.Integer)
+    quantity = db.Column(db.Integer)
+    cost = db.Column(db.Integer, nullable=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+class InventorySchema(ma.SQLAlchemyAutoSchema):
+    product = ma.Nested(ProductSchema, many=False, only=("brand.name","category.name", "name", "description", "cover_image", "id",))
+
+    class Meta:
+        model = Inventory
