@@ -339,7 +339,6 @@ function ProductPage() {
                                                         {currentUser && <AddToInventory product_id={content.id} />}
                                                     </Grid>
                                                 </Grid>
-                                                <Typography variant="subtitle">{new Date(content.created_at).toLocaleDateString()}</Typography><br /><br />
                                             </Grid>
                                             <Grid item>
                                                 <Typography variant="body1">{content.description}</Typography>
