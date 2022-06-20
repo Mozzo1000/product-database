@@ -54,6 +54,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import useAlert from '../components/Alerts/useAlert';
 import FavoriteButton from '../components/FavoriteButton';
 import AddToInventory from '../components/AddToInventory';
+import Skeleton from '@mui/material/Skeleton';
 
 const prettyBytes = require('pretty-bytes');
 
@@ -284,74 +285,84 @@ function ProductPage() {
 
     return (
         <Container sx={{paddingTop: 4}}>
-            {content ? (
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        <Card>
-                            <CardContent>
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <Card>
+                        <CardContent>
                                 <Grid container direction="row" justifyContent="space-between">
-                                    <Grid item>
-                                        <Breadcrumbs aria-label="breadcrumb">
-                                            <Link component={RouterLink} underline="hover" color="inherit" to="/products">
-                                                Products
-                                            </Link>
-                                            <Typography color="text.primary">{content.name}</Typography>
-                                        </Breadcrumbs>
+                                    <Grid item xs={10}>
+                                        {content ? (
+                                            <Breadcrumbs aria-label="breadcrumb">
+                                                <Link component={RouterLink} underline="hover" color="inherit" to="/products">
+                                                    Products
+                                                </Link>
+                                                <Typography color="text.primary">{content.name}</Typography>
+                                            </Breadcrumbs>
+                                        ): (
+                                            <Skeleton variant="text" />
+                                        )}
                                     </Grid>
-                                    <Grid item>
+                                    <Grid item xs={2}>
                                         <Grid container spacing={0} direction="row">
                                             <Grid item>
-                                                {currentUser && <FavoriteButton product_id={content.id} />}
+                                                {currentUser && content && <FavoriteButton product_id={content?.id} />}
                                             </Grid>
                                             <Grid item>
-                                                {currentUser && <AddToInventory product_id={content.id} />}
+                                                {currentUser && content && <AddToInventory product_id={content?.id} />}
                                             </Grid>
                                         </Grid>
-                                    </Grid>
+                                    </Grid>                                    
                                 </Grid>
-                                <Grid container spacing={6}>
-                                    <Grid item xs={12} md={6}>
-                                        {imageContent.length > 0 && 
-                                            <>
-                                            <SwipeableViews index={activeStep} onChangeIndex={handleStepChange} enableMouseEvents>
-                                                {imageContent.map((image, index) => (
-                                                    <div key={image.name}>
-                                                        {Math.abs(activeStep - index) <= 2 ? (
-                                                            <Image src={"http://localhost:5000/v1/documents/storage/" + image.name} style={{width: "100%", height: "100%", objectFit: "contain"}}/>
-                                                        ): null}
-                                                    </div>
-                                                ))}
-                                                </SwipeableViews>
-                                                <MobileStepper position="static" steps={imageContent.length} activeStep={activeStep} variant="dots"
-                                                    nextButton={
-                                                        <Button size="small" onClick={handleNext} disabled={activeStep === imageContent.length - 1}>
-                                                            Next
-                                                            <KeyboardArrowRight />
-                                                        </Button>
-                                                    }
-                                                    backButton={
-                                                        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                                                            <KeyboardArrowLeft />
-                                                            Back
-                                                        </Button>
-                                                    }
-                                                />
-                                                </>
-                                            }
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <Grid container spacing={0} justifyContent="flex-start" alignItems="stretch" >
-                                            <Grid item>
-                                                <Grid container spacing={3} direction="row" alignItems="center">
-                                                    <Grid item>
-                                                        <Typography variant="h3">{content.name}</Typography>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid item>
+                            <Grid container spacing={6}>
+                                <Grid item xs={12} md={6}>
+                                    {imageContent.length > 0 ? ( 
+                                        <>
+                                        <SwipeableViews index={activeStep} onChangeIndex={handleStepChange} enableMouseEvents>
+                                            {imageContent.map((image, index) => (
+                                                <div key={image.name}>
+                                                    {Math.abs(activeStep - index) <= 2 ? (
+                                                        <Image src={"http://localhost:5000/v1/documents/storage/" + image.name} style={{width: "100%", height: "100%", objectFit: "contain"}}/>
+                                                    ): null}
+                                                </div>
+                                            ))}
+                                            </SwipeableViews>
+                                            <MobileStepper position="static" steps={imageContent.length} activeStep={activeStep} variant="dots"
+                                                nextButton={
+                                                    <Button size="small" onClick={handleNext} disabled={activeStep === imageContent.length - 1}>
+                                                        Next
+                                                        <KeyboardArrowRight />
+                                                    </Button>
+                                                }
+                                                backButton={
+                                                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                                                        <KeyboardArrowLeft />
+                                                        Back
+                                                    </Button>
+                                                }
+                                            />
+                                            </>
+                                    ) : (
+                                        <Skeleton variant="rectangular" width={520} height={560}/>
+                                    )}
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <Grid container spacing={3} direction="column" justifyContent="flex-start" alignItems="stretch" >
+                                        <Grid item xs={12}>
+                                            {content ? (
+                                                <Typography variant="h3">{content.name}</Typography>
+                                            ): (
+                                                <Skeleton variant="rectangular" height={120}/>
+                                            )}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            {content ? (
                                                 <Typography variant="body1">{content.description}</Typography>
-                                            </Grid>
-                                            <Grid item>
+                                            ): (
+                                                <Skeleton variant="rectangular" height={320}/>
+                                            )}
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            {content &&
                                                 <Accordion>
                                                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
                                                         <Typography>More information</Typography>
@@ -377,30 +388,32 @@ function ProductPage() {
                                                         </TableContainer>
                                                     </AccordionDetails>
                                                 </Accordion>
-                                            </Grid>
+                                            }
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <CardActions>
-                                    {currentUser && currentUser["role"] === "admin" &&
-                                        <>
-                                        <Button size="small">Edit</Button>
-                                        <Button size="small" color="error">Delete</Button>
-                                        </>
-                                    }
-                                </CardActions>
-                            </CardContent>
-                        </Card>
-                        <Grid item xs={12}>
-                            <Tabs value={tab} onChange={handleTabChange} aria-label="tabs">
-                                <Tab label="Attributes" {...a11yProps(0)} />
-                                <Tab label="Environment" {...a11yProps(1)} />
-                                <Tab label="Documents" {...a11yProps(2)} />
-                            </Tabs>
-                            <TabPanel value={tab} index={0}>
-                                <Card>
-                                    <CardHeader title={addNewAttributeButton()} />
-                                    <CardContent>
+                            </Grid>
+                            <CardActions>
+                                {currentUser && currentUser["role"] === "admin" &&
+                                    <>
+                                    <Button size="small">Edit</Button>
+                                    <Button size="small" color="error">Delete</Button>
+                                    </>
+                                }
+                            </CardActions>
+                        </CardContent>
+                    </Card>
+                    <Grid item xs={12}>
+                        <Tabs value={tab} onChange={handleTabChange} aria-label="tabs">
+                            <Tab label="Attributes" {...a11yProps(0)} />
+                            <Tab label="Environment" {...a11yProps(1)} />
+                            <Tab label="Documents" {...a11yProps(2)} />
+                        </Tabs>
+                        <TabPanel value={tab} index={0}>
+                            <Card>
+                                <CardHeader title={addNewAttributeButton()} />
+                                <CardContent>
+                                    {content ? (
                                         <TableContainer>
                                             <Table>
                                                 <TableBody>
@@ -423,94 +436,94 @@ function ProductPage() {
                                                 </TableBody>
                                             </Table>
                                         </TableContainer>
-                                    </CardContent>
-                                </Card>
-                            </TabPanel>
-                            
-                            <TabPanel value={tab} index={1}>
-                                <Card>
-                                    <CardHeader title={addEnvironmentReportButton()} />
-                                    <CardContent>
-                                        <TableContainer>
-                                            <Table>
-                                                <TableBody>
-                                                    {environmentContent ? (
-                                                        <>
-                                                        <TableRow>
-                                                            <TableCell>Carbon footprint</TableCell>
-                                                            <TableCell>{environmentContent.carbon_footprint} kgCO2e</TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Carbon deviation</TableCell>
-                                                            <TableCell>+/- {environmentContent.carbon_deviation} kgCO2e</TableCell>
-                                                        </TableRow>
-                                                        </>
-                                                    ) : (
-                                                        <Typography>No environment report data found</Typography>
-                                                    )}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </CardContent>
-                                </Card>
-                            </TabPanel>
-
-                            <TabPanel value={tab} index={2}>
-                                <Card>
-                                    <CardHeader title={uploadFileButton()} />
-                                        <CardContent>
-                                            <Popover id="popover" open={openHelp} anchorEl={anchorElHelp} onClose={handleCloseHelp} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
-                                                <Typography sx={{ p: 2 }}>Uploading images will add them as cover images.</Typography>
-                                            </Popover>
-                                            {loadUpload && 
-                                                <CircularProgress />
-                                            }
-                                        <TableContainer>
-                                            <Table>
-                                                <TableHead>
+                                    ) : (
+                                        <Skeleton variant="rectangular" />
+                                    )}
+                                </CardContent>
+                            </Card>
+                        </TabPanel>
+                        
+                        <TabPanel value={tab} index={1}>
+                            <Card>
+                                <CardHeader title={addEnvironmentReportButton()} />
+                                <CardContent>
+                                    <TableContainer>
+                                        <Table>
+                                            <TableBody>
+                                                {environmentContent ? (
+                                                    <>
                                                     <TableRow>
-                                                        <TableCell>File</TableCell>
-                                                        <TableCell>Type</TableCell>
-                                                        <TableCell>Size</TableCell>
-                                                        <TableCell>Checksum (SHA256)</TableCell>
-                                                        <TableCell>More</TableCell>
+                                                        <TableCell>Carbon footprint</TableCell>
+                                                        <TableCell>{environmentContent.carbon_footprint} kgCO2e</TableCell>
                                                     </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {documentContent.length > 0 ? (
-                                                        documentContent.map((document) => (
-                                                            <TableRow key={document.name}>
-                                                                {/*TODO: Remove the hardcoded api link. This is a temporary workaround because file download did not work through the proxy pass.*/}
-                                                                <TableCell component="a" href={"http://localhost:5000/v1/documents/storage/" + document.name} target="_blank">{document.name}</TableCell>
-                                                                <TableCell>{document.type}</TableCell>
-                                                                {document.size === null ? (
-                                                                    <TableCell>{document.size}</TableCell>
-                                                                ): (
-                                                                    <TableCell>{prettyBytes(document.size)}</TableCell>
-                                                                )}
-                                                                <TableCell>{document.checksum}</TableCell>
-                                                                {currentUser && currentUser["role"] === "admin" && 
-                                                                <TableCell>
-                                                                    <RemoveDocument props={document} />
-                                                                </TableCell>
-                                                                }
-                                                            </TableRow>
-                                                        ))
-                                                    ) : (
-                                                        <Typography>No documents found</Typography>
-                                                    )}  
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </CardContent>
-                                </Card>
-                            </TabPanel>
-                        </Grid>
+                                                    <TableRow>
+                                                        <TableCell>Carbon deviation</TableCell>
+                                                        <TableCell>+/- {environmentContent.carbon_deviation} kgCO2e</TableCell>
+                                                    </TableRow>
+                                                    </>
+                                                ) : (
+                                                    <Typography>No environment report data found</Typography>
+                                                )}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </CardContent>
+                            </Card>
+                        </TabPanel>
+
+                        <TabPanel value={tab} index={2}>
+                            <Card>
+                                <CardHeader title={uploadFileButton()} />
+                                    <CardContent>
+                                        <Popover id="popover" open={openHelp} anchorEl={anchorElHelp} onClose={handleCloseHelp} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
+                                            <Typography sx={{ p: 2 }}>Uploading images will add them as cover images.</Typography>
+                                        </Popover>
+                                        {loadUpload && 
+                                            <CircularProgress />
+                                        }
+                                    <TableContainer>
+                                        <Table>
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell>File</TableCell>
+                                                    <TableCell>Type</TableCell>
+                                                    <TableCell>Size</TableCell>
+                                                    <TableCell>Checksum (SHA256)</TableCell>
+                                                    <TableCell>More</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {documentContent.length > 0 ? (
+                                                    documentContent.map((document) => (
+                                                        <TableRow key={document.name}>
+                                                            {/*TODO: Remove the hardcoded api link. This is a temporary workaround because file download did not work through the proxy pass.*/}
+                                                            <TableCell component="a" href={"http://localhost:5000/v1/documents/storage/" + document.name} target="_blank">{document.name}</TableCell>
+                                                            <TableCell>{document.type}</TableCell>
+                                                            {document.size === null ? (
+                                                                <TableCell>{document.size}</TableCell>
+                                                            ): (
+                                                                <TableCell>{prettyBytes(document.size)}</TableCell>
+                                                            )}
+                                                            <TableCell>{document.checksum}</TableCell>
+                                                            {currentUser && currentUser["role"] === "admin" && 
+                                                            <TableCell>
+                                                                <RemoveDocument props={document} />
+                                                            </TableCell>
+                                                            }
+                                                        </TableRow>
+                                                    ))
+                                                ) : (
+                                                    <Typography>No documents found</Typography>
+                                                )}  
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </CardContent>
+                            </Card>
+                        </TabPanel>
                     </Grid>
                 </Grid>
-            ) : (
-                <LinearProgress />
-            )}
+            </Grid>
             <Dialog open={openModal} onClose={handleCloseModal}>
                 <DialogTitle>Add new attribute</DialogTitle>
                 <FormControl>
