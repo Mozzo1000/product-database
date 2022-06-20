@@ -53,6 +53,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import useAlert from '../components/Alerts/useAlert';
 import FavoriteButton from '../components/FavoriteButton';
+import AddToInventory from '../components/AddToInventory';
 
 const prettyBytes = require('pretty-bytes');
 
@@ -333,6 +334,9 @@ function ProductPage() {
                                                     </Grid>
                                                     <Grid item>
                                                         {currentUser && <FavoriteButton product_id={content.id} />}
+                                                    </Grid>
+                                                    <Grid item>
+                                                        {currentUser && <AddToInventory product_id={content.id} />}
                                                     </Grid>
                                                 </Grid>
                                                 <Typography variant="subtitle">{new Date(content.created_at).toLocaleDateString()}</Typography><br /><br />
