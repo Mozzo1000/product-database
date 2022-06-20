@@ -10,6 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import InventoryService from "../services/inventory.service";
 import useAlert from './Alerts/useAlert';
+import Tooltip from '@mui/material/Tooltip';
 
 function AddToInventory(props) {
     const snackbar = useAlert();
@@ -48,7 +49,9 @@ function AddToInventory(props) {
 
     return (
         <div>
-            <IconButton size="large" onClick={handleClickOpenModal}><AddCircleIcon fontSize="large" /></IconButton>
+            <Tooltip title="Add to inventory">
+                <IconButton size="large" onClick={handleClickOpenModal}><AddCircleIcon fontSize="large" /></IconButton>
+            </Tooltip>
             <Dialog open={openModal} onClose={handleCloseModal}>
                 <DialogTitle>Add to inventory</DialogTitle>
                 <FormControl>

@@ -4,6 +4,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import FavoriteService from '../services/favorite.service'
 import useAlert from './Alerts/useAlert';
+import Tooltip from '@mui/material/Tooltip';
 
 function FavoriteButton(props) {
     const snackbar = useAlert();
@@ -68,9 +69,13 @@ function FavoriteButton(props) {
     return (
         <IconButton onClick={handleClickFavorite} size="large">
             {isFavorite ? (
-                <Favorite color="error" fontSize="large" />
+                <Tooltip title="Remove favorite">
+                    <Favorite color="error" fontSize="large" />
+                </Tooltip>
             ): (
-                <FavoriteBorderIcon fontSize="large" />
+                <Tooltip title="Add favorite">
+                    <FavoriteBorderIcon fontSize="large" />
+                </Tooltip>
             )}
         </IconButton>
     )
