@@ -15,10 +15,15 @@ import Typography from '@mui/material/Typography';
 import LinkMUI from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import SearchIcon from "@mui/icons-material/Search";
+import TextField from "@mui/material/TextField";
+import InputAdornment from '@mui/material/InputAdornment';
+import Container from '@mui/material/Container';
 
 function FavoriteTable() {
     const snackbar = useAlert();
     const [favorites, setFavorites] = useState();
+    const [query, setQuery] = useState("");
 
     const loadFavorites = () => {
         FavoriteService.getAll().then(
@@ -42,31 +47,44 @@ function FavoriteTable() {
       }, []);
 
     return (
-    <>
+    <Container>
     {favorites ? (
         favorites.length > 0 ? (
-            <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell></TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Category</TableCell>
-                            <TableCell>Action</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {favorites.map((favorite) => (
-                            <TableRow key={favorite.id}>
-                                <TableCell><Image src={"http://localhost:5000/v1/documents/storage/" + favorite.product.cover_image} style={{width: "100%", height: "100%", objectFit: "contain"}}/></TableCell>
-                                <TableCell><LinkMUI underline="hover" component={Link} to={"/product/" + favorite.product.id}>{favorite.product.name}</LinkMUI></TableCell>
-                                <TableCell>{favorite.product.category.name}</TableCell>                            
-                                <TableCell><FavoriteButton product_id={favorite.product.id} onRemove={() => loadFavorites()}/></TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Grid container spacing={3} direction="column">
+                <Grid item xs={12}>
+                    <TextField fullWidth value={query} onChange={(e) => {setQuery(e.target.value)}} label="Search" InputProps={{endAdornment: <InputAdornment position="end"><SearchIcon/></InputAdornment>,}}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell>Category</TableCell>
+                                    <TableCell>Action</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {favorites.filter(favorite => {
+                                    if (query === "") {
+                                        return favorite;
+                                    } else if (favorite.product.name.toLowerCase().includes(query.toLowerCase())) {
+                                        return favorite;
+                                    }
+                                }).map((favorite) => (
+                                    <TableRow key={favorite.id}>
+                                        <TableCell><Image src={"http://localhost:5000/v1/documents/storage/" + favorite.product.cover_image} style={{width: "100%", height: "100%", objectFit: "contain"}}/></TableCell>
+                                        <TableCell><LinkMUI underline="hover" component={Link} to={"/product/" + favorite.product.id}>{favorite.product.name}</LinkMUI></TableCell>
+                                        <TableCell>{favorite.product.category.name}</TableCell>                            
+                                        <TableCell><FavoriteButton product_id={favorite.product.id} onRemove={() => loadFavorites()}/></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
+            </Grid>
         ) : (
             <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
                 <Grid item>
@@ -79,7 +97,7 @@ function FavoriteTable() {
     ): (
         <LinearProgress />
     )}
-    </>
+    </Container>
   )
 }
 
