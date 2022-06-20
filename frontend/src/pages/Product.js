@@ -289,14 +289,28 @@ function ProductPage() {
                     <Grid item xs={12}>
                         <Card>
                             <CardContent>
-                                <Grid container spacing={6}>
-                                    <Grid item xs={12} md={6}>
+                                <Grid container direction="row" justifyContent="space-between">
+                                    <Grid item>
                                         <Breadcrumbs aria-label="breadcrumb">
                                             <Link component={RouterLink} underline="hover" color="inherit" to="/products">
                                                 Products
                                             </Link>
                                             <Typography color="text.primary">{content.name}</Typography>
                                         </Breadcrumbs>
+                                    </Grid>
+                                    <Grid item>
+                                        <Grid container spacing={0} direction="row">
+                                            <Grid item>
+                                                {currentUser && <FavoriteButton product_id={content.id} />}
+                                            </Grid>
+                                            <Grid item>
+                                                {currentUser && <AddToInventory product_id={content.id} />}
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={6}>
+                                    <Grid item xs={12} md={6}>
                                         {imageContent.length > 0 && 
                                             <>
                                             <SwipeableViews index={activeStep} onChangeIndex={handleStepChange} enableMouseEvents>
@@ -331,12 +345,6 @@ function ProductPage() {
                                                 <Grid container spacing={3} direction="row" alignItems="center">
                                                     <Grid item>
                                                         <Typography variant="h3">{content.name}</Typography>
-                                                    </Grid>
-                                                    <Grid item>
-                                                        {currentUser && <FavoriteButton product_id={content.id} />}
-                                                    </Grid>
-                                                    <Grid item>
-                                                        {currentUser && <AddToInventory product_id={content.id} />}
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
