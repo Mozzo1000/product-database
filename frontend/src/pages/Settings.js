@@ -21,6 +21,7 @@ import BrandsPage from './Brands';
 import UserTable from '../components/UserTable';
 import useAlert from '../components/Alerts/useAlert';
 import FavoriteTable from '../components/FavoriteTable';
+import InventoryTable from '../components/InventoryTable';
 
 function SettingsPage() {
     const snackbar = useAlert();
@@ -167,9 +168,10 @@ function SettingsPage() {
                 <Tabs value={tab} onChange={handleTabChange} aria-label="tabs">
                     <Tab label="Account" {...a11yProps(0)} />
                     <Tab label="Favorites" {...a11yProps(1)} />
-                    {currentUser["role"] === "admin" &&<Tab label="Category" {...a11yProps(2)} />}
-                    {currentUser["role"] === "admin" &&<Tab label="Brand" {...a11yProps(3)} />}
-                    {currentUser["role"] === "admin" &&<Tab label="Users" {...a11yProps(4)} />}
+                    <Tab label="Inventory" {...a11yProps(2)} />
+                    {currentUser["role"] === "admin" &&<Tab label="Category" {...a11yProps(3)} />}
+                    {currentUser["role"] === "admin" &&<Tab label="Brand" {...a11yProps(4)} />}
+                    {currentUser["role"] === "admin" &&<Tab label="Users" {...a11yProps(5)} />}
                 </Tabs>
             </Box>
             <TabPanel value={tab} index={0}>
@@ -227,12 +229,15 @@ function SettingsPage() {
                 <FavoriteTable />
             </TabPanel>
             <TabPanel value={tab} index={2}>
-                <CategoriesPage />
+                <InventoryTable />
             </TabPanel>
             <TabPanel value={tab} index={3}>
-                <BrandsPage />
+                <CategoriesPage />
             </TabPanel>
             <TabPanel value={tab} index={4}>
+                <BrandsPage />
+            </TabPanel>
+            <TabPanel value={tab} index={5}>
                 <UserTable />
             </TabPanel>
         </Container>
