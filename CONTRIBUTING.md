@@ -16,26 +16,26 @@ If you want to help out with a code contribution, our project uses the following
 
 * [React](https://reactjs.org/docs/getting-started.html)
 
-# How do I make a code contribution?
+## How do I make a code contribution?
 
 Are you new to open source contribution? Wondering how contributions work in our project? Here's a quick rundown.
 
 Find an issue that you're interested in addressing, or a feature that you'd like to add.
 
-## Step 1: Make a fork
+### Step 1: Make a fork
 
 Fork the `product-database` repository to your GitHub account. This means that you'll have a copy of the repository under _your-GitHub-username/repository-name_.
 
-## Step 2: Clone the repository to your local machine
+### Step 2: Clone the repository to your local machine
 
 ```
 git clone https://github.com/{your-GitHub-username}/product-database.git
 ```
 
-## Step 3: Setup the development environment
+### Step 3: Setup the development environment
 Read [DEVELOPMENT.md](DEVELOPMENT.md) to setup your development environment.
 
-## Step 4: Create a branch
+### Step 4: Create a branch
 
 Create a new branch for your fix.
 
@@ -43,11 +43,11 @@ Create a new branch for your fix.
 git checkout -b branch-name-here
 ```
 
-## Step 5: Make your changes
+### Step 5: Make your changes
 
 Update the code with your bug fix or new feature.
 
-## Step 6: Add the changes that are ready to be committed
+### Step 6: Add the changes that are ready to be committed
 
 Stage the changes that are ready to be committed:
 
@@ -55,7 +55,7 @@ Stage the changes that are ready to be committed:
 git add .
 ```
 
-## Step 7: Commit the changes
+### Step 7: Commit the changes
 
 Commit the changes with a short message.
 
@@ -63,7 +63,7 @@ Commit the changes with a short message.
 git commit -m "<subject>"
 ```
 
-## Step 8: Push the changes to the remote repository
+### Step 8: Push the changes to the remote repository
 
 Push the changes to the remote repository using:
 
@@ -71,7 +71,7 @@ Push the changes to the remote repository using:
 git push origin branch-name-here
 ```
 
-## Step 9: Create Pull Request
+### Step 9: Create Pull Request
 
 In GitHub, do the following to submit a pull request to the upstream repository:
 
@@ -85,3 +85,5 @@ Remember, it's okay if your pull request is not perfect (no pull request ever is
 
 Celebrate your success after your pull request is merged :)
 
+## Roadmap
+Check out the [roadmap](https://github.com/users/Mozzo1000/projects/1/views/1) to see what is being planned and currently in the works.
