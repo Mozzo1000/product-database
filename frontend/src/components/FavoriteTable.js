@@ -19,6 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
 import InputAdornment from '@mui/material/InputAdornment';
 import Container from '@mui/material/Container';
+import ExportButton from './ExportButton';
 
 function FavoriteTable() {
     const snackbar = useAlert();
@@ -52,7 +53,16 @@ function FavoriteTable() {
         favorites.length > 0 ? (
             <Grid container spacing={3} direction="column">
                 <Grid item xs={12}>
-                    <TextField fullWidth value={query} onChange={(e) => {setQuery(e.target.value)}} label="Search" InputProps={{endAdornment: <InputAdornment position="end"><SearchIcon/></InputAdornment>,}}/>
+                    <Grid container direction="row" spacing={3} justifyContent="space-between" alignItems="center">
+                        <Grid item xs={9}>
+                            <TextField fullWidth value={query} onChange={(e) => {setQuery(e.target.value)}} label="Search" InputProps={{endAdornment: <InputAdornment position="end"><SearchIcon/></InputAdornment>,}}/>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <ExportButton filename={"favorites"} data={favorites} csv_fields={[{label: "ID",value: "id"},
+                                                                                                {label: "Product name", value: "product.name"}, 
+                                                                                                {label: "Category", value: "product.category.name"}]}/>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid item xs={12}>
                     <TableContainer>
