@@ -305,10 +305,19 @@ function ProductPage() {
                                     <Grid item xs={6}>
                                         <Grid container spacing={0} direction="row" justifyContent="flex-end">
                                             <Grid item>
-                                                {currentUser && content && <FavoriteButton product_id={content?.id} />}
+                                                {content && currentUser ? (
+                                                    <FavoriteButton product_id={content?.id} />
+                                                ) : (
+                                                    <Skeleton variant="circular" width={40} height={40}/>
+                                                )}
                                             </Grid>
                                             <Grid item>
-                                                {currentUser && content && <AddToInventory product_id={content?.id} />}
+                                                {content && currentUser ? (
+                                                    <AddToInventory product_id={content?.id} />
+                                                ): (
+                                                    <Skeleton variant="circular" width={40} height={40} />
+                                                )}
+                                                
                                             </Grid>
                                         </Grid>
                                     </Grid>                                    
