@@ -290,7 +290,7 @@ function ProductPage() {
                     <Card>
                         <CardContent>
                                 <Grid container direction="row" justifyContent="space-between">
-                                    <Grid item xs={10}>
+                                    <Grid item xs={6}>
                                         {content ? (
                                             <Breadcrumbs aria-label="breadcrumb">
                                                 <Link component={RouterLink} underline="hover" color="inherit" to="/products">
@@ -302,8 +302,8 @@ function ProductPage() {
                                             <Skeleton variant="text" />
                                         )}
                                     </Grid>
-                                    <Grid item xs={2}>
-                                        <Grid container spacing={0} direction="row">
+                                    <Grid item xs={6}>
+                                        <Grid container spacing={0} direction="row" justifyContent="flex-end">
                                             <Grid item>
                                                 {currentUser && content && <FavoriteButton product_id={content?.id} />}
                                             </Grid>
