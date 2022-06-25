@@ -11,10 +11,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import ParticleBackground from '../components/ParticleBackground';
 import LinkMUI from '@mui/material/Link';
 import useAlert from '../components/Alerts/useAlert';
+import { useTranslation } from "react-i18next";
 
 function LoginPage(props) {
     document.title = "Login - product-database";
     const snackbar = useAlert();
+    const {t, i18n} = useTranslation();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -46,22 +48,22 @@ function LoginPage(props) {
                     <Grid container direction="column" justifyContent="center" spacing={2} className="login-form">
                         <Paper variant="elevation" elevation={2} className="login-background">
                             <Grid item>
-                                <Typography component="h1" variant="h5">Sign in to your account</Typography><br />
+                                <Typography component="h1" variant="h5">{t("login.sign_into_account")}</Typography><br />
                             </Grid>
                             <Grid item>
                                 <form onSubmit={handleLogin}>
                                     <Grid container direction="column" spacing={2}>
                                         <Grid item>
-                                            <TextField type="email" label="Email" fullWidth required autoFocus name="username" variant="outlined" value={username} onChange={e => setUsername(e.target.value)} />
+                                            <TextField type="email" label={t("input.email")} fullWidth required autoFocus name="username" variant="outlined" value={username} onChange={e => setUsername(e.target.value)} />
                                         </Grid>
                                         <Grid item>
-                                            <TextField type="password" label="Password" fullWidth required name="password" variant="outlined" value={password} onChange={e => setPassword(e.target.value)} />
+                                            <TextField type="password" label={t("input.password")} fullWidth required name="password" variant="outlined" value={password} onChange={e => setPassword(e.target.value)} />
                                         </Grid>
                                         <Grid item>
-                                            <Button variant="contained" color="primary" type="submit" fullWidth>Sign In</Button>
+                                            <Button variant="contained" color="primary" type="submit" fullWidth>{t("buttons.sign_in")}</Button>
                                         </Grid>
                                         <Grid item>
-                                            <LinkMUI component={Link} to="/register">Register account</LinkMUI>
+                                            <LinkMUI component={Link} to="/register">{t("login.register_account")}</LinkMUI>
                                         </Grid>
                                     </Grid>
                                 </form>

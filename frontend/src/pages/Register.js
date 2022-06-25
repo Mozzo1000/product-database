@@ -11,10 +11,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import ParticleBackground from '../components/ParticleBackground';
 import LinkMUI from '@mui/material/Link';
 import useAlert from '../components/Alerts/useAlert';
+import { useTranslation } from "react-i18next";
 
 function RegisterPage(props) {
     document.title = "Register - product-database";
     const snackbar = useAlert();
+    const {t, i18n} = useTranslation();
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -73,28 +75,28 @@ function RegisterPage(props) {
                     <Grid container direction="column" justifyContent="center" spacing={2} className="login-form">
                         <Paper variant="elevation" elevation={2} className="login-background">
                             <Grid item>
-                                <Typography component="h1" variant="h5">Register new account</Typography><br />
+                                <Typography component="h1" variant="h5">{t("register.register_new_account")}</Typography><br />
                             </Grid>
                             <Grid item>
                                 <form onSubmit={handleRegistration}>
                                     <Grid container direction="column" spacing={2}>
                                         <Grid item>
-                                            <TextField type="email" label="Email" fullWidth required autoFocus name="email" variant="outlined" value={email} onChange={e => setEmail(e.target.value)} />
+                                            <TextField type="email" label={t("input.email")} fullWidth required autoFocus name="email" variant="outlined" value={email} onChange={e => setEmail(e.target.value)} />
                                         </Grid>
                                         <Grid item>
-                                            <TextField type="name" label="Name" fullWidth required name="name" variant="outlined" value={name} onChange={e => setName(e.target.value)} />
+                                            <TextField type="name" label={t("input.name")} fullWidth required name="name" variant="outlined" value={name} onChange={e => setName(e.target.value)} />
                                         </Grid>
                                         <Grid item>
-                                            <TextField type="password" fullWidth required label="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                                            <TextField type="password" fullWidth required label={t("input.password")} value={password} onChange={e => setPassword(e.target.value)} />
                                         </Grid>
                                         <Grid item>
-                                            <TextField type="password" fullWidth required label="Confirm password" value={passwordConf} helperText={passwordError} onChange={e => setPasswordConf(e.target.value)} error={password !== passwordConf} />
+                                            <TextField type="password" fullWidth required label={t("input.confirm_password")} value={passwordConf} helperText={passwordError} onChange={e => setPasswordConf(e.target.value)} error={password !== passwordConf} />
                                         </Grid>
                                         <Grid item>
-                                            <Button variant="contained" color="primary" type="submit" disabled={registerButtonDisabled} fullWidth>Register account</Button>
+                                            <Button variant="contained" color="primary" type="submit" disabled={registerButtonDisabled} fullWidth>{t("buttons.register_account")}</Button>
                                         </Grid>
                                         <Grid item>
-                                            <LinkMUI component={Link} to="/login">Go to login</LinkMUI>
+                                            <LinkMUI component={Link} to="/login">{t("register.goto_login")}</LinkMUI>
                                         </Grid>
                                     </Grid>
                                 </form>

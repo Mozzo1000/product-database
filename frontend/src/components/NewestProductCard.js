@@ -13,9 +13,11 @@ import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import Grid from '@mui/material/Grid';
+import { useTranslation } from "react-i18next";
 
 function NewestProductCard(props) {
     const snackbar = useAlert();
+    const {t, i18n} = useTranslation();
     const [content, setContent] = useState();
 
     useEffect(() => {
@@ -39,7 +41,7 @@ function NewestProductCard(props) {
 
     return (
         <Card>
-            <CardHeader avatar={<NewReleasesIcon fontSize="large"/>} title="Recently added" titleTypographyProps={{variant: "h5", fontWeight: "500"}}/>
+            <CardHeader avatar={<NewReleasesIcon fontSize="large"/>} title={t("card.recently_added")} titleTypographyProps={{variant: "h5", fontWeight: "500"}}/>
             <ImageList sx={{gridAutoFlow: "column", 
                 gridTemplateColumns: "repeat(auto-fit, minmax(160px,1fr)) !important", 
                 gridAutoColumns: "minmax(160px, 1fr)"}}>
@@ -77,7 +79,7 @@ function NewestProductCard(props) {
                             variant="contained"
                             color="primary"
                             sx={{ width: '200px', fontSize: '16px', margin: "auto"}} component={Link} to="/products">
-                            See all products
+                            {t("buttons.all_products")}
                         </Button>
                 </ImageListItem>  
                 }              

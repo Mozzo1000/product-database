@@ -11,9 +11,11 @@ import FormControl from '@mui/material/FormControl';
 import InventoryService from "../services/inventory.service";
 import useAlert from './Alerts/useAlert';
 import Tooltip from '@mui/material/Tooltip';
+import { useTranslation } from "react-i18next";
 
 function AddToInventory(props) {
     const snackbar = useAlert();
+    const {t, i18n} = useTranslation();
 
     const [openModal, setOpenModal] = useState(false);
     const [year, setYear] = useState();
@@ -49,21 +51,21 @@ function AddToInventory(props) {
 
     return (
         <div>
-            <Tooltip title="Add to inventory">
+            <Tooltip title={t("buttons.tooltip.add_inventory")}>
                 <IconButton size="large" onClick={handleClickOpenModal}><AddCircleIcon fontSize="large" /></IconButton>
             </Tooltip>
             <Dialog open={openModal} onClose={handleCloseModal}>
-                <DialogTitle>Add to inventory</DialogTitle>
+                <DialogTitle>{t("dialog.add_to_inventory")}</DialogTitle>
                 <FormControl>
                     <form onSubmit={handleAddToInventory}>
                         <DialogContent>
-                            <TextField required autoFocus id="year" label="Year" margin="dense" fullWidth variant="standard" value={year} onChange={e => setYear(e.target.value)}/>
-                            <TextField required id="quantity" label="Quantity" margin="dense" fullWidth variant="standard" value={quantity} onChange={e => setQuantity(e.target.value)}/>
-                            <TextField id="cost" label="Cost per product" margin="dense" fullWidth variant="standard" value={cost} onChange={e => setCost(e.target.value)}/>
+                            <TextField required autoFocus id="year" label={t("input.year")} margin="dense" fullWidth variant="standard" value={year} onChange={e => setYear(e.target.value)}/>
+                            <TextField required id="quantity" label={t("input.quantity")} margin="dense" fullWidth variant="standard" value={quantity} onChange={e => setQuantity(e.target.value)}/>
+                            <TextField id="cost" label={t("input.cost_per")} margin="dense" fullWidth variant="standard" value={cost} onChange={e => setCost(e.target.value)}/>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleCloseModal}>Cancel</Button>
-                            <Button type="submit" color="primary" onClick={handleCloseModal}>Add</Button>
+                            <Button onClick={handleCloseModal}>{t("buttons.cancel")}</Button>
+                            <Button type="submit" color="primary" onClick={handleCloseModal}>{t("buttons.add")}</Button>
                         </DialogActions>
                     </form>
                 </FormControl>

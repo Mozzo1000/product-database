@@ -5,9 +5,11 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteService from '../services/favorite.service'
 import useAlert from './Alerts/useAlert';
 import Tooltip from '@mui/material/Tooltip';
+import { useTranslation } from "react-i18next";
 
 function FavoriteButton(props) {
     const snackbar = useAlert();
+    const {t, i18n} = useTranslation();
 
     const [isFavorite, setIsFavorite] = useState(false);
 
@@ -69,11 +71,11 @@ function FavoriteButton(props) {
     return (
         <IconButton onClick={handleClickFavorite} size="large">
             {isFavorite ? (
-                <Tooltip title="Remove favorite">
+                <Tooltip title={t("buttons.tooltip.remove_favorite")}>
                     <Favorite color="error" fontSize="large" />
                 </Tooltip>
             ): (
-                <Tooltip title="Add favorite">
+                <Tooltip title={t("buttons.tooltip.add_favorite")}>
                     <FavoriteBorderIcon fontSize="large" />
                 </Tooltip>
             )}

@@ -1,5 +1,6 @@
 {
     "general": {
+        "app_name": "product database",
         "products": "products",
         "brands": "brands"
     },
@@ -9,9 +10,68 @@
         "search_products": "Search for products"
     },
     "buttons": {
-        "all_products": "See all products"
+        "all_products": "See all products",
+        "change_picture": "Change picture",
+        "save_changes": "Save changes",
+        "save_new_password": "Save new password",
+        "sign_in": "Sign in",
+        "register_account": "Register account",
+        "cancel": "Cancel",
+        "add": "Add",
+        "tooltip": {
+            "add_favorite": "Add favorite",
+            "remove_favorite": "Remove favorite",
+            "add_inventory": "Add to inventory"
+        }
     },
     "input": {
-        "search": "Search"
+        "search": "Search",
+        "name": "Name",
+        "email": "Email",
+        "password": "Password",
+        "change_password": "Change password",
+        "confirm_password": "Confirm password",
+        "new_password": "New password",
+        "confirm_new_password": "Confirm new password",
+        "year": "Year",
+        "quantity": "Quantity",
+        "cost_per": "Cost per product"
+
+    },
+    "menu": {
+        "account": "Account",
+        "favorites": "Favorites",
+        "inventory": "Inventory",
+        "category": "Category",
+        "brand": "Brand",
+        "users": "Users",
+        "home": "Home",
+        "products": "Products",
+        "about": "About",
+        "settings": "Settings",
+        "sign_out": "Sign out",
+
+        "tooltip": {
+            "login": "Login",
+            "open_settings": "Open settings"
+        }
+    },
+    "login": {
+        "sign_into_account": "Sign in to your account",
+        "register_account": "Register account"
+    },
+    "register": {
+        "register_new_account": "Register new account",
+        "goto_login": "Go to login"
+    },
+    "footer": {
+        "made_with": "Made with",
+        "by": "by"
+    },
+    "card": {
+        "recently_added": "Recently added"
+    },
+    "dialog": {
+        "add_to_inventory": "Add to inventory"
     }
 }

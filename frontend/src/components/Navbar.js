@@ -25,27 +25,29 @@ import LoginIcon from '@mui/icons-material/Login';
 import InfoIcon from '@mui/icons-material/Info';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslation } from "react-i18next";
 
 function Navbar() {
     let navigate = useNavigate();
     let location = useLocation();
+    const {t, i18n} = useTranslation();
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const currentUser = AuthService.getCurrentUser()
 
     const pages = [
-        {name: 'Home', link: '/', icon: <HomeIcon sx={{color: 'white'}} />},
-        {name: 'Products', link: "/products", icon: <InventoryIcon sx={{color: 'white'}} />},
-        {name: 'Favorites', link: '/favorites', icon: <FavoriteIcon sx={{color: 'white'}} />},
-        {name: 'About', link: '/about', icon: <InfoIcon sx={{color: 'white'}} />},
+        {name: t("menu.home"), link: '/', icon: <HomeIcon sx={{color: 'white'}} />},
+        {name: t("menu.products"), link: "/products", icon: <InventoryIcon sx={{color: 'white'}} />},
+        {name: t("menu.favorites"), link: '/favorites', icon: <FavoriteIcon sx={{color: 'white'}} />},
+        {name: t("menu.about"), link: '/about', icon: <InfoIcon sx={{color: 'white'}} />},
     ];
 
     const pagesBottom = [
-        {name: 'Settings', link: "/settings", icon: <SettingsIcon sx={{color: 'white'}} />},
+        {name: t("menu.settings"), link: "/settings", icon: <SettingsIcon sx={{color: 'white'}} />},
     ];
 
     const settings = [
-        {name: 'Sign out', action: "logout", icon: <LogoutIcon />},
+        {name: t("menu.sign_out"), action: "logout", icon: <LogoutIcon />},
     ];
 
     const handleDrawerToggle = () => {
@@ -74,7 +76,7 @@ function Navbar() {
         <>
             <Toolbar>
                 <Typography align="center" sx={{flexGrow: 1, textTransform: 'uppercase', letterSpacing: '0.05rem', fontWeight: '600'}}>
-                    product database
+                    {t("general.app_name")}
                 </Typography>
             </Toolbar>
             <Divider sx={{background: 'rgba(255, 255, 255, 0.15);'}} />
@@ -139,7 +141,7 @@ function Navbar() {
                         <LanguageSwitcher />
                         {currentUser &&
                             <Box sx={{flexGrow: 0}}>
-                                <Tooltip title="Open settings">
+                                <Tooltip title={t("menu.tooltip.open_settings")}>
                                     <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
                                         <Avatar src={"http://localhost:5000/v1/users/storage/" + currentUser["image"]} alt="User" />
                                     </IconButton>
@@ -174,7 +176,7 @@ function Navbar() {
                             </Box>
                         }
                         {!currentUser && 
-                            <Tooltip title="Login">
+                            <Tooltip title={t("menu.tooltip.login")}>
                                 <IconButton component={Link} to="/login" sx={{p: 0}}>
                                 <LoginIcon />
                                 </IconButton>

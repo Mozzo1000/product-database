@@ -22,9 +22,11 @@ import UserTable from '../components/UserTable';
 import useAlert from '../components/Alerts/useAlert';
 import FavoriteTable from '../components/FavoriteTable';
 import InventoryTable from '../components/InventoryTable';
+import { useTranslation } from "react-i18next";
 
 function SettingsPage() {
     const snackbar = useAlert();
+    const {t, i18n} = useTranslation();
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -166,12 +168,12 @@ function SettingsPage() {
         <Container>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={tab} onChange={handleTabChange} aria-label="tabs">
-                    <Tab label="Account" {...a11yProps(0)} />
-                    <Tab label="Favorites" {...a11yProps(1)} />
-                    <Tab label="Inventory" {...a11yProps(2)} />
-                    {currentUser["role"] === "admin" &&<Tab label="Category" {...a11yProps(3)} />}
-                    {currentUser["role"] === "admin" &&<Tab label="Brand" {...a11yProps(4)} />}
-                    {currentUser["role"] === "admin" &&<Tab label="Users" {...a11yProps(5)} />}
+                    <Tab label={t("menu.account")} {...a11yProps(0)} />
+                    <Tab label={t("menu.favorites")} {...a11yProps(1)} />
+                    <Tab label={t("menu.inventory")} {...a11yProps(2)} />
+                    {currentUser["role"] === "admin" &&<Tab label={t("menu.category")} {...a11yProps(3)} />}
+                    {currentUser["role"] === "admin" &&<Tab label={t("menu.brand")} {...a11yProps(4)} />}
+                    {currentUser["role"] === "admin" &&<Tab label={t("menu.users")} {...a11yProps(5)} />}
                 </Tabs>
             </Box>
             <TabPanel value={tab} index={0}>
@@ -180,9 +182,9 @@ function SettingsPage() {
                         <Card>
                             <CardContent>
                                 {/*eslint-disable no-sequences*/}
-                                <TextField fullWidth label="Name" value={name} onChange={e => (setName(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{m:1}}/>
-                                <TextField fullWidth label="Email" value={email} onChange={e => (setEmail(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{m:1}}/>
-                                <Button fullWidth variant="contained" disabled={saveButtonDisabled} onClick={handleSaveSettings}>Save changes</Button>
+                                <TextField fullWidth label={t("input.name")} value={name} onChange={e => (setName(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{m:1}}/>
+                                <TextField fullWidth label={t("input.email")} value={email} onChange={e => (setEmail(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{m:1}}/>
+                                <Button fullWidth variant="contained" disabled={saveButtonDisabled} onClick={handleSaveSettings}>{t("buttons.save_changes")}</Button>
                             </CardContent>
                         </Card>
                     </Grid>
@@ -197,7 +199,7 @@ function SettingsPage() {
                                         <label htmlFor="contained-button-file">
                                         <Input id="contained-button-file" multiple type="file" onChange={handleImageUpload}/>
                                         <Button variant="contained" component="span">
-                                            Change picture
+                                            {t("buttons.change_picture")}
                                         </Button>
                                     </label>
                                     </Grid>
@@ -211,13 +213,13 @@ function SettingsPage() {
                             <CardContent>
                                 <Grid container spacing={3} direction="column">
                                     <Grid item>
-                                        <TextField type="password" fullWidth required label="New password" value={newPassword} onChange={e => setNewPassword(e.target.value)} />
+                                        <TextField type="password" fullWidth required label={t("input.new_password")} value={newPassword} onChange={e => setNewPassword(e.target.value)} />
                                     </Grid>
                                     <Grid item>
-                                        <TextField type="password" fullWidth required label="Confirm new password" value={newPasswordConf} helperText={passwordError} onChange={e => setNewPasswordConf(e.target.value)} error={newPassword !== newPasswordConf} />
+                                        <TextField type="password" fullWidth required label={t("input.confirm_new_password")} value={newPasswordConf} helperText={passwordError} onChange={e => setNewPasswordConf(e.target.value)} error={newPassword !== newPasswordConf} />
                                     </Grid>
                                     <Grid item>
-                                        <Button fullWidth variant="contained" onClick={handleSavePasswordSettings} disabled={savePasswordButtonDisabled}>Save new password</Button>
+                                        <Button fullWidth variant="contained" onClick={handleSavePasswordSettings} disabled={savePasswordButtonDisabled}>{t("buttons.save_new_password")}</Button>
                                     </Grid>
                                 </Grid>
                             </CardContent>
