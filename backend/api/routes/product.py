@@ -19,10 +19,17 @@ def search_for_product(query):
 @product_endpoint.route("/v1/products")
 def get_products():
     product_schema = ProductSchema(many=True)
+    page = request.args.get('page', 1, type=int)
+
+    products = Product.query.order_by(Product.created_at.desc())
     if request.args.get('category'):
-        products = Product.query.filter_by(category_id=request.args.get('category')).all()
+        products = products.filter_by(category_id=request.args.get('category'))
+    if request.args.get('limit'):
+        products = products.paginate(page, int(request.args.get("limit")), False)
+        return jsonify(product_schema.dump(products.items))
     else:
-        products = Product.query.all()
+        products = products.all()
+    
     return jsonify(product_schema.dump(products))
 
 @product_endpoint.route("/v1/products", methods=["POST"])
