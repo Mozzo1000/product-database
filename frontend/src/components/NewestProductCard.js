@@ -39,7 +39,7 @@ function NewestProductCard(props) {
 
     return (
         <Card>
-            <CardHeader avatar={<NewReleasesIcon fontSize="large"/>} title="Newly added" titleTypographyProps={{variant: "h5", fontWeight: "500"}}/>
+            <CardHeader avatar={<NewReleasesIcon fontSize="large"/>} title="Recently added" titleTypographyProps={{variant: "h5", fontWeight: "500"}}/>
             <ImageList sx={{gridAutoFlow: "column", 
                 gridTemplateColumns: "repeat(auto-fit, minmax(160px,1fr)) !important", 
                 gridAutoColumns: "minmax(160px, 1fr)"}}>
@@ -71,7 +71,7 @@ function NewestProductCard(props) {
                         </ImageListItem>
                     )
                 )}
-                {content && content.length > 0 &&
+                {content && content.length > 0 &&   
                 <ImageListItem>
                         <Button
                             variant="contained"
