@@ -1,0 +1,17 @@
+{
+    "general": {
+        "products": "products",
+        "brands": "brands"
+    },
+    "home": {
+        "title": "Easy searching",
+        "subtitle": "Find everything you might need about computers, monitors, devices and gadgets in just one search. 100% free and open.",
+        "search_products": "Search for products"
+    },
+    "buttons": {
+        "all_products": "See all products"
+    },
+    "input": {
+        "search": "Search"
+    }
+}
