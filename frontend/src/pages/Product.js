@@ -308,14 +308,14 @@ function ProductPage() {
                                                 {content && currentUser ? (
                                                     <FavoriteButton product_id={content?.id} />
                                                 ) : (
-                                                    <Skeleton variant="circular" width={40} height={40}/>
+                                                    (currentUser && <Skeleton variant="circular" width={40} height={40}/>)
                                                 )}
                                             </Grid>
                                             <Grid item>
                                                 {content && currentUser ? (
                                                     <AddToInventory product_id={content?.id} />
                                                 ): (
-                                                    <Skeleton variant="circular" width={40} height={40} />
+                                                    (currentUser && <Skeleton variant="circular" width={40} height={40} />)
                                                 )}
                                                 
                                             </Grid>
