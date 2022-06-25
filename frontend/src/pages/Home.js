@@ -17,6 +17,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import StatsService from '../services/stats.service';
 import CircularProgress from '@mui/material/CircularProgress';
 import useAlert from '../components/Alerts/useAlert';
+import NewestProductCard from '../components/NewestProductCard';
 
 function HomePage() {
     document.title = "product-database";
@@ -78,6 +79,9 @@ function HomePage() {
         <Container>
             <Box sx={{width: '100%', display: 'flex', minHeight: '500px', alignItems: 'center', justifyContent: 'center'}}>
                 <Grid container spacing={6} sx={{display: 'flex', alignItems: 'center', maxWidth: '1300px', padding: '50px'}}>
+                    <Grid item xs={12}>
+                        <NewestProductCard limit={10}/>
+                    </Grid>
                     <Grid item xs={12} md={7}>
                     <Typography variant="h3" fontWeight={700} sx={{paddingBottom: '15px'}}>
                         Easy searching
