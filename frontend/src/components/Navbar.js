@@ -24,6 +24,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import LoginIcon from '@mui/icons-material/Login';
 import InfoIcon from '@mui/icons-material/Info';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import LanguageSwitcher from './LanguageSwitcher';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -135,6 +136,7 @@ function Navbar() {
                             {pagesBottom.find(el => location.pathname === el.link)?.name}
                         </Typography>
                         <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}></Box>
+                        <LanguageSwitcher />
                         {currentUser &&
                             <Box sx={{flexGrow: 0}}>
                                 <Tooltip title="Open settings">
