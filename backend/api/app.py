@@ -15,6 +15,7 @@ from routes.environment import environment_endpoint
 from routes.stats import stats_endpoint
 from routes.favorite import favorite_endpoint
 from routes.inventory import inventory_endpoint
+from commands.db import db_command
 from commands.user import user_command
 
 swagger_template = {
@@ -34,6 +35,7 @@ migrate = Migrate(app, db)
 swagger = Swagger(app, template=swagger_template)
 jwt = JWTManager(app)
 
+app.register_blueprint(db_command)
 app.register_blueprint(user_command)
 
 app.register_blueprint(auth_endpoint)
