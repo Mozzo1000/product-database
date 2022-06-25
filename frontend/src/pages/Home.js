@@ -18,10 +18,12 @@ import StatsService from '../services/stats.service';
 import CircularProgress from '@mui/material/CircularProgress';
 import useAlert from '../components/Alerts/useAlert';
 import NewestProductCard from '../components/NewestProductCard';
+import {useTranslation} from "react-i18next";
 
 function HomePage() {
     document.title = "product-database";
     const snackbar = useAlert();
+    const {t, i18n} = useTranslation();
 
     const [search, setSearch] = useState("");
     const [searchedList, setSearchedList] = useState([]);
@@ -84,10 +86,10 @@ function HomePage() {
                     </Grid>
                     <Grid item xs={12} md={7}>
                     <Typography variant="h3" fontWeight={700} sx={{paddingBottom: '15px'}}>
-                        Easy searching
+                        {t("home.title")}
                     </Typography>
                     <Typography variant="h6" sx={{opacity: '0.4', paddingBottom: '30px'}}>
-                        Find everything you might need about computers, monitors, devices and gadgets in just one search. 100% free and open.
+                        {t("home.subtitle")}
                     </Typography>
                     <Grid container direction="row" spacing={3}>
                         <Grid item>
@@ -95,7 +97,7 @@ function HomePage() {
                                 variant="contained"
                                 color="primary"
                                 sx={{ width: '200px', fontSize: '16px'}} component={Link} to="/products">
-                                See all products
+                                {t("buttons.all_products")}
                             </Button>
                         </Grid>
                     </Grid>
@@ -116,7 +118,7 @@ function HomePage() {
                         ) : (
                             <CircularProgress />
                         )}
-                        <Typography variant="h6" sx={{opacity: '0.4'}}>products</Typography>
+                        <Typography variant="h6" sx={{opacity: '0.4'}}>{t("general.products")}</Typography>
                     </Grid>
                     <Grid item xs={12} md={3.5} sx={{backgroundColor: '#f2f0f1', textAlign: 'center', padding: '30px', width: '200px', borderRadius: '10px', margin: '10px !important'}}>
                         {statsBrands ? (
@@ -126,7 +128,7 @@ function HomePage() {
                         ) : (
                             <CircularProgress />
                         )}
-                        <Typography variant="h6" sx={{opacity: '0.4'}}>brands</Typography>
+                        <Typography variant="h6" sx={{opacity: '0.4'}}>{t("general.brands")}</Typography>
                     </Grid>
                 </Grid>
             </Box>
@@ -135,14 +137,14 @@ function HomePage() {
                     <Grid container spacing={3} justifyContent="center"  direction="column" alignItems="center">
                         <Grid item xs={12}>
                             <Typography variant="h4" sx={{fontWeight: 600}}>
-                                Search for product
+                                {t("home.search_products")}
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <form onSubmit={handleSearch}>
                                 <Grid container spacing={2} justifyContent="center" alignItems="center" direction="row">
                                     <Grid item xs={12}>
-                                        <TextField label="Search" type="search" value={search} onChange={e => setSearch(e.target.value)} InputProps={{endAdornment: <InputAdornment position="end"><IconButton type="submit" edge="end"><SearchIcon/></IconButton></InputAdornment>,}}/>
+                                        <TextField label={t("input.search")} type="search" value={search} onChange={e => setSearch(e.target.value)} InputProps={{endAdornment: <InputAdornment position="end"><IconButton type="submit" edge="end"><SearchIcon/></IconButton></InputAdornment>,}}/>
                                     </Grid>
                                 </Grid>
                             </form>
