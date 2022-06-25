@@ -6,7 +6,7 @@ from models import User, UserSchema, db
 import os
 from api.utils import admin_required
 
-user_endpoint = Blueprint('user', __name__)
+user_endpoint = Blueprint('user_endpoint', __name__)
 
 @user_endpoint.route('/v1/users/storage/<path:filename>', methods=['GET'])
 def get_image(filename):
