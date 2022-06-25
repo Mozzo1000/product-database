@@ -53,24 +53,22 @@ npm start
 ```
 
 ## Create admin user
-Once the API is up and running you need to create a user and promote it to admin. You have two options in order to accomplish this:
-
-### Manual POST request
-`POST http://localhost:5000/v1/auth/register`
-`BODY {"email": "admin@admin.com", "name": "Admin", "password": "admin"}'`
-
-Example request with curl:
+From the `backend` folder run the following command to create a new user:
 ```
-curl -X POST http://localhost:5000/v1/auth/register 
-   -H "Content-Type: application/json"
-   -d '{"email": "admin@admin.com", "name": "Admin", "password": "admin"}'  
+python -m flask user create <email> <name> <role>
 ```
-On success a message saying `Account with email admin@admin.com was created` and you will also get a access and refresh token. 
+Role can be either `admin` or `user`. In this case you will want to use `admin`.
 
-### From the frontend
-If you have the frontend running you can go to the /register endpoint on the website (eg: http://localhost:3000/register). There you can fill out the form to create a normal user.
+Example:
+```
+python -m flask user create admin@admin.com Admin admin
+```
 
-### Promote to admin
-Once you have done one of the two above steps you will need to go into the `user`table inside the database and modify the `role` column of your new user. Set it to `admin`.
+## (Optional) Seed database
+If you want the database to be occupied with data for testing you can run the following command from inside the `backend` folder:
+**Note: the database needs to be empty!**
+```
+python -m flask data seed
+```
 
 You should now be all good to go in order to start developing. If you have any questions or problems, feel free to get in contact by opening a issue.
