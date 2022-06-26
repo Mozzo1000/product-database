@@ -50,7 +50,9 @@ def add_document():
             "message": "file is empty"
         }), 400
     if file and allowed_file(file.filename):
-        filename = secure_filename(os.path.basename(file.filename))
+        if not os.path.exists(os.path.join(current_app.config["UPLOAD_FOLDER"], request.form.get("product_id"))):
+            os.makedirs(os.path.join(current_app.config["UPLOAD_FOLDER"], request.form.get("product_id")))
+        filename = os.path.join(request.form.get("product_id"), secure_filename(os.path.basename(file.filename)))
         filetype = mimetypes.guess_type(filename)[0]
         if filetype:
             file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
@@ -92,6 +94,11 @@ def add_document():
             return jsonify({
                 "error": "Bad request",
                 "message": "Could not determine file type"
+            }), 400
+    else:
+        return jsonify({
+                "error": "Bad request",
+                "message": "Unknown error occurred"
             }), 400
 
 @document_endpoint.route('/v1/documents/<id>', methods=["DELETE"])
