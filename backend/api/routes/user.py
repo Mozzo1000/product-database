@@ -23,16 +23,11 @@ def get_logged_in_user():
 
 @user_endpoint.route("/v1/users/me", methods=["PATCH"])
 @jwt_required()
-def edit_logged_in_user():
-    if not request.json and not request.files:
-        return jsonify({
-            "error": "Bad request",
-            "message": "name, email, password and/or image not given"
-       }), 400
-    
+def edit_logged_in_user():        
     user = User.query.filter_by(email=get_jwt_identity()).first()
 
     if request.files:
+        print("MULTIFORM DATA")
         if "image" in  request.files:
             image = request.files["image"]
             if image.filename == "":
@@ -43,13 +38,18 @@ def edit_logged_in_user():
             image_filename = secure_filename(image.filename)
             image.save(os.path.join(current_app.config["UPLOAD_FOLDER_PROFILE"], image_filename))
             user.image = image_filename
-    else:
+    elif request.json:
         if "name" in request.json:
             user.name = request.json["name"]
         if "email" in request.json:
             user.email = request.json["email"]
         if "password" in request.json:
             user.password = User.generate_hash(request.json["password"])
+    else:
+        return jsonify({
+                    "error": "Bad request",
+                    "message": "name, email, password and/or image not given"
+        }), 400
     user.save_to_db()
     return jsonify({'message': 'User settings saved'}), 200
 
