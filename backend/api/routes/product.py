@@ -25,7 +25,7 @@ def get_products():
     if request.args.get('category'):
         products = products.filter_by(category_id=request.args.get('category'))
     if request.args.get('limit'):
-        products = products.paginate(page, int(request.args.get("limit")), False)
+        products = products.paginate(page=page, per_page=int(request.args.get("limit")), error_out=False)
         return jsonify(product_schema.dump(products.items))
     else:
         products = products.all()
