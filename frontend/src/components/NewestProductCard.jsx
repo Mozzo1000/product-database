@@ -1,9 +1,9 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect } from 'react'
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import ProductService from "../services/product.service";
-import useAlert from '../components/Alerts/useAlert';
+import useAlert from './Alerts/useAlert';
 import Image from 'material-ui-image'
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardContent';
@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 
 function NewestProductCard(props) {
     const snackbar = useAlert();
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
     const [content, setContent] = useState();
 
     useEffect(() => {
@@ -37,52 +37,54 @@ function NewestProductCard(props) {
                 snackbar.showError(resMessage);
             }
         )
-      }, []);
+    }, []);
 
     return (
         <Card>
-            <CardHeader avatar={<NewReleasesIcon fontSize="large"/>} title={t("card.recently_added")} titleTypographyProps={{variant: "h5", fontWeight: "500"}}/>
-            <ImageList sx={{gridAutoFlow: "column", 
-                gridTemplateColumns: "repeat(auto-fit, minmax(160px,1fr)) !important", 
-                gridAutoColumns: "minmax(160px, 1fr)"}}>
+            <CardHeader avatar={<NewReleasesIcon fontSize="large" />} title={t("card.recently_added")} titleTypographyProps={{ variant: "h5", fontWeight: "500" }} />
+            <ImageList sx={{
+                gridAutoFlow: "column",
+                gridTemplateColumns: "repeat(auto-fit, minmax(160px,1fr)) !important",
+                gridAutoColumns: "minmax(160px, 1fr)"
+            }}>
                 {content ? (
                     content.length > 0 ? (
                         content.map((product) => (
                             <>
-                            <CardActionArea component={Link} to={"/product/" + product.id}>
-                                <ImageListItem>
-                                    <Image src={"http://localhost:5000/v1/documents/storage/" + product.cover_image} style={{width: "100%", height: "100%", objectFit: "contain"}}/>
-                                    <ImageListItemBar title={product.name} />
-                                </ImageListItem>
-                            </CardActionArea>
-                            
+                                <CardActionArea component={Link} to={"/product/" + product.id}>
+                                    <ImageListItem>
+                                        <Image src={"http://localhost:5000/v1/documents/storage/" + product.cover_image} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                        <ImageListItemBar title={product.name} />
+                                    </ImageListItem>
+                                </CardActionArea>
+
                             </>
                         ))
-                        
-                    ): (
+
+                    ) : (
                         <Grid container direction="row" justifyContent="center" alignItems="center">
                             <Grid item>
-                                <Typography variant="h5" sx={{fontWeight: 500}}>Could not find any products.</Typography>
+                                <Typography variant="h5" sx={{ fontWeight: 500 }}>Could not find any products.</Typography>
                             </Grid>
                         </Grid>
-                    )        
+                    )
                 ) : (
-                    [1, 2, 3, 4, 5, 6, 7].map(() => 
+                    [1, 2, 3, 4, 5, 6, 7].map(() =>
                         <ImageListItem>
                             <Skeleton variant="rectangular" width={160} height={160} />
                         </ImageListItem>
                     )
                 )}
-                {content && content.length > 0 &&   
-                <ImageListItem>
+                {content && content.length > 0 &&
+                    <ImageListItem>
                         <Button
                             variant="contained"
                             color="primary"
-                            sx={{ width: '200px', fontSize: '16px', margin: "auto"}} component={Link} to="/products">
+                            sx={{ width: '200px', fontSize: '16px', margin: "auto" }} component={Link} to="/products">
                             {t("buttons.all_products")}
                         </Button>
-                </ImageListItem>  
-                }              
+                    </ImageListItem>
+                }
             </ImageList>
         </Card>
     )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect } from 'react'
 import { styled } from '@mui/material/styles';
 import { useParams, Link as RouterLink } from "react-router-dom";
 import ProductService from "../services/product.service";
@@ -55,8 +55,7 @@ import useAlert from '../components/Alerts/useAlert';
 import FavoriteButton from '../components/FavoriteButton';
 import AddToInventory from '../components/AddToInventory';
 import Skeleton from '@mui/material/Skeleton';
-
-const prettyBytes = require('pretty-bytes');
+import prettyBytes from 'pretty-bytes';
 
 function ProductPage() {
     const snackbar = useAlert();
@@ -80,8 +79,8 @@ function ProductPage() {
     const handleClickHelp = (event) => {
         setAnchorElHelp(event.currentTarget);
     };
-    
-      const handleCloseHelp = () => {
+
+    const handleCloseHelp = () => {
         setAnchorElHelp(null);
     };
 
@@ -100,7 +99,7 @@ function ProductPage() {
     const Input = styled('input')({
         display: 'none',
     });
-      
+
     const handleTabChange = (event, newTab) => {
         setTab(newTab);
     };
@@ -243,22 +242,22 @@ function ProductPage() {
                 snackbar.showError(resMessage);
             }
         )
-      }, [id]);
+    }, [id]);
 
     const uploadFileButton = () => {
         return (
             <>
-            {currentUser && currentUser["role"] === "admin" &&
-                <>
-                <label htmlFor="contained-button-file">
-                <Input id="contained-button-file" multiple type="file" onChange={handleFileUpload}/>
-                <Button variant="text" component="span">
-                    Upload file
-                </Button>
-                </label>
-                <Button aria-describedby="popover" onClick={handleClickHelp}><HelpIcon /></Button>
-                </>
-            }
+                {currentUser && currentUser["role"] === "admin" &&
+                    <>
+                        <label htmlFor="contained-button-file">
+                            <Input id="contained-button-file" multiple type="file" onChange={handleFileUpload} />
+                            <Button variant="text" component="span">
+                                Upload file
+                            </Button>
+                        </label>
+                        <Button aria-describedby="popover" onClick={handleClickHelp}><HelpIcon /></Button>
+                    </>
+                }
             </>
         )
     }
@@ -266,9 +265,9 @@ function ProductPage() {
     const addNewAttributeButton = () => {
         return (
             <>
-            {currentUser && currentUser["role"] === "admin" &&
-                <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>   
-            }         
+                {currentUser && currentUser["role"] === "admin" &&
+                    <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>
+                }
             </>
         )
     }
@@ -276,64 +275,64 @@ function ProductPage() {
     const addEnvironmentReportButton = () => {
         return (
             <>
-            {currentUser && currentUser["role"] === "admin" &&
-                <AddEnvironmentReport id={id}/>
-            }
+                {currentUser && currentUser["role"] === "admin" &&
+                    <AddEnvironmentReport id={id} />
+                }
             </>
         )
     }
 
     return (
-        <Container sx={{paddingTop: 4}}>
+        <Container sx={{ paddingTop: 4 }}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Card>
                         <CardContent>
-                                <Grid container direction="row" justifyContent="space-between">
-                                    <Grid item xs={6}>
-                                        {content ? (
-                                            <Breadcrumbs aria-label="breadcrumb">
-                                                <Link component={RouterLink} underline="hover" color="inherit" to="/products">
-                                                    Products
-                                                </Link>
-                                                <Typography color="text.primary">{content.name}</Typography>
-                                            </Breadcrumbs>
-                                        ): (
-                                            <Skeleton variant="text" />
-                                        )}
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Grid container spacing={0} direction="row" justifyContent="flex-end">
-                                            <Grid item>
-                                                {content && currentUser ? (
-                                                    <FavoriteButton product_id={content?.id} />
-                                                ) : (
-                                                    (currentUser && <Skeleton variant="circular" width={40} height={40}/>)
-                                                )}
-                                            </Grid>
-                                            <Grid item>
-                                                {content && currentUser ? (
-                                                    <AddToInventory product_id={content?.id} />
-                                                ): (
-                                                    (currentUser && <Skeleton variant="circular" width={40} height={40} />)
-                                                )}
-                                                
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>                                    
+                            <Grid container direction="row" justifyContent="space-between">
+                                <Grid item xs={6}>
+                                    {content ? (
+                                        <Breadcrumbs aria-label="breadcrumb">
+                                            <Link component={RouterLink} underline="hover" color="inherit" to="/products">
+                                                Products
+                                            </Link>
+                                            <Typography color="text.primary">{content.name}</Typography>
+                                        </Breadcrumbs>
+                                    ) : (
+                                        <Skeleton variant="text" />
+                                    )}
                                 </Grid>
+                                <Grid item xs={6}>
+                                    <Grid container spacing={0} direction="row" justifyContent="flex-end">
+                                        <Grid item>
+                                            {content && currentUser ? (
+                                                <FavoriteButton product_id={content?.id} />
+                                            ) : (
+                                                (currentUser && <Skeleton variant="circular" width={40} height={40} />)
+                                            )}
+                                        </Grid>
+                                        <Grid item>
+                                            {content && currentUser ? (
+                                                <AddToInventory product_id={content?.id} />
+                                            ) : (
+                                                (currentUser && <Skeleton variant="circular" width={40} height={40} />)
+                                            )}
+
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                             <Grid container spacing={6}>
                                 <Grid item xs={12} md={6}>
-                                    {imageContent.length > 0 ? ( 
+                                    {imageContent.length > 0 ? (
                                         <>
-                                        <SwipeableViews index={activeStep} onChangeIndex={handleStepChange} enableMouseEvents>
-                                            {imageContent.map((image, index) => (
-                                                <div key={image.name}>
-                                                    {Math.abs(activeStep - index) <= 2 ? (
-                                                        <Image src={"http://localhost:5000/v1/documents/storage/" + image.name} style={{width: "100%", height: "100%", objectFit: "contain"}}/>
-                                                    ): null}
-                                                </div>
-                                            ))}
+                                            <SwipeableViews index={activeStep} onChangeIndex={handleStepChange} enableMouseEvents>
+                                                {imageContent.map((image, index) => (
+                                                    <div key={image.name}>
+                                                        {Math.abs(activeStep - index) <= 2 ? (
+                                                            <Image src={"http://localhost:5000/v1/documents/storage/" + image.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                                        ) : null}
+                                                    </div>
+                                                ))}
                                             </SwipeableViews>
                                             <MobileStepper position="static" steps={imageContent.length} activeStep={activeStep} variant="dots"
                                                 nextButton={
@@ -349,9 +348,9 @@ function ProductPage() {
                                                     </Button>
                                                 }
                                             />
-                                            </>
+                                        </>
                                     ) : (
-                                        <Skeleton variant="rectangular" width={520} height={560}/>
+                                        <Skeleton variant="rectangular" width={520} height={560} />
                                     )}
                                 </Grid>
                                 <Grid item xs={12} md={6}>
@@ -359,15 +358,15 @@ function ProductPage() {
                                         <Grid item xs={12}>
                                             {content ? (
                                                 <Typography variant="h3">{content.name}</Typography>
-                                            ): (
-                                                <Skeleton variant="rectangular" height={120}/>
+                                            ) : (
+                                                <Skeleton variant="rectangular" height={120} />
                                             )}
                                         </Grid>
                                         <Grid item xs={12}>
                                             {content ? (
                                                 <Typography variant="body1">{content.description}</Typography>
-                                            ): (
-                                                <Skeleton variant="rectangular" height={320}/>
+                                            ) : (
+                                                <Skeleton variant="rectangular" height={320} />
                                             )}
                                         </Grid>
                                         <Grid item xs={12}>
@@ -405,8 +404,8 @@ function ProductPage() {
                             <CardActions>
                                 {currentUser && currentUser["role"] === "admin" &&
                                     <>
-                                    <Button size="small">Edit</Button>
-                                    <Button size="small" color="error">Delete</Button>
+                                        <Button size="small">Edit</Button>
+                                        <Button size="small" color="error">Delete</Button>
                                     </>
                                 }
                             </CardActions>
@@ -433,8 +432,8 @@ function ProductPage() {
                                                                 <TableCell>{attribute.value}</TableCell>
                                                                 {currentUser && currentUser["role"] === "admin" &&
                                                                     <>
-                                                                    <TableCell><EditProductAttribute props={attribute} /></TableCell>
-                                                                    <TableCell><RemoveProductAttribute props={attribute} /></TableCell>
+                                                                        <TableCell><EditProductAttribute props={attribute} /></TableCell>
+                                                                        <TableCell><RemoveProductAttribute props={attribute} /></TableCell>
                                                                     </>
                                                                 }
                                                             </TableRow>
@@ -451,7 +450,7 @@ function ProductPage() {
                                 </CardContent>
                             </Card>
                         </TabPanel>
-                        
+
                         <TabPanel value={tab} index={1}>
                             <Card>
                                 <CardHeader title={addEnvironmentReportButton()} />
@@ -461,14 +460,14 @@ function ProductPage() {
                                             <TableBody>
                                                 {environmentContent ? (
                                                     <>
-                                                    <TableRow>
-                                                        <TableCell>Carbon footprint</TableCell>
-                                                        <TableCell>{environmentContent.carbon_footprint} kgCO2e</TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <TableCell>Carbon deviation</TableCell>
-                                                        <TableCell>+/- {environmentContent.carbon_deviation} kgCO2e</TableCell>
-                                                    </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>Carbon footprint</TableCell>
+                                                            <TableCell>{environmentContent.carbon_footprint} kgCO2e</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>Carbon deviation</TableCell>
+                                                            <TableCell>+/- {environmentContent.carbon_deviation} kgCO2e</TableCell>
+                                                        </TableRow>
                                                     </>
                                                 ) : (
                                                     <Typography>No environment report data found</Typography>
@@ -483,13 +482,13 @@ function ProductPage() {
                         <TabPanel value={tab} index={2}>
                             <Card>
                                 <CardHeader title={uploadFileButton()} />
-                                    <CardContent>
-                                        <Popover id="popover" open={openHelp} anchorEl={anchorElHelp} onClose={handleCloseHelp} anchorOrigin={{vertical: "bottom", horizontal: "left"}}>
-                                            <Typography sx={{ p: 2 }}>Uploading images will add them as cover images.</Typography>
-                                        </Popover>
-                                        {loadUpload && 
-                                            <CircularProgress />
-                                        }
+                                <CardContent>
+                                    <Popover id="popover" open={openHelp} anchorEl={anchorElHelp} onClose={handleCloseHelp} anchorOrigin={{ vertical: "bottom", horizontal: "left" }}>
+                                        <Typography sx={{ p: 2 }}>Uploading images will add them as cover images.</Typography>
+                                    </Popover>
+                                    {loadUpload &&
+                                        <CircularProgress />
+                                    }
                                     <TableContainer>
                                         <Table>
                                             <TableHead>
@@ -510,20 +509,20 @@ function ProductPage() {
                                                             <TableCell>{document.type}</TableCell>
                                                             {document.size === null ? (
                                                                 <TableCell>{document.size}</TableCell>
-                                                            ): (
+                                                            ) : (
                                                                 <TableCell>{prettyBytes(document.size)}</TableCell>
                                                             )}
                                                             <TableCell>{document.checksum}</TableCell>
-                                                            {currentUser && currentUser["role"] === "admin" && 
-                                                            <TableCell>
-                                                                <RemoveDocument props={document} />
-                                                            </TableCell>
+                                                            {currentUser && currentUser["role"] === "admin" &&
+                                                                <TableCell>
+                                                                    <RemoveDocument props={document} />
+                                                                </TableCell>
                                                             }
                                                         </TableRow>
                                                     ))
                                                 ) : (
                                                     <Typography>No documents found</Typography>
-                                                )}  
+                                                )}
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
@@ -541,8 +540,8 @@ function ProductPage() {
                             <DialogContentText>
                                 Fill out the information below
                             </DialogContentText>
-                            <TextField required autofocus id="name" label="Name" margin="dense" fullWidth variant="standard" value={newAttributeName} onChange={e => setNewAttributeName(e.target.value)}/>
-                            <TextField required autofocus id="value" label="Value" margin="dense" fullWidth variant="standard" value={newAttributeValue} onChange={e => setNewAttributeValue(e.target.value)}/>
+                            <TextField required autofocus id="name" label="Name" margin="dense" fullWidth variant="standard" value={newAttributeName} onChange={e => setNewAttributeName(e.target.value)} />
+                            <TextField required autofocus id="value" label="Value" margin="dense" fullWidth variant="standard" value={newAttributeValue} onChange={e => setNewAttributeValue(e.target.value)} />
 
                         </DialogContent>
                         <DialogActions>
