@@ -49,7 +49,7 @@ npm install
 #### Start the frontend server
 From the `frontend` folder run the following to start the development frontend server:
 ```
-npm start
+npm run dev
 ```
 
 ## Create admin user
