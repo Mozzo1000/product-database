@@ -14,11 +14,13 @@ import { Link } from "react-router-dom";
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from "react-i18next";
+import { useHorizontalScroll } from './HorizontalScrollRef';
 
 function NewestProductCard(props) {
     const snackbar = useAlert();
     const { t, i18n } = useTranslation();
     const [content, setContent] = useState();
+    const scrollRef = useHorizontalScroll();
 
     useEffect(() => {
         const filter = "?limit=" + props.limit;
@@ -42,7 +44,7 @@ function NewestProductCard(props) {
     return (
         <Card>
             <CardHeader avatar={<NewReleasesIcon fontSize="large" />} title={t("card.recently_added")} titleTypographyProps={{ variant: "h5", fontWeight: "500" }} />
-            <ImageList sx={{
+            <ImageList ref={scrollRef} sx={{
                 gridAutoFlow: "column",
                 gridTemplateColumns: "repeat(auto-fit, minmax(160px,1fr)) !important",
                 gridAutoColumns: "minmax(160px, 1fr)"
