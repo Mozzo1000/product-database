@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import Container from '@mui/material/Container';
 import DataTable from '../components/DataTable';
@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
-import { GridToolbarContainer, GridToolbarExport, gridClasses, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarDensitySelector} from '@mui/x-data-grid';
+import { GridToolbarContainer, GridToolbarExport, gridClasses, GridToolbarColumnsButton, GridToolbarFilterButton, GridToolbarDensitySelector } from '@mui/x-data-grid';
 import CategorySelection from '../components/CategorySelection'
 import BrandSelection from '../components/BrandSelection'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
@@ -21,6 +21,8 @@ import Typography from '@mui/material/Typography';
 import LinkMUI from '@mui/material/Link';
 import Image from 'material-ui-image'
 import useAlert from '../components/Alerts/useAlert';
+import Grid from '@mui/material/Grid';
+import Drawer from '@mui/material/Drawer';
 
 function ProductsPage() {
     const snackbar = useAlert();
@@ -43,18 +45,20 @@ function ProductsPage() {
         setOpenModal(false);
     };
     const columns = [
-        {field: "id", headerName: "ID", hide: true},
-        {field: "Image", headerName: "",
+        { field: "id", headerName: "ID", hide: true },
+        {
+            field: "Image", headerName: "",
             renderCell: (params) => {
                 if (params.row.cover_image) {
                     // Hard code api server address until fix is found for opening image and redirect to api storage endpoint correctly.
-                    return <Image src={"http://localhost:5000/v1/documents/storage/" + params.row.cover_image} style={{width: "100%", height: "100%", objectFit: "contain"}}/>
+                    return <Image src={"http://localhost:5000/v1/documents/storage/" + params.row.cover_image} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                 } else {
-                    return <InsertPhotoIcon fontSize="large" sx={{margin: "auto"}} />
+                    return <InsertPhotoIcon fontSize="large" sx={{ margin: "auto" }} />
                 }
             }
         },
-        {field: "name", headerName: "Name", width: 300,
+        {
+            field: "name", headerName: "Name", width: 300,
             renderCell: (params) => {
                 return <div><Typography><LinkMUI underline="hover" component={Link} to={"/product/" + params.row.id}>{params.value}</LinkMUI></Typography><Typography>{params.row.description}</Typography></div>
             }
@@ -121,46 +125,54 @@ function ProductsPage() {
                 snackbar.showError(resMessage);
             }
         )
-      }, []);
+    }, []);
 
-      function CustomToolbar() {
+    function CustomToolbar() {
         return (
-          <GridToolbarContainer className={gridClasses.toolbarContainer}>
-            <GridToolbarExport />
-            <GridToolbarColumnsButton />
-            <GridToolbarFilterButton />
-            <GridToolbarDensitySelector />
-            {currentUser && currentUser["role"] === "admin" && 
-                <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>
-            }
-          </GridToolbarContainer>
+            <GridToolbarContainer className={gridClasses.toolbarContainer}>
+                <GridToolbarExport />
+                <GridToolbarColumnsButton />
+                <GridToolbarFilterButton />
+                <GridToolbarDensitySelector />
+                {currentUser && currentUser["role"] === "admin" &&
+                    <Button variant="text" startIcon={<AddIcon />} onClick={handleClickOpenModal}>Add new</Button>
+                }
+            </GridToolbarContainer>
         );
     }
 
 
-      return (
+    return (
         <Container>
-            <DataTable content={content} columns={columns} pageSize={pageSize} toolbar={CustomToolbar}/>
-            <Dialog open={openModal} onClose={handleCloseModal}>
-                <DialogTitle>Add new product</DialogTitle>
-                <FormControl>
+            <DataTable content={content} columns={columns} pageSize={pageSize} toolbar={CustomToolbar} />
+            <Drawer open={openModal} onClose={handleCloseModal} anchor="right">
+                <Container>
                     <form onSubmit={handleAddProduct}>
-                        <DialogContent>
-                            <DialogContentText>
-                                Fill out the information below
-                            </DialogContentText>
-                            <TextField required autofocus id="name" label="Name" margin="dense" fullWidth variant="standard" value={newProductName} onChange={e => setNewProductName(e.target.value)}/>
-                            <CategorySelection selectedCategory={newProductCategory} setState={setNewProductCategory} />
-                            <BrandSelection selectedBrand={newProductBrand} setState={setNewProductBrand} />
-                            <TextField id="description" label="Description" margin="dense" fullWidth variant="standard" value={newProductDescription} onChange={e => setNewProductDescription(e.target.value)}/>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleCloseModal}>Cancel</Button>
-                            <Button type="submit" color="primary" onClick={handleCloseModal}>Add</Button>
-                        </DialogActions>
+                        <Grid container spacing={3} direction="row" alignItems="center" justifyContent="space-between">
+                            <Grid item>
+                                <Typography variant="h5"><br />Add new product</Typography>
+
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField required autofocus id="name" label="Name" fullWidth value={newProductName} onChange={e => setNewProductName(e.target.value)} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <CategorySelection selectedCategory={newProductCategory} setState={setNewProductCategory} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <BrandSelection selectedBrand={newProductBrand} setState={setNewProductBrand} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField id="description" multiline minRows={3} label="Description" fullWidth value={newProductDescription} onChange={e => setNewProductDescription(e.target.value)} />
+                            </Grid>
+                            <Grid item>
+                                <Button onClick={handleCloseModal} color="error">Cancel</Button>
+                                <Button variant="contained" type="submit" color="primary" onClick={handleCloseModal}>Add</Button>
+                            </Grid>
+                        </Grid>
                     </form>
-                </FormControl>
-            </Dialog>
+                </Container>
+            </Drawer>
         </Container>
     )
 }
