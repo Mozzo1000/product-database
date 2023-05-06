@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, abort, send_from_directory, curre
 from werkzeug.utils import secure_filename
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, get_jwt_identity, get_jwt)
-from models import User, UserSchema, db
+from api.models import User, UserSchema, db
 import os
 from api.utils import admin_required
 

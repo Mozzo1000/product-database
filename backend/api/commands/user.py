@@ -3,7 +3,7 @@ import click
 from getpass import getpass
 import sys
 import re
-from models import User
+from api.models import User
 
 user_command = Blueprint('user', __name__)
 

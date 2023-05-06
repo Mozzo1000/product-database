@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import Attribute, AttributeSchema, db
+from api.models import Attribute, AttributeSchema, db
 from api.utils import admin_required
 
 attribute_endpoint = Blueprint('attribute', __name__)

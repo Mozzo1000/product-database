@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import Favorite, FavoriteSchema, User, db
+from api.models import Favorite, FavoriteSchema, User, db
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 favorite_endpoint = Blueprint('favorite', __name__)

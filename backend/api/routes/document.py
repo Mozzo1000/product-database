@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, current_app, send_from_directory
 from werkzeug.utils import secure_filename
 import os
-from models import Document, DocumentSchema, db
+from api.models import Document, DocumentSchema, db
 import mimetypes
 import hashlib
 import platform

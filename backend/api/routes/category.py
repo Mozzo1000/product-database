@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import Category, CategorySchema, db
+from api.models import Category, CategorySchema, db
 from api.utils import admin_required
 
 category_endpoint = Blueprint('category', __name__)

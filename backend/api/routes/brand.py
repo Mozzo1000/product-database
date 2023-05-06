@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import Brand, BrandSchema, db
+from api.models import Brand, BrandSchema, db
 from api.utils import admin_required
 
 brand_endpoint = Blueprint('brand', __name__)

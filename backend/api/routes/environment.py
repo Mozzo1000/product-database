@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import Environment, EnvironmentSchema, db
+from api.models import Environment, EnvironmentSchema, db
 from api.utils import admin_required
 
 environment_endpoint = Blueprint('environment', __name__)

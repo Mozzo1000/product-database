@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import Product, ProductSchema, db
+from api.models import Product, ProductSchema, db
 from api.utils import admin_required
 
 product_endpoint = Blueprint('product', __name__)

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import Product, Brand, db
+from api.models import Product, Brand, db
 
 stats_endpoint = Blueprint('stats', __name__)
 

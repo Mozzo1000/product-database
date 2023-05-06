@@ -1,6 +1,6 @@
 from unicodedata import category
 from flask import Blueprint
-from models import db, Brand, Category, Product
+from api.models import db, Brand, Category, Product
 from flask_migrate import Migrate
 from alembic import command
 

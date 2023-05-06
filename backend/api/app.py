@@ -2,21 +2,21 @@ from flask import Flask, url_for
 from flask_migrate import Migrate
 from flasgger import Swagger
 from flask_jwt_extended import JWTManager
-import config
-from models import db, ma
-from routes.auth import auth_endpoint
-from routes.brand import brand_endpoint
-from routes.category import category_endpoint
-from routes.product import product_endpoint
-from routes.attribute import attribute_endpoint
-from routes.document import document_endpoint
-from routes.user import user_endpoint
-from routes.environment import environment_endpoint
-from routes.stats import stats_endpoint
-from routes.favorite import favorite_endpoint
-from routes.inventory import inventory_endpoint
-from commands.db import db_command
-from commands.user import user_command
+from api.config import Config
+from api.models import db, ma
+from api.routes.auth import auth_endpoint
+from api.routes.brand import brand_endpoint
+from api.routes.category import category_endpoint
+from api.routes.product import product_endpoint
+from api.routes.attribute import attribute_endpoint
+from api.routes.document import document_endpoint
+from api.routes.user import user_endpoint
+from api.routes.environment import environment_endpoint
+from api.routes.stats import stats_endpoint
+from api.routes.favorite import favorite_endpoint
+from api.routes.inventory import inventory_endpoint
+from api.commands.db import db_command
+from api.commands.user import user_command
 
 swagger_template = {
   "swagger": "2.0",
@@ -28,7 +28,7 @@ swagger_template = {
 }
 
 app = Flask(__name__)
-app.config.from_object(config.Config)
+app.config.from_object(Config)
 db.init_app(app)
 ma.init_app(app)
 migrate = Migrate(app, db)
