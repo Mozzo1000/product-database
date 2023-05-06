@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect } from 'react'
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import TabPanel from '../components/TabPanel';
@@ -26,7 +26,7 @@ import { useTranslation } from "react-i18next";
 
 function SettingsPage() {
     const snackbar = useAlert();
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -39,14 +39,14 @@ function SettingsPage() {
     const [savePasswordButtonDisabled, setSavePasswordButtonDisabled] = useState(true);
     const currentUser = AuthService.getCurrentUser();
 
-    document.title = "Settings - product-database"
+    document.title = "Settings - " + import.meta.env.VITE_TITLE
 
     const handleTabChange = (event, newTab) => {
         setTab(newTab);
     };
 
     const handleSavePasswordSettings = () => {
-        UserService.editMe({'password': newPassword}).then(
+        UserService.editMe({ 'password': newPassword }).then(
             response => {
                 snackbar.showSuccess(response.data.message);
                 setSaveButtonDisabled(true);
@@ -66,7 +66,7 @@ function SettingsPage() {
     }
 
     const handleSaveSettings = () => {
-        UserService.editMe({name, email}).then(
+        UserService.editMe({ name, email }).then(
             response => {
                 snackbar.showSuccess(response.data.message);
                 setSaveButtonDisabled(true);
@@ -96,7 +96,7 @@ function SettingsPage() {
 
     useEffect(() => {
         if (newPasswordConf === newPassword) {
-            if (newPasswordConf || newPassword) { 
+            if (newPasswordConf || newPassword) {
                 setSavePasswordButtonDisabled(false);
                 setPasswordError("")
             }
@@ -120,7 +120,7 @@ function SettingsPage() {
                 snackbar.showError(resMessage);
             }
         )
-      }, []);
+    }, []);
 
     const Input = styled('input')({
         display: 'none',
@@ -164,52 +164,52 @@ function SettingsPage() {
             )
         }
     };
-      return (
+    return (
         <Container>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={tab} onChange={handleTabChange} aria-label="tabs">
                     <Tab label={t("menu.account")} {...a11yProps(0)} />
                     <Tab label={t("menu.favorites")} {...a11yProps(1)} />
                     <Tab label={t("menu.inventory")} {...a11yProps(2)} />
-                    {currentUser["role"] === "admin" &&<Tab label={t("menu.category")} {...a11yProps(3)} />}
-                    {currentUser["role"] === "admin" &&<Tab label={t("menu.brand")} {...a11yProps(4)} />}
-                    {currentUser["role"] === "admin" &&<Tab label={t("menu.users")} {...a11yProps(5)} />}
+                    {currentUser["role"] === "admin" && <Tab label={t("menu.category")} {...a11yProps(3)} />}
+                    {currentUser["role"] === "admin" && <Tab label={t("menu.brand")} {...a11yProps(4)} />}
+                    {currentUser["role"] === "admin" && <Tab label={t("menu.users")} {...a11yProps(5)} />}
                 </Tabs>
             </Box>
             <TabPanel value={tab} index={0}>
                 <Grid container spacing={3} justifyContent="flex-start" alignItems="center">
-                    <Grid item xs={12} md={6} order={{xs: 2, md: 1}}>
+                    <Grid item xs={12} md={6} order={{ xs: 2, md: 1 }}>
                         <Card>
                             <CardContent>
                                 {/*eslint-disable no-sequences*/}
-                                <TextField fullWidth label={t("input.name")} value={name} onChange={e => (setName(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{m:1}}/>
-                                <TextField fullWidth label={t("input.email")} value={email} onChange={e => (setEmail(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{m:1}}/>
+                                <TextField fullWidth label={t("input.name")} value={name} onChange={e => (setName(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{ m: 1 }} />
+                                <TextField fullWidth label={t("input.email")} value={email} onChange={e => (setEmail(e.target.value), setSaveButtonDisabled(!e.target.value))} sx={{ m: 1 }} />
                                 <Button fullWidth variant="contained" disabled={saveButtonDisabled} onClick={handleSaveSettings}>{t("buttons.save_changes")}</Button>
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item xs={12} md={6} order={{xs: 1, md: 2}}>
+                    <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}>
                         <Card>
                             <CardContent>
                                 <Grid container spacing={3} direction="column" alignItems="center">
                                     <Grid item>
-                                        <Avatar src={"http://localhost:5000/v1/users/storage/" + profileImage} sx={{ width: 100, height: 100 }} />
+                                        <Avatar src={import.meta.env.VITE_API_ENDPOINT + "v1/users/storage/" + profileImage} sx={{ width: 100, height: 100 }} />
                                     </Grid>
                                     <Grid item>
                                         <label htmlFor="contained-button-file">
-                                        <Input id="contained-button-file" multiple type="file" onChange={handleImageUpload}/>
-                                        <Button variant="contained" component="span">
-                                            {t("buttons.change_picture")}
-                                        </Button>
-                                    </label>
+                                            <Input id="contained-button-file" multiple type="file" onChange={handleImageUpload} />
+                                            <Button variant="contained" component="span">
+                                                {t("buttons.change_picture")}
+                                            </Button>
+                                        </label>
                                     </Grid>
                                 </Grid>
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item xs={12} md={6} order={{xs: 3}}>
+                    <Grid item xs={12} md={6} order={{ xs: 3 }}>
                         <Card>
-                            <CardHeader title={<Typography variant="h5">Change password</Typography>}/>
+                            <CardHeader title={<Typography variant="h5">Change password</Typography>} />
                             <CardContent>
                                 <Grid container spacing={3} direction="column">
                                     <Grid item>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect } from 'react'
 import UserService from '../services/user.service'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -50,50 +50,50 @@ function UserTable() {
                 snackbar.showError(resMessage);
             }
         )
-      }, []);
+    }, []);
 
     return (
-    <>
-    <TableContainer>
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Role</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Action</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {users ? (
-                    users.map((user) => (
-                        <TableRow key={user.id}>
-                            <TableCell><Avatar src={"http://localhost:5000/v1/users/storage/" + user.image} alt="User" /></TableCell>
-                            <TableCell>{user.name}</TableCell>
-                            <TableCell>{user.email}</TableCell>
-                            <TableCell>{user.role}</TableCell>
-                            <TableCell>
-                                {user.status == "active" ? (
-                                    <Chip label="Active" color="success" />
-                                ): (
-                                    <Chip label="Inactive" color="error" />
-                                )}
-                            </TableCell>
-                            <TableCell>
-                                <UserTableActionMenu user={user} callback={() => loadUsers()} />
-                            </TableCell>
+        <>
+            <TableContainer>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Email</TableCell>
+                            <TableCell>Role</TableCell>
+                            <TableCell>Status</TableCell>
+                            <TableCell>Action</TableCell>
                         </TableRow>
-                    ))
-                ) : (
-                    <LinearProgress />
-                )}
-            </TableBody>
-        </Table>
-    </TableContainer>
-    </>
-  )
+                    </TableHead>
+                    <TableBody>
+                        {users ? (
+                            users.map((user) => (
+                                <TableRow key={user.id}>
+                                    <TableCell><Avatar src={import.meta.env.VITE_API_ENDPOINT + "v1/users/storage/" + user.image} alt="User" /></TableCell>
+                                    <TableCell>{user.name}</TableCell>
+                                    <TableCell>{user.email}</TableCell>
+                                    <TableCell>{user.role}</TableCell>
+                                    <TableCell>
+                                        {user.status == "active" ? (
+                                            <Chip label="Active" color="success" />
+                                        ) : (
+                                            <Chip label="Inactive" color="error" />
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        <UserTableActionMenu user={user} callback={() => loadUsers()} />
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <LinearProgress />
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
+    )
 }
 
 export default UserTable

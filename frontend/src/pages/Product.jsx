@@ -188,7 +188,7 @@ function ProductPage() {
         ProductService.getProduct(id).then(
             response => {
                 setContent(response.data);
-                document.title = response.data.name + " - product-database"
+                document.title = response.data.name + " - " + + import.meta.env.VITE_TITLE;
             },
             error => {
                 const resMessage =
@@ -329,7 +329,7 @@ function ProductPage() {
                                                 {imageContent.map((image, index) => (
                                                     <div key={image.name}>
                                                         {Math.abs(activeStep - index) <= 2 ? (
-                                                            <Image src={"http://localhost:5000/v1/documents/storage/" + image.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                                            <Image src={import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + image.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                                                         ) : null}
                                                     </div>
                                                 ))}
@@ -504,8 +504,7 @@ function ProductPage() {
                                                 {documentContent.length > 0 ? (
                                                     documentContent.map((document) => (
                                                         <TableRow key={document.name}>
-                                                            {/*TODO: Remove the hardcoded api link. This is a temporary workaround because file download did not work through the proxy pass.*/}
-                                                            <TableCell component="a" href={"http://localhost:5000/v1/documents/storage/" + document.name} target="_blank">{document.name}</TableCell>
+                                                            <TableCell component="a" href={import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + document.name} target="_blank">{document.name}</TableCell>
                                                             <TableCell>{document.type}</TableCell>
                                                             {document.size === null ? (
                                                                 <TableCell>{document.size}</TableCell>

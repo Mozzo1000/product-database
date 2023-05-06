@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useState } from 'react'
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -14,9 +14,9 @@ import useAlert from '../components/Alerts/useAlert';
 import { useTranslation } from "react-i18next";
 
 function LoginPage(props) {
-    document.title = "Login - product-database";
+    document.title = "Login - " + import.meta.env.VITE_TITLE;
     const snackbar = useAlert();
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -42,7 +42,7 @@ function LoginPage(props) {
 
     return (
         <Container>
-           <ParticleBackground />
+            <ParticleBackground />
             <Grid container spacing={0} justifyContent="center" direction="row">
                 <Grid item>
                     <Grid container direction="column" justifyContent="center" spacing={2} className="login-form">

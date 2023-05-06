@@ -36,7 +36,7 @@ function ProductsPage() {
     const [newProductDescription, setNewProductDescription] = useState("");
     const currentUser = AuthService.getCurrentUser();
 
-    document.title = "Products - product-database"
+    document.title = "Products - " + import.meta.env.VITE_TITLE;
     const handleClickOpenModal = () => {
         setOpenModal(true);
     };
@@ -50,8 +50,7 @@ function ProductsPage() {
             field: "Image", headerName: "",
             renderCell: (params) => {
                 if (params.row.cover_image) {
-                    // Hard code api server address until fix is found for opening image and redirect to api storage endpoint correctly.
-                    return <Image src={"http://localhost:5000/v1/documents/storage/" + params.row.cover_image} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                    return <Image src={import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + params.row.cover_image} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                 } else {
                     return <InsertPhotoIcon fontSize="large" sx={{ margin: "auto" }} />
                 }

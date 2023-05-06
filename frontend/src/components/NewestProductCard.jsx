@@ -55,7 +55,7 @@ function NewestProductCard(props) {
                             <>
                                 <CardActionArea component={Link} to={"/product/" + product.id}>
                                     <ImageListItem>
-                                        <Image src={"http://localhost:5000/v1/documents/storage/" + product.cover_image} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                        <Image src={import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + product.cover_image} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                                         <ImageListItemBar title={product.name} />
                                     </ImageListItem>
                                 </CardActionArea>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react'
+import React, { useState, useEffect } from 'react'
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -14,9 +14,9 @@ import useAlert from '../components/Alerts/useAlert';
 import { useTranslation } from "react-i18next";
 
 function RegisterPage(props) {
-    document.title = "Register - product-database";
+    document.title = "Register - " + import.meta.env.VITE_TITLE;
     const snackbar = useAlert();
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -60,7 +60,7 @@ function RegisterPage(props) {
 
     useEffect(() => {
         if (passwordConf === password) {
-            if (passwordConf && password && email && name) { 
+            if (passwordConf && password && email && name) {
                 setRegisterButtonDisabled(false);
                 setPasswordError("")
             }
@@ -69,7 +69,7 @@ function RegisterPage(props) {
 
     return (
         <Container>
-           <ParticleBackground />
+            <ParticleBackground />
             <Grid container spacing={0} justifyContent="center" direction="row">
                 <Grid item>
                     <Grid container direction="column" justifyContent="center" spacing={2} className="login-form">
