@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import LinkMUI from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Container from '@mui/material/Container';
 
 function InventoryTable() {
     const snackbar = useAlert();
@@ -37,7 +38,7 @@ function InventoryTable() {
     }, []);
 
     return (
-        <>
+        <Container>
             {inventory ? (
                 inventory.length > 0 ? (
                     <TableContainer>
@@ -72,7 +73,7 @@ function InventoryTable() {
                     <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
                         <Grid item>
                             <Image style={{ backgroundColor: 'transparent' }} src="assets/undraw_no_data_re_kwbl.svg" />
-                            <Typography variant="h5" fontWeight={700}>You have not added any products to your inventory yet</Typography>
+                            <Typography variant="h5" fontWeight={700}>You have not added any products yet</Typography>
                             <Typography variant="h6" sx={{ opacity: 0.4 }}>Start by going to a product and clicking the <AddCircleIcon /> icon</Typography>
                         </Grid>
                     </Grid>
@@ -80,7 +81,7 @@ function InventoryTable() {
             ) : (
                 <LinearProgress />
             )}
-        </>
+        </Container>
     )
 }
 
