@@ -188,7 +188,7 @@ function ProductPage() {
         ProductService.getProduct(id).then(
             response => {
                 setContent(response.data);
-                document.title = response.data.name + " - " + + import.meta.env.VITE_TITLE;
+                document.title = response.data.name + " - " + import.meta.env.VITE_TITLE;
             },
             error => {
                 const resMessage =
