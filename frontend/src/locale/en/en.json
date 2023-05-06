@@ -1,6 +1,5 @@
 {
     "general": {
-        "app_name": "product database",
         "products": "products",
         "brands": "brands"
     },
@@ -36,7 +35,6 @@
         "year": "Year",
         "quantity": "Quantity",
         "cost_per": "Cost per product"
-
     },
     "menu": {
         "account": "Account",
@@ -50,7 +48,6 @@
         "about": "About",
         "settings": "Settings",
         "sign_out": "Sign out",
-
         "tooltip": {
             "login": "Login",
             "open_settings": "Open settings"
