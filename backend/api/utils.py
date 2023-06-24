@@ -14,3 +14,15 @@ def admin_required():
                 return jsonify({'error': 'Permission denied', 'message': 'You do not have the required permission.'}), 403
         return decorator
     return wrapper
+
+def disable_route(value=False):
+    def wrapper(fn):
+        @wraps(fn)
+        def decorator(*args, **kwargs):
+            print(value)
+            if value.lower() in ["true", "yes", "y"]:
+                return fn(*args, **kwargs)
+            else:
+                return jsonify({'error': 'Route disabled', 'message': 'This route has been disabled by the administrator.'}), 403
+        return decorator
+    return wrapper
