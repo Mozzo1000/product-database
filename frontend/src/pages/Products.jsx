@@ -19,7 +19,7 @@ import BrandSelection from '../components/BrandSelection'
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import Typography from '@mui/material/Typography';
 import LinkMUI from '@mui/material/Link';
-import Image from 'material-ui-image'
+import Image from "@roflcoopter/material-ui-image";
 import useAlert from '../components/Alerts/useAlert';
 import Grid from '@mui/material/Grid';
 import Drawer from '@mui/material/Drawer';

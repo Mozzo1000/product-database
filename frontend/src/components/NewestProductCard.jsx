@@ -4,7 +4,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import ProductService from "../services/product.service";
 import useAlert from './Alerts/useAlert';
-import Image from 'material-ui-image'
+import Image from "@roflcoopter/material-ui-image";
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardContent';
 import { CardActionArea, CardHeader, Skeleton } from '@mui/material';

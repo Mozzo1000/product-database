@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import LinearProgress from '@mui/material/LinearProgress';
 import useAlert from './Alerts/useAlert';
-import Image from 'material-ui-image'
+import Image from "@roflcoopter/material-ui-image";
 import { Link } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 import LinkMUI from '@mui/material/Link';

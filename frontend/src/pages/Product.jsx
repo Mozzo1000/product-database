@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { styled } from '@mui/material/styles';
 import { useParams, Link as RouterLink } from "react-router-dom";
 import ProductService from "../services/product.service";
@@ -33,12 +33,12 @@ import Tab from '@mui/material/Tab';
 import a11yProps from '../components/TabPanel';
 import DocumentService from "../services/document.service";
 import MobileStepper from '@mui/material/MobileStepper';
-import SwipeableViews from 'react-swipeable-views';
+import { SwipeableViews } from 'react-swipeable-views-v18';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Popover from '@mui/material/Popover';
 import HelpIcon from '@mui/icons-material/Help';
-import Image from 'material-ui-image'
+import Image from "@roflcoopter/material-ui-image";
 import EditProductAttribute from '../components/EditProductAttribute';
 import RemoveProductAttribute from '../components/RemoveProductAttribute';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -69,11 +69,12 @@ function ProductPage() {
     const [loadUpload, setLoadUpload] = useState(false);
     const [documentContent, setDocumentContent] = useState([]);
     const [imageContent, setImageContent] = useState([]);
-    const [activeStep, setActiveStep] = React.useState(0);
+    const swipeableViewsRef = useRef(null);
     const [anchorElHelp, setAnchorElHelp] = React.useState(null);
     const openHelp = Boolean(anchorElHelp);
     const [environmentContent, setEnvironmentContent] = useState([]);
     const currentUser = AuthService.getCurrentUser();
+    const [activeStep, setActiveStep] = React.useState(0);
 
 
     const handleClickHelp = (event) => {
@@ -85,15 +86,14 @@ function ProductPage() {
     };
 
     const handleNext = () => {
+        swipeableViewsRef.current.swipeForward();
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
     };
 
     const handleBack = () => {
+        swipeableViewsRef.current.swipeBackward();
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const handleStepChange = (step) => {
-        setActiveStep(step);
     };
 
     const Input = styled('input')({
@@ -325,24 +325,22 @@ function ProductPage() {
                                 <Grid item xs={12} md={6}>
                                     {imageContent.length > 0 ? (
                                         <>
-                                            <SwipeableViews index={activeStep} onChangeIndex={handleStepChange} enableMouseEvents>
+                                            <SwipeableViews ref={swipeableViewsRef} loop={false} >
                                                 {imageContent.map((image, index) => (
                                                     <div key={image.name}>
-                                                        {Math.abs(activeStep - index) <= 2 ? (
-                                                            <Image src={import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + image.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-                                                        ) : null}
+                                                        <Image src={import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + image.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                                                     </div>
                                                 ))}
                                             </SwipeableViews>
                                             <MobileStepper position="static" steps={imageContent.length} activeStep={activeStep} variant="dots"
                                                 nextButton={
-                                                    <Button size="small" onClick={handleNext} disabled={activeStep === imageContent.length - 1}>
+                                                    <Button size="small" onClick={handleNext}>
                                                         Next
                                                         <KeyboardArrowRight />
                                                     </Button>
                                                 }
                                                 backButton={
-                                                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                                                    <Button size="small" onClick={handleBack}>
                                                         <KeyboardArrowLeft />
                                                         Back
                                                     </Button>
@@ -402,6 +400,7 @@ function ProductPage() {
                                 </Grid>
                             </Grid>
                             <CardActions>
+                                <br/><br/><br/><br/>
                                 {currentUser && currentUser["role"] === "admin" &&
                                     <>
                                         <Button size="small">Edit</Button>

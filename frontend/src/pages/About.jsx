@@ -2,7 +2,7 @@ import React from 'react'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import Image from 'material-ui-image'
+import Image from "@roflcoopter/material-ui-image";
 
 function AboutPage() {
     return (
