@@ -40,10 +40,28 @@ function NewestProductCard(props) {
             }
         )
     }, []);
+    
+    const allProductTitle = (
+        <Grid container spacing={3} direction="row" justifyContent="space-between">
+            <Grid item>
+                <Typography variant="h5" fontWeight="500">{t("card.recently_added")}</Typography>
+            </Grid>
+            {content && content.length > 0 &&
+                <Grid item>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        sx={{ width: '200px', fontSize: '16px', margin: "auto" }} component={Link} to="/products">
+                        {t("buttons.all_products")}
+                    </Button>
+                </Grid>
+            }
+        </Grid>
+    )
 
     return (
         <Card>
-            <CardHeader avatar={<NewReleasesIcon fontSize="large" />} title={t("card.recently_added")} titleTypographyProps={{ variant: "h5", fontWeight: "500" }} />
+            <CardHeader avatar={<NewReleasesIcon fontSize="large" />} title={allProductTitle} />
             <ImageList ref={scrollRef} sx={{
                 gridAutoFlow: "column",
                 gridTemplateColumns: "repeat(auto-fit, minmax(160px,1fr)) !important",
@@ -77,16 +95,6 @@ function NewestProductCard(props) {
                         </ImageListItem>
                     )
                 )}
-                {content && content.length > 0 &&
-                    <ImageListItem>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            sx={{ width: '200px', fontSize: '16px', margin: "auto" }} component={Link} to="/products">
-                            {t("buttons.all_products")}
-                        </Button>
-                    </ImageListItem>
-                }
             </ImageList>
         </Card>
     )
