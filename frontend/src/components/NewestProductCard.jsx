@@ -53,8 +53,8 @@ function NewestProductCard(props) {
                     content.length > 0 ? (
                         content.map((product) => (
                             <>
-                                <CardActionArea component={Link} to={"/product/" + product.id}>
-                                    <ImageListItem>
+                                <CardActionArea  component={Link} to={"/product/" + product.id} sx={{maxWidth: "200px"}}>
+                                    <ImageListItem sx={{maxWidth: "200px"}}>
                                         <Image src={import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + product.cover_image} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                                         <ImageListItemBar title={product.name} />
                                     </ImageListItem>
