@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { styled, alpha } from '@mui/material/styles';
-import { parse } from 'json2csv/dist/json2csv.umd'
+import { Parser } from '@json2csv/plainjs';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -61,7 +61,8 @@ function ExportButton(props) {
     const opts = { fields };
 
     try {
-      const csv = parse(props.data, opts);
+      const parser = new Parser(opts)
+      const csv = parser.parse(props.data);
       console.log(csv);
       const element = document.createElement("a");
       const file = new Blob([csv], {

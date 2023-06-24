@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@json2csv/plainjs": "7.0.1",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.5",
     "@mui/x-data-grid": "^5.2.1",
@@ -14,7 +15,6 @@
     "axios": "^0.24.0",
     "i18next": "^21.8.10",
     "i18next-browser-languagedetector": "^6.1.4",
-    "json2csv": "^5.0.7",
     "material-ui-image": "^3.3.2",
     "material-ui-snackbar-provider": "^2.0.0",
     "pretty-bytes": "^5.6.0",
