@@ -79,7 +79,7 @@ class ProductSchema(ma.SQLAlchemyAutoSchema):
     cover_image = ma.Method("get_cover_image")
 
     def get_cover_image(self, obj):
-        query = Document.query.filter(Document.product_id==obj.id, Document.type.contains("image/")).first()
+        query = Document.query.filter(Document.product_id==obj.id, Document.type.contains("image/")).order_by(Document.order.desc()).first()
         if query:
             return query.name
         else:
