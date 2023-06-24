@@ -25,7 +25,7 @@ function LanguageSwitcher() {
   
     return (
         <>
-        <IconButton onClick={handleClick}>
+        <IconButton onClick={handleClick} sx={{marginRight: 2}}>
             <LanguageIcon />
         </IconButton>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>

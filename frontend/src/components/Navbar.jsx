@@ -26,6 +26,8 @@ import InfoIcon from '@mui/icons-material/Info';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from "react-i18next";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import Grid from '@mui/material/Grid';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -138,6 +140,9 @@ function Navbar() {
                                 {pagesBottom.find(el => location.pathname === el.link)?.name}
                             </Typography>
                             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
+                            <IconButton sx={{marginRight: 2}} href="https://github.com/Mozzo1000/product-database" target="_blank">
+                                <GitHubIcon />
+                            </IconButton>
                             <LanguageSwitcher />
                             {currentUser &&
                                 <Box sx={{ flexGrow: 0 }}>
