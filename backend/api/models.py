@@ -97,6 +97,7 @@ class Document(db.Model):
     size = db.Column(db.Integer, nullable=True)
     file_created_at = db.Column(db.Date, nullable=True)
     checksum = db.Column(db.String, nullable=True)
+    order = db.Column(db.Integer, server_default="1", nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
