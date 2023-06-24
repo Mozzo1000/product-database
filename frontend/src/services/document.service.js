@@ -19,11 +19,17 @@ const removeDocument = (document_id) => {
   return axios.delete(API_URL + "documents/" + document_id, {}, { headers: authHeader() });
 };
 
+const editDocumentOrder = (document_id, order) => {
+  return axios.put(API_URL + "documents/" + document_id, {
+    order,
+  }, { headers: authHeader() });
+};
 
 const exportedObject = {
     addDocument,
     getAllDocuments,
     removeDocument,
+    editDocumentOrder,
 };
 
 export default exportedObject;
