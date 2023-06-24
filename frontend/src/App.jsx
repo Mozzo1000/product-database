@@ -14,6 +14,7 @@ import AboutPage from './pages/About';
 import Footer from './components/Footer';
 import RegisterPage from './pages/Register';
 import FavoriteTable from './components/FavoriteTable';
+import PageNotFound from './pages/404';
 
 function PrivateRoute({ children }) {
   const auth = AuthService.getCurrentUser()
@@ -47,6 +48,7 @@ function App() {
               <Route path="/settings" element={<PrivateRoute><SettingsPage/></PrivateRoute>} />
               <Route path="/favorites" element={<PrivateRoute><FavoriteTable/></PrivateRoute>} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="*" element={<PageNotFound />} />
             </Route>
           </Routes>
         </Box>
