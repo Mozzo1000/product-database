@@ -85,7 +85,7 @@ function Navbar() {
             <Box sx={{ overflow: 'auto' }}>
                 <List>
                     {pages.map((page) => (
-                        <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link}>
+                        <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link} onClick={() => setMobileOpen(false)}>
                             <ListItemIcon>
                                 {page.icon}
                             </ListItemIcon>
