@@ -11,6 +11,21 @@ from sqlalchemy.exc import IntegrityError
 
 document_endpoint = Blueprint('document', __name__)
 
+
+@document_endpoint.route('/v1/documents/<id>', methods=["PUT"])
+@admin_required()
+def edit_document(id):
+    if not "order" in request.json:
+        return jsonify({
+            "error": "Bad request",
+            "message": "order not given"
+        }), 400
+    document = Document.query.get(id)
+    document.order = request.json["order"]
+    document.save_to_db()
+    return jsonify({'message': f'Document with id {id} has been edited successfully'}), 200
+
+
 @document_endpoint.route('/v1/documents/storage/<path:filename>', methods=['GET'])
 def get_document(filename):
     directory = os.path.join(os.getcwd(), current_app.config['UPLOAD_FOLDER'])
