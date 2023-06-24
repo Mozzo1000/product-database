@@ -504,7 +504,7 @@ function ProductPage() {
                                                 {documentContent.length > 0 ? (
                                                     documentContent.map((document) => (
                                                         <TableRow key={document.name}>
-                                                            <TableCell component="a" href={import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + document.name} target="_blank">{document.name}</TableCell>
+                                                            <TableCell component="a" href={import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + document.name} target="_blank">{document.name.split("/").pop()}</TableCell>
                                                             <TableCell>{document.type}</TableCell>
                                                             {document.size === null ? (
                                                                 <TableCell>{document.size}</TableCell>
