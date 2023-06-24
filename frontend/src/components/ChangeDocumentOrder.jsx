@@ -1,5 +1,4 @@
 import React, { useState }  from 'react'
-import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -11,18 +10,15 @@ import DocumentService from "../services/document.service";
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
+import ViewListIcon from '@mui/icons-material/ViewList';
 import useAlert from './Alerts/useAlert';
-import ChangeDocumentOrder from './ChangeDocumentOrder';
+import { TextField } from '@mui/material';
 
-function RemoveDocument(props) {
+function ChangeDocumentOrder(props) {
     const snackbar = useAlert();
 
     const [openModal, setOpenModal] = useState(false);
-    const [anchorElDocMore, setAnchorElDocMore] = React.useState(null);
-    const openDocMore = Boolean(anchorElDocMore);
+    const [order, setOrder] = useState();
 
     const handleClickOpenModal = () => {
         setOpenModal(true);
@@ -32,17 +28,9 @@ function RemoveDocument(props) {
         setOpenModal(false);
     };
 
-    const handleClickDocMore = (event) => {
-        setAnchorElDocMore(event.currentTarget);
-    };
-    
-    const handleCloseDocMore = () => {
-        setAnchorElDocMore(null);
-    };
-
-    const handleRemoveAttribute = (e) => {
+    const handleEditDocument = (e) => {
         e.preventDefault();
-        DocumentService.removeDocument(props.props.id).then(
+        DocumentService.editDocumentOrder(props.document.id, order).then(
             response => {
                 setOpenModal(false);
                 // TODO: Update the state with new data automatically instead of prompting the user to refresh the page.
@@ -62,27 +50,25 @@ function RemoveDocument(props) {
 
     return (
         <>
-            <IconButton id={"morebtn-" + document.id} aria-controls={openDocMore ? 'more-menu' : undefined} aria-haspopup="true" aria-expanded={openDocMore ? 'true' : undefined} onClick={handleClickDocMore}><MoreVertIcon /></IconButton>
-            <Menu id={"moremore-" + document.id} anchorEl={anchorElDocMore} open={openDocMore} onClose={handleCloseDocMore} MenuListProps={{'aria-labelledby': 'basic-button',}}>
-                <MenuItem onClick={handleClickOpenModal}>
-                    <ListItemIcon ><DeleteIcon /></ListItemIcon>
-                    <ListItemText primary="Delete" />
-                </MenuItem>
-                <ChangeDocumentOrder document={props.props}/>
-            </Menu>  
+            <MenuItem onClick={handleClickOpenModal}>
+                <ListItemIcon ><ViewListIcon /></ListItemIcon>
+                <ListItemText primary="Change order" />
+            </MenuItem>
 
             <Dialog open={openModal} onClose={handleCloseModal}>
-                <DialogTitle>Are you sure?</DialogTitle>
+                <DialogTitle>Change order</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                            Removing document, <strong>{props.props.name}</strong> CANNOT be undone!
+                            The higher the order value, the higher up the document will be show in the list.
+                            This also affects the cover image(s).<br/><br/>
                     </DialogContentText>
+                    <TextField label="Order" defaultValue={props.document.order} onChange={(e) => setOrder(e.target.value)}/>
                 </DialogContent>
                 <FormControl>
-                    <form onSubmit={handleRemoveAttribute}>
+                    <form onSubmit={handleEditDocument}>
                         <DialogActions>
                             <Button onClick={handleCloseModal}>Cancel</Button>
-                            <Button type="submit" color="error" onClick={handleCloseModal}>Yes</Button>
+                            <Button type="submit" onClick={handleCloseModal}>Save</Button>
                         </DialogActions>
                     </form>
                 </FormControl>
@@ -91,4 +77,4 @@ function RemoveDocument(props) {
     )
 }
 
-export default RemoveDocument
+export default ChangeDocumentOrder
