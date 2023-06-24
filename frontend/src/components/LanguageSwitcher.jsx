@@ -4,6 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import LanguageIcon from '@mui/icons-material/Language';
 import { useTranslation } from "react-i18next";
+import { Tooltip } from '@mui/material';
 
 function LanguageSwitcher() {
     const {t, i18n} = useTranslation();
@@ -25,9 +26,11 @@ function LanguageSwitcher() {
   
     return (
         <>
-        <IconButton onClick={handleClick} sx={{marginRight: 2}}>
-            <LanguageIcon />
-        </IconButton>
+        <Tooltip title="Change language">
+            <IconButton onClick={handleClick} sx={{marginRight: 2}}>
+                <LanguageIcon />
+            </IconButton>
+        </Tooltip>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
             <MenuItem onClick={() => changeLanguage("en")}>
                 🇺🇸 English

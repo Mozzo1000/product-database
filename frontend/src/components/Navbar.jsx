@@ -140,9 +140,11 @@ function Navbar() {
                                 {pagesBottom.find(el => location.pathname === el.link)?.name}
                             </Typography>
                             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
-                            <IconButton sx={{marginRight: 2}} href="https://github.com/Mozzo1000/product-database" target="_blank">
-                                <GitHubIcon />
-                            </IconButton>
+                            <Tooltip title="Open repository">
+                                <IconButton sx={{marginRight: 2}} href="https://github.com/Mozzo1000/product-database" target="_blank">
+                                    <GitHubIcon />
+                                </IconButton>
+                            </Tooltip>
                             <LanguageSwitcher />
                             {currentUser &&
                                 <Box sx={{ flexGrow: 0 }}>
