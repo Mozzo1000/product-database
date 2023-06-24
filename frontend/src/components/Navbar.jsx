@@ -150,7 +150,7 @@ function Navbar() {
                                 <Box sx={{ flexGrow: 0 }}>
                                     <Tooltip title={t("menu.tooltip.open_settings")}>
                                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                            <Avatar src={import.meta.env.VITE_API_ENDPOINT + "v1/users/storage/" + currentUser["image"]} alt="User" />
+                                            <Avatar src={import.meta.env.VITE_API_ENDPOINT + "v1/users/storage/" + currentUser["image"]} alt={currentUser["name"]} />
                                         </IconButton>
                                     </Tooltip>
                                     <Menu
@@ -170,7 +170,7 @@ function Navbar() {
                                         onClose={handleCloseUserMenu}
                                     >
                                         <MenuItem component={Link} to="/settings">
-                                            <Avatar src={import.meta.env.VITE_API_ENDPOINT + "v1/users/storage/" + currentUser["image"]} /> {currentUser["name"]}
+                                            <Avatar src={import.meta.env.VITE_API_ENDPOINT + "v1/users/storage/" + currentUser["image"]} alt={currentUser["name"]} /> {currentUser["name"]}
                                         </MenuItem>
                                         <Divider />
                                         {settings.map((setting) => (

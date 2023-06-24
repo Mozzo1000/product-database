@@ -193,7 +193,7 @@ function SettingsPage() {
                             <CardContent>
                                 <Grid container spacing={3} direction="column" alignItems="center">
                                     <Grid item>
-                                        <Avatar src={import.meta.env.VITE_API_ENDPOINT + "v1/users/storage/" + profileImage} sx={{ width: 100, height: 100 }} />
+                                        <Avatar src={import.meta.env.VITE_API_ENDPOINT + "v1/users/storage/" + profileImage} alt={name} sx={{ width: 100, height: 100 }} />
                                     </Grid>
                                     <Grid item>
                                         <label htmlFor="contained-button-file">
