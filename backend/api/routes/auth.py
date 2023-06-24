@@ -2,10 +2,13 @@ from flask import Blueprint, request, jsonify, abort
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, get_jwt_identity, get_jwt)
 from api.models import User, RevokedTokenModel
+from api.utils import disable_route
+import os
 
 auth_endpoint = Blueprint('auth', __name__)
 
 @auth_endpoint.route("/v1/auth/register", methods=["POST"])
+@disable_route(os.environ.get("ALLOW_REGISTRATION"))
 def register():
     if not "email" or not "password" or not "name" in request.json:
         abort(422)
