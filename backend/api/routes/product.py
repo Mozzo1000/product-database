@@ -7,8 +7,21 @@ product_endpoint = Blueprint('product', __name__)
 @product_endpoint.route("/v1/products/<id>")
 def get_product(id):
     product_schema = ProductSchema(many=False)
+
+    if not id.isnumeric():
+        return jsonify({
+            "error": "Bad request",
+            "message": "ID has to be a number"
+        }), 500
+
     product = Product.query.get(id)
-    return jsonify(product_schema.dump(product))
+    if product:
+        return jsonify(product_schema.dump(product))
+    else: 
+        return jsonify({
+            "error": "Not found",
+            "message": "Requested product can not be found"
+        }), 404
 
 @product_endpoint.route("/v1/products/search/<query>")
 def search_for_product(query):
