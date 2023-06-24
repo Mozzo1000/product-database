@@ -1,5 +1,24 @@
-# product-database
-A open-source, api-driven product database containing all information you will ever need about all kinds of products.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/Mozzo1000/product-database">
+    <img src="assets/icon_round.svg" height="120px" width="120px"/>
+  </a>
+
+<h3 align="center">Product Database</h3>
+
+  <p align="center">
+    A open-source, api-driven product database containing all information you will ever need about all kinds of products.
+    <br />
+    <a href="https://github.com/Mozzo1000/product-database/wiki"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href=""><s>View Demo</s></a>
+    <a href="https://github.com/Mozzo1000/product-database/issues">Report Bug</a>
+    <a href="https://github.com/Mozzo1000/product-database/issues">Request Feature</a>
+  </p>
+</div>
+
 
 |           Home page            |          Product page          |          Product list          |
 | :----------------------------: | :----------------------------: | :----------------------------: |
