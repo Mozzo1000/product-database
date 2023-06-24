@@ -27,7 +27,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from "react-i18next";
 import GitHubIcon from '@mui/icons-material/GitHub';
-import Grid from '@mui/material/Grid';
+import ListItemButton from '@mui/material/ListItemButton';
 
 function Navbar() {
     let navigate = useNavigate();
@@ -85,12 +85,12 @@ function Navbar() {
             <Box sx={{ overflow: 'auto' }}>
                 <List>
                     {pages.map((page) => (
-                        <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link} onClick={() => setMobileOpen(false)}>
+                        <ListItemButton key={page.name} component={Link} to={page.link} selected={location.pathname === page.link} onClick={() => setMobileOpen(false)}>
                             <ListItemIcon>
                                 {page.icon}
                             </ListItemIcon>
                             <ListItemText primary={page.name} />
-                        </ListItem>
+                        </ListItemButton>
                     ))}
                 </List>
 
@@ -98,12 +98,12 @@ function Navbar() {
             {currentUser && currentUser["role"] === "admin" &&
                 <List sx={{ marginTop: 'auto' }}>
                     {pagesBottom.map((page) => (
-                        <ListItem button key={page.name} component={Link} to={page.link} selected={location.pathname === page.link}>
+                        <ListItemButton key={page.name} component={Link} to={page.link} selected={location.pathname === page.link}>
                             <ListItemIcon>
                                 {page.icon}
                             </ListItemIcon>
                             <ListItemText primary={page.name} />
-                        </ListItem>
+                        </ListItemButton>
                     ))}
                 </List>
             }
