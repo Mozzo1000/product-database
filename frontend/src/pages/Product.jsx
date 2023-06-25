@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles';
 import { useParams, Link as RouterLink } from "react-router-dom";
 import ProductService from "../services/product.service";
 import AttributeService from "../services/attribute.service";
-import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -32,13 +31,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import a11yProps from '../components/TabPanel';
 import DocumentService from "../services/document.service";
-import MobileStepper from '@mui/material/MobileStepper';
-import { SwipeableViews } from 'react-swipeable-views-v18';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import Popover from '@mui/material/Popover';
 import HelpIcon from '@mui/icons-material/Help';
-import Image from "@roflcoopter/material-ui-image";
 import EditProductAttribute from '../components/EditProductAttribute';
 import RemoveProductAttribute from '../components/RemoveProductAttribute';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -56,6 +50,8 @@ import FavoriteButton from '../components/FavoriteButton';
 import AddToInventory from '../components/AddToInventory';
 import Skeleton from '@mui/material/Skeleton';
 import prettyBytes from 'pretty-bytes';
+import ImageGallery from 'react-image-gallery';
+import "react-image-gallery/styles/css/image-gallery.css"
 
 function ProductPage() {
     const snackbar = useAlert();
@@ -74,8 +70,6 @@ function ProductPage() {
     const openHelp = Boolean(anchorElHelp);
     const [environmentContent, setEnvironmentContent] = useState([]);
     const currentUser = AuthService.getCurrentUser();
-    const [activeStep, setActiveStep] = React.useState(0);
-
 
     const handleClickHelp = (event) => {
         setAnchorElHelp(event.currentTarget);
@@ -83,17 +77,6 @@ function ProductPage() {
 
     const handleCloseHelp = () => {
         setAnchorElHelp(null);
-    };
-
-    const handleNext = () => {
-        swipeableViewsRef.current.swipeForward();
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
-    };
-
-    const handleBack = () => {
-        swipeableViewsRef.current.swipeBackward();
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
     const Input = styled('input')({
@@ -282,6 +265,18 @@ function ProductPage() {
         )
     }
 
+
+    const generateImageGallery = () => {
+        const image_arr = [];
+        let i = 0;
+        imageContent.forEach((x, i) => {
+            console.log(x["name"]);
+            image_arr.push({"original": import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + x["name"]})
+        });
+        console.log(image_arr)
+        return image_arr;
+    }
+
     return (
         <Container sx={{ paddingTop: 4 }}>
             <Grid container spacing={3}>
@@ -325,27 +320,7 @@ function ProductPage() {
                                 <Grid item xs={12} md={6}>
                                     {imageContent.length > 0 ? (
                                         <>
-                                            <SwipeableViews ref={swipeableViewsRef} loop={false} >
-                                                {imageContent.map((image, index) => (
-                                                    <div key={image.name}>
-                                                        <Image src={import.meta.env.VITE_API_ENDPOINT + "v1/documents/storage/" + image.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-                                                    </div>
-                                                ))}
-                                            </SwipeableViews>
-                                            <MobileStepper position="static" steps={imageContent.length} activeStep={activeStep} variant="dots"
-                                                nextButton={
-                                                    <Button size="small" onClick={handleNext}>
-                                                        Next
-                                                        <KeyboardArrowRight />
-                                                    </Button>
-                                                }
-                                                backButton={
-                                                    <Button size="small" onClick={handleBack}>
-                                                        <KeyboardArrowLeft />
-                                                        Back
-                                                    </Button>
-                                                }
-                                            />
+                                            <ImageGallery items={generateImageGallery()} showThumbnails={false} showFullscreenButton={false} showPlayButton={false} showIndex  />
                                         </>
                                     ) : (
                                         <Skeleton variant="rectangular" width={520} height={560} />
@@ -400,7 +375,6 @@ function ProductPage() {
                                 </Grid>
                             </Grid>
                             <CardActions>
-                                <br/><br/><br/><br/>
                                 {currentUser && currentUser["role"] === "admin" &&
                                     <>
                                         <Button size="small">Edit</Button>
