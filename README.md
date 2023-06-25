@@ -17,8 +17,8 @@
     <a href="https://github.com/Mozzo1000/product-database/issues">Report Bug</a>
     <a href="https://github.com/Mozzo1000/product-database/issues">Request Feature</a>
   </p>
+  <img src="https://img.shields.io/badge/maintenance-under%20development-green"/>
 </div>
-
 
 |           Home page            |          Product page          |          Product list          |
 | :----------------------------: | :----------------------------: | :----------------------------: |
