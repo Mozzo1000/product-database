@@ -17,6 +17,7 @@ from api.routes.favorite import favorite_endpoint
 from api.routes.inventory import inventory_endpoint
 from api.commands.db import db_command
 from api.commands.user import user_command
+import mimetypes
 
 swagger_template = {
   "swagger": "2.0",
@@ -49,6 +50,8 @@ app.register_blueprint(environment_endpoint)
 app.register_blueprint(stats_endpoint)
 app.register_blueprint(favorite_endpoint)
 app.register_blueprint(inventory_endpoint)
+
+mimetypes.add_type("image/webp", ".webp") # Python 3.11 does not have .webp as a supported mimetype (https://bugs.python.org/issue38902)
 
 @app.route('/')
 def index():
