@@ -32,7 +32,7 @@ const editAttribute = (attribute_id, name, value) => {
 };
 
 const removeAttribute = (attribute_id) => {
-  return axios.delete(API_URL + "attributes/" + attribute_id, {}, { headers: authHeader() });
+  return axios.delete(API_URL + "attributes/" + attribute_id, { headers: authHeader() });
 };
 
 const exportedObject = {
