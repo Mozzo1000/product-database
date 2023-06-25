@@ -140,6 +140,8 @@ function ProductPage() {
         AttributeService.addAttribute(id, newAttributeName, newAttributeValue).then(
             () => {
                 setOpenModal(false);
+                setNewAttributeName();
+                setNewAttributeValue();
                 ProductService.getProduct(id).then(
                     response => {
                         setContent(response.data);
