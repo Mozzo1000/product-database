@@ -15,6 +15,7 @@ import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import Grid from '@mui/material/Grid';
 import { useTranslation } from "react-i18next";
 import { useHorizontalScroll } from './HorizontalScrollRef';
+import Hidden from '@mui/material/Hidden'
 
 function NewestProductCard(props) {
     const snackbar = useAlert();
@@ -42,20 +43,22 @@ function NewestProductCard(props) {
     }, []);
     
     const allProductTitle = (
-        <Grid container spacing={3} direction="row" justifyContent="space-between">
+        <Grid container spacing={3} direction="row" justifyContent="space-between" alignItems="center">
             <Grid item>
                 <Typography variant="h5" fontWeight="500">{t("card.recently_added")}</Typography>
             </Grid>
-            {content && content.length > 0 &&
-                <Grid item>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ width: '200px', fontSize: '16px', margin: "auto" }} component={Link} to="/products">
-                        {t("buttons.all_products")}
-                    </Button>
-                </Grid>
-            }
+            <Hidden smDown>
+                {content && content.length > 0 &&
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ width: '200px', fontSize: '16px', margin: "auto" }} component={Link} to="/products">
+                            {t("buttons.all_products")}
+                        </Button>
+                    </Grid>
+                }
+            </Hidden>
         </Grid>
     )
 
@@ -77,7 +80,6 @@ function NewestProductCard(props) {
                                         <ImageListItemBar title={product.name} />
                                     </ImageListItem>
                                 </CardActionArea>
-
                             </>
                         ))
 
@@ -96,6 +98,15 @@ function NewestProductCard(props) {
                     )
                 )}
             </ImageList>
+            <Hidden smUp>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    sx={{ fontSize: '16px', margin: "auto" }} component={Link} to="/products">
+                    {t("buttons.all_products")}
+                </Button>
+            </Hidden>
         </Card>
     )
 }
